@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+  <metadata>
+    <id>OSharpNS.Template.Mvc_Angular</id>
+    <version>0.2.1-beta03</version>
+    <title></title>
+    <authors>柳柳软件(66soft.net)</authors>
+    <owners>柳柳软件(66soft.net)</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://choosealicense.com/licenses/apache-2.0/</licenseUrl>
+    <projectUrl>https://github.com/i66soft/osharp-ns20</projectUrl>
+    <iconUrl>http://core.osharp.org/assets/osharp/logo-color.png</iconUrl>
+    <description>osharp with .netstandard2.0 &amp; angular6，项目启动模板代码，以WebApi为后端，Angular6为前端，实现了系统初始化、身份认证、权限授权等通用功能。</description>
+    <copyright>Copyright © 66SOFT 2014-2018</copyright>
+    <tags>osharp osharpns</tags>
+    <packageTypes>
+      <packageType name="Template" />
+    </packageTypes>
+  </metadata>
+  <files>
+    <file
+      src="src\**"
+      exclude="**/node_modules/**;**/bin/**;**/obj/**;**/.vs/**;**/.vscode/**;**/ClientApp/dist/**;**/wwwroot/dist/**;content/Directory.Build.*"
+      target="content" />
+  </files>
+</package>

@@ -1,0 +1,19 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "LiuliuSoft",
+    "classifications": [
+        "Web",
+        "MVC",
+        "OSHARP"
+    ],
+    "groupIdentity": "OSharp.Template.Core",
+    "identity": "OSharp.Template.Core.CSharp.0.2",
+    "name": "OSharp Service Core Project",
+    "shortName": "osharp_core",
+    "tags": {
+        "language": "C#",
+        "type": "project"
+    },
+    "sourceName": "OSharp.Template",
+    "preferNameDirectory": true
+}

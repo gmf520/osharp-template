@@ -1,0 +1,19 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "LiuliuSoft",
+    "classifications": [
+        "Web",
+        "MVC",
+        "OSHARP"
+    ],
+    "groupIdentity": "OSharp.Template.EntityConfiguration",
+    "identity": "OSharp.Template.EntityConfiguration.CSharp.0.2",
+    "name": "OSharp EntityConfiguration Project",
+    "shortName": "osharp_entityconfig",
+    "tags": {
+        "language": "C#",
+        "type": "project"
+    },
+    "sourceName": "OSharp.Template",
+    "preferNameDirectory": true
+}
