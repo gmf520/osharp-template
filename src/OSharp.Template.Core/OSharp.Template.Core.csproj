@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="OSharpNS.AspNetCore" Version="0.2.1-beta03" />
-    <PackageReference Include="OSharpNS.Permissions" Version="0.2.1-beta03" />
+    <PackageReference Include="OSharpNS.AspNetCore" Version="0.2.1-beta04" />
+    <PackageReference Include="OSharpNS.Permissions" Version="0.2.1-beta04" />
   </ItemGroup>
 
 </Project>

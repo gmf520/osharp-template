@@ -1,2 +1,2 @@
-# osharp-ns20-template
-osharp-ns20-template with dotnet cli
+# OSharp.Template
+OSharp.Template with dotnet cli

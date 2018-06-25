@@ -7,7 +7,7 @@
 //  <last-date>2018-04-09 21:01</last-date>
 // -----------------------------------------------------------------------
 
-namespace OSharp.Template.Common.Dtos
+namespace OSharp.Template.Security.Dtos
 {
     public class UserSetPermissionDto
     {
