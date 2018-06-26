@@ -4,7 +4,7 @@
 //  </copyright>
 //  <site>http://www.osharp.org</site>
 //  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-06-14 0:53</last-date>
+//  <last-date>2018-06-27 4:49</last-date>
 // -----------------------------------------------------------------------
 
 using System;
@@ -14,6 +14,12 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
+using OSharp.Template.Identity;
+using OSharp.Template.Identity.Dtos;
+using OSharp.Template.Identity.Entities;
+using OSharp.Template.Security;
+using OSharp.Template.Security.Dtos;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,18 +28,11 @@ using OSharp.AspNetCore.UI;
 using OSharp.Collections;
 using OSharp.Core.Modules;
 using OSharp.Data;
-using OSharp.Template.Common.Dtos;
-using OSharp.Template.Identity;
-using OSharp.Template.Identity.Dtos;
-using OSharp.Template.Identity.Entities;
-using OSharp.Template.Security;
-using OSharp.Template.Security.Dtos;
 using OSharp.Entity;
 using OSharp.Extensions;
 using OSharp.Filter;
 using OSharp.Identity;
 using OSharp.Mapping;
-using OSharp.Security;
 
 
 namespace OSharp.Template.Web.Areas.Admin.Controllers
@@ -53,41 +52,33 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
             _identityContract = identityContract;
         }
 
+        /// <summary>
+        /// 读取用户列表信息
+        /// </summary>
+        /// <returns>用户列表信息</returns>
+        [HttpPost]
         [ModuleInfo]
         [Description("读取")]
-        public IActionResult Read()
+        public PageData<UserOutputDto> Read()
         {
             PageRequest request = new PageRequest(Request);
             Expression<Func<User, bool>> predicate = FilterHelper.GetExpression<User>(request.FilterGroup);
-            var page = _userManager.Users.ToPage(predicate,
-                request.PageCondition,
-                m => new
-                {
-                    m.Id,
-                    m.UserName,
-                    m.NickName,
-                    m.Email,
-                    m.EmailConfirmed,
-                    m.PhoneNumber,
-                    m.PhoneNumberConfirmed,
-                    m.LockoutEnabled,
-                    m.LockoutEnd,
-                    m.AccessFailedCount,
-                    m.IsLocked,
-                    m.CreatedTime,
-                    Roles = _identityContract.UserRoles.Where(n => !n.IsLocked).Where(n => n.UserId == m.Id)
-                        .SelectMany(n => _identityContract.Roles.Where(o => o.Id == n.RoleId).Select(o => o.Name))
-                });
+            var page = _userManager.Users.ToPage<User, UserOutputDto>(predicate, request.PageCondition);
 
-            return Json(page.ToPageData());
+            return page.ToPageData();
         }
 
+        /// <summary>
+        /// 新增用户信息
+        /// </summary>
+        /// <param name="dtos">用户信息</param>
+        /// <returns>JSON操作结果</returns>
         [HttpPost]
         [ModuleInfo]
         [DependOnFunction("Read")]
         [ServiceFilter(typeof(UnitOfWorkAttribute))]
         [Description("新增")]
-        public async Task<IActionResult> Create(UserInputDto[] dtos)
+        public async Task<AjaxResult> Create(UserInputDto[] dtos)
         {
             Check.NotNull(dtos, nameof(dtos));
             List<string> names = new List<string>();
@@ -99,19 +90,24 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
                     : await _userManager.CreateAsync(user, dto.Password);
                 if (!result.Succeeded)
                 {
-                    return Json(result.ToOperationResult().ToAjaxResult());
+                    return result.ToOperationResult().ToAjaxResult();
                 }
                 names.Add(user.UserName);
             }
-            return Json(new AjaxResult($"用户“{names.ExpandAndToString()}”创建成功"));
+            return new AjaxResult($"用户“{names.ExpandAndToString()}”创建成功");
         }
 
+        /// <summary>
+        /// 更新用户信息
+        /// </summary>
+        /// <param name="dtos">用户信息</param>
+        /// <returns>JSON操作结果</returns>
         [HttpPost]
         [ModuleInfo]
         [DependOnFunction("Read")]
         [ServiceFilter(typeof(UnitOfWorkAttribute))]
         [Description("更新")]
-        public async Task<IActionResult> Update(UserInputDto[] dtos)
+        public async Task<AjaxResult> Update(UserInputDto[] dtos)
         {
             Check.NotNull(dtos, nameof(dtos));
             List<string> names = new List<string>();
@@ -122,19 +118,24 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
                 IdentityResult result = await _userManager.UpdateAsync(user);
                 if (!result.Succeeded)
                 {
-                    return Json(result.ToOperationResult().ToAjaxResult());
+                    return result.ToOperationResult().ToAjaxResult();
                 }
                 names.Add(user.UserName);
             }
-            return Json(new AjaxResult($"用户“{names.ExpandAndToString()}”更新成功"));
+            return new AjaxResult($"用户“{names.ExpandAndToString()}”更新成功");
         }
 
+        /// <summary>
+        /// 删除用户信息
+        /// </summary>
+        /// <param name="ids">用户信息</param>
+        /// <returns>JSON操作结果</returns>
         [HttpPost]
         [ModuleInfo]
         [DependOnFunction("Read")]
         [ServiceFilter(typeof(UnitOfWorkAttribute))]
         [Description("删除")]
-        public async Task<IActionResult> Delete(int[] ids)
+        public async Task<AjaxResult> Delete(int[] ids)
         {
             Check.NotNull(ids, nameof(ids));
             List<string> names = new List<string>();
@@ -144,13 +145,18 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
                 IdentityResult result = await _userManager.DeleteAsync(user);
                 if (!result.Succeeded)
                 {
-                    return Json(result.ToOperationResult().ToAjaxResult());
+                    return result.ToOperationResult().ToAjaxResult();
                 }
                 names.Add(user.UserName);
             }
-            return Json(new AjaxResult($"用户“{names.ExpandAndToString()}”删除成功"));
+            return new AjaxResult($"用户“{names.ExpandAndToString()}”删除成功");
         }
 
+        /// <summary>
+        /// 设置用户权限
+        /// </summary>
+        /// <param name="dto">用户权限信息</param>
+        /// <returns>JSON操作结果</returns>
         [HttpPost]
         [ModuleInfo]
         [DependOnFunction("Read")]
@@ -158,7 +164,7 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
         [DependOnFunction("ReadUserModules", Controller = "Module")]
         [ServiceFilter(typeof(UnitOfWorkAttribute))]
         [Description("设置权限")]
-        public async Task<IActionResult> SetPermission([FromBody] UserSetPermissionDto dto)
+        public async Task<AjaxResult> SetPermission([FromBody] UserSetPermissionDto dto)
         {
             OperationResult result1 = await _identityContract.SetUserRoles(dto.UserId, dto.RoleIds);
             string msg = $"设置角色：{result1.Message}<br/>";
@@ -179,7 +185,7 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
                 type = AjaxResultType.Error;
             }
 
-            return Json(new AjaxResult(msg, type));
+            return new AjaxResult(msg, type);
         }
     }
 }

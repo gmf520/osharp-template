@@ -4,8 +4,12 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard2.0\OSharp.Template.EntityConfiguration.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="OSharpNS.EntityFrameworkCore" Version="0.2.1-beta04" />
+    <PackageReference Include="OSharpNS.EntityFrameworkCore" Version="0.2.1-beta05" />
   </ItemGroup>
 
   <ItemGroup>

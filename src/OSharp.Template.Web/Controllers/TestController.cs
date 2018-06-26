@@ -4,20 +4,19 @@
 //  </copyright>
 //  <site>http://www.osharp.org</site>
 //  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-05-10 22:46</last-date>
+//  <last-date>2018-06-27 4:50</last-date>
 // -----------------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-using Microsoft.AspNetCore.Http;
+using OSharp.Template.Security.Entities;
+
 using Microsoft.AspNetCore.Mvc;
 
 using OSharp.AspNetCore.Mvc;
 using OSharp.Collections;
-using OSharp.Core.Functions;
-using OSharp.Template.Security.Entities;
 using OSharp.Entity;
 
 
@@ -33,15 +32,16 @@ namespace OSharp.Template.Web.Controllers
             _entityRoleRepository = entityRoleRepository;
         }
 
+        [HttpGet]
         [Description("测试01")]
-        public IActionResult Test01()
+        public string Test01()
         {
             List<object> list = new List<object>();
 
             string str = string.Empty;
             list.Add(str);
 
-            return Content(list.ExpandAndToString("\r\n"));
+            return list.ExpandAndToString("\r\n");
         }
     }
 }

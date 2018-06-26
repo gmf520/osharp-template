@@ -4,10 +4,15 @@
 //  </copyright>
 //  <site>http://www.osharp.org</site>
 //  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-06-20 19:49</last-date>
+//  <last-date>2018-06-27 4:50</last-date>
 // -----------------------------------------------------------------------
 
+using System;
+using System.IO;
+using System.Linq;
 using System.Text;
+
+using OSharp.Template.Web.Mappers;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -25,21 +30,39 @@ using OSharp.AspNetCore.Mvc.Conventions;
 using OSharp.AspNetCore.Mvc.Filters;
 using OSharp.Core;
 
+using Swashbuckle.AspNetCore.Swagger;
+
 
 namespace OSharp.Template.Web
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
+            Environment = env;
         }
 
         public IConfiguration Configuration { get; }
 
+        public IHostingEnvironment Environment { get; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            if (Environment.IsDevelopment())
+            {
+                services.AddMvcCore().AddApiExplorer();
+                services.AddSwaggerGen(options =>
+                {
+                    options.SwaggerDoc("v1", new Info() { Title = "OSharpNS API", Version = "v1" });
+                    Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.xml").ToList().ForEach(file =>
+                    {
+                        options.IncludeXmlComments(file);
+                    });
+                });
+            }
+
             services.AddMvc(options =>
             {
                 options.Conventions.Add(new DashedRoutingConvention());
@@ -86,6 +109,10 @@ namespace OSharp.Template.Web
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+                app.UseSwagger().UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "OSharpNS API V1");
+                });
             }
             else
             {
@@ -95,6 +122,7 @@ namespace OSharp.Template.Web
 
             app.UseMiddleware<NodeNoFoundHandlerMiddleware>()
                 .UseMiddleware<NodeExceptionHandlerMiddleware>()
+                .UseDtoMappings()
                 //.UseHttpsRedirection()
                 .UseDefaultFiles().UseStaticFiles()
                 .UseAuthentication()

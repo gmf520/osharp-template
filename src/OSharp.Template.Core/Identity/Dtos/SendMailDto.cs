@@ -4,7 +4,7 @@
 //  </copyright>
 //  <site>http://www.osharp.org</site>
 //  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-05-10 3:12</last-date>
+//  <last-date>2018-06-27 4:44</last-date>
 // -----------------------------------------------------------------------
 
 using System.ComponentModel.DataAnnotations;
@@ -12,6 +12,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace OSharp.Template.Identity.Dtos
 {
+    /// <summary>
+    /// 发送邮件DTO
+    /// </summary>
     public class SendMailDto
     {
         /// <summary>

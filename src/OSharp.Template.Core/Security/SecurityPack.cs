@@ -4,13 +4,14 @@
 //  </copyright>
 //  <site>http://www.osharp.org</site>
 //  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-06-23 15:29</last-date>
+//  <last-date>2018-06-27 4:44</last-date>
 // -----------------------------------------------------------------------
+
+using OSharp.Template.Security.Dtos;
+using OSharp.Template.Security.Entities;
 
 using OSharp.Core.EntityInfos;
 using OSharp.Core.Functions;
-using OSharp.Template.Security.Dtos;
-using OSharp.Template.Security.Entities;
 using OSharp.Security;
 using OSharp.Secutiry;
 
@@ -21,7 +22,8 @@ namespace OSharp.Template.Security
     /// 权限安全模块
     /// </summary>
     public class SecurityPack
-        : SecurityPackBase<SecurityManager, FunctionAuthorization, FunctionAuthCache, ModuleHandler, Function, FunctionInputDto, EntityInfo, EntityInfoInputDto,
+        : SecurityPackBase<SecurityManager, FunctionAuthorization, FunctionAuthCache, ModuleHandler, Function, FunctionInputDto, EntityInfo,
+            EntityInfoInputDto,
             Module, ModuleInputDto, int, ModuleFunction, ModuleRole, ModuleUser, int, int>
     {
         /// <summary>

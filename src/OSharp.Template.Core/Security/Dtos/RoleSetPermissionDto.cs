@@ -4,15 +4,24 @@
 //  </copyright>
 //  <site>http://www.osharp.org</site>
 //  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-06-25 21:18</last-date>
+//  <last-date>2018-06-27 4:44</last-date>
 // -----------------------------------------------------------------------
 
 namespace OSharp.Template.Security.Dtos
 {
+    /// <summary>
+    /// 角色设置权限DTO
+    /// </summary>
     public class RoleSetPermissionDto
     {
+        /// <summary>
+        /// 获取或设置 角色编号
+        /// </summary>
         public int RoleId { get; set; }
 
+        /// <summary>
+        /// 获取或设置 要设置的模块编号集合
+        /// </summary>
         public int[] ModuleIds { get; set; }
     }
 }

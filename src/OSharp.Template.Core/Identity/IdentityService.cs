@@ -1,26 +1,24 @@
 ﻿// -----------------------------------------------------------------------
 //  <copyright file="IdentityService.cs" company="OSharp开源团队">
-//      Copyright (c) 2014-2017 OSharp. All rights reserved.
+//      Copyright (c) 2014-2018 OSharp. All rights reserved.
 //  </copyright>
 //  <site>http://www.osharp.org</site>
 //  <last-editor>郭明锋</last-editor>
-//  <last-date>2017-08-18 14:48</last-date>
+//  <last-date>2018-06-27 4:44</last-date>
 // -----------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
+
+using OSharp.Template.Identity.Dtos;
+using OSharp.Template.Identity.Entities;
+using OSharp.Template.Identity.Events;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 
-using OSharp.Collections;
 using OSharp.Data;
-using OSharp.Template.Identity.Dtos;
-using OSharp.Template.Identity.Entities;
-using OSharp.Template.Identity.Events;
 using OSharp.Entity;
 using OSharp.EventBuses;
 using OSharp.Extensions;
@@ -34,15 +32,15 @@ namespace OSharp.Template.Identity
     /// </summary>
     public partial class IdentityService : IIdentityContract
     {
-        private readonly UserManager<User> _userManager;
-        private readonly RoleManager<Role> _roleManager;
-        private readonly SignInManager<User> _signInManager;
         private readonly IEventBus _eventBus;
-        private readonly IRepository<User, int> _userRepository;
+        private readonly RoleManager<Role> _roleManager;
         private readonly IRepository<Role, int> _roleRepository;
-        private ILogger<IdentityService> _logger;
-        private readonly IRepository<UserRole, Guid> _userRoleRepository;
+        private readonly SignInManager<User> _signInManager;
         private readonly IRepository<UserDetail, int> _userDetailRepository;
+        private readonly UserManager<User> _userManager;
+        private readonly IRepository<User, int> _userRepository;
+        private readonly IRepository<UserRole, Guid> _userRoleRepository;
+        private readonly ILogger<IdentityService> _logger;
 
         /// <summary>
         /// 初始化一个<see cref="IdentityService"/>类型的新实例
@@ -156,7 +154,7 @@ namespace OSharp.Template.Identity
             _logger.LogInformation(4, $"用户 {userId} 登出系统");
 
             //触发登出成功事件
-            LogoutEventData logoutEventData = new LogoutEventData(){UserId = userId};
+            LogoutEventData logoutEventData = new LogoutEventData() { UserId = userId };
             _eventBus.PublishSync(logoutEventData);
 
             return OperationResult.Success;
@@ -208,7 +206,8 @@ namespace OSharp.Template.Identity
             if (result.IsLockedOut)
             {
                 _logger.LogWarning(2, $"用户 {user.Id} 因密码错误次数过多被锁定，解锁时间：{user.LockoutEnd}");
-                return new OperationResult<User>(OperationResultType.Error, $"用户因密码错误次数过多而被锁定 {_userManager.Options.Lockout.DefaultLockoutTimeSpan.TotalMinutes} 分钟，请稍后重试");
+                return new OperationResult<User>(OperationResultType.Error,
+                    $"用户因密码错误次数过多而被锁定 {_userManager.Options.Lockout.DefaultLockoutTimeSpan.TotalMinutes} 分钟，请稍后重试");
             }
             if (result.RequiresTwoFactor)
             {
@@ -218,7 +217,8 @@ namespace OSharp.Template.Identity
             {
                 return new OperationResult<User>(OperationResultType.Success, "用户登录成功", user);
             }
-            return new OperationResult<User>(OperationResultType.Error, $"用户名或密码错误，剩余 {_userManager.Options.Lockout.MaxFailedAccessAttempts - user.AccessFailedCount} 次机会");
+            return new OperationResult<User>(OperationResultType.Error,
+                $"用户名或密码错误，剩余 {_userManager.Options.Lockout.MaxFailedAccessAttempts - user.AccessFailedCount} 次机会");
         }
     }
 }

@@ -4,7 +4,7 @@
 //  </copyright>
 //  <site>http://www.osharp.org</site>
 //  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-04-29 3:35</last-date>
+//  <last-date>2018-06-27 4:44</last-date>
 // -----------------------------------------------------------------------
 
 using System;
@@ -13,12 +13,13 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
+using OSharp.Template.Identity.Dtos;
+using OSharp.Template.Identity.Entities;
+
 using Microsoft.AspNetCore.Identity;
 
 using OSharp.Collections;
 using OSharp.Data;
-using OSharp.Template.Identity.Dtos;
-using OSharp.Template.Identity.Entities;
 using OSharp.Identity;
 
 

@@ -1,10 +1,10 @@
 ﻿// -----------------------------------------------------------------------
 //  <copyright file="IIdentityContract.cs" company="OSharp开源团队">
-//      Copyright (c) 2014-2017 OSharp. All rights reserved.
+//      Copyright (c) 2014-2018 OSharp. All rights reserved.
 //  </copyright>
 //  <site>http://www.osharp.org</site>
 //  <last-editor>郭明锋</last-editor>
-//  <last-date>2017-08-18 14:11</last-date>
+//  <last-date>2018-06-27 4:44</last-date>
 // -----------------------------------------------------------------------
 
 using System;
@@ -12,13 +12,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-using Microsoft.AspNetCore.Identity;
-
-using OSharp.Data;
 using OSharp.Template.Identity.Dtos;
 using OSharp.Template.Identity.Entities;
-using OSharp.Dependency;
-using OSharp.Entity;
+
+using OSharp.Data;
 
 
 namespace OSharp.Template.Identity
@@ -102,6 +99,5 @@ namespace OSharp.Template.Identity
         Task<OperationResult> Logout(int userId);
 
         #endregion
-
     }
 }

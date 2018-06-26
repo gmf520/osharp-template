@@ -4,7 +4,7 @@
 //  </copyright>
 //  <site>http://www.osharp.org</site>
 //  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-05-02 19:54</last-date>
+//  <last-date>2018-06-27 4:44</last-date>
 // -----------------------------------------------------------------------
 
 using System.ComponentModel.DataAnnotations;
@@ -39,6 +39,5 @@ namespace OSharp.Template.Identity.Dtos
         /// </summary>
         [Compare("NewPassword", ErrorMessage = "新密码与确认密码不匹配")]
         public string ConfirmPassword { get; set; }
-
     }
 }

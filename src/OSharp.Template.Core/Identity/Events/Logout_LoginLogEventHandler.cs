@@ -4,15 +4,14 @@
 //  </copyright>
 //  <site>http://www.osharp.org</site>
 //  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-05-03 1:22</last-date>
+//  <last-date>2018-06-27 4:44</last-date>
 // -----------------------------------------------------------------------
 
 using System;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 using OSharp.Template.Identity.Entities;
+
 using OSharp.Dependency;
 using OSharp.Entity;
 using OSharp.EventBuses;
@@ -49,6 +48,5 @@ namespace OSharp.Template.Identity.Events
             log.LogoutTime = DateTime.Now;
             _loginLogRepository.Update(log);
         }
-
     }
 }

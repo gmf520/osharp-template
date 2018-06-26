@@ -4,7 +4,7 @@
 //  </copyright>
 //  <site>http://www.osharp.org</site>
 //  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-04-29 2:44</last-date>
+//  <last-date>2018-06-27 4:50</last-date>
 // -----------------------------------------------------------------------
 
 using System.Collections.Generic;
@@ -12,6 +12,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+
+using OSharp.Template.Identity;
+using OSharp.Template.Identity.Dtos;
+using OSharp.Template.Identity.Entities;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,9 +28,6 @@ using OSharp.Collections;
 using OSharp.Core;
 using OSharp.Core.Modules;
 using OSharp.Data;
-using OSharp.Template.Identity;
-using OSharp.Template.Identity.Dtos;
-using OSharp.Template.Identity.Entities;
 using OSharp.Dependency;
 using OSharp.Entity;
 using OSharp.Extensions;
@@ -42,8 +44,8 @@ namespace OSharp.Template.Web.Controllers
     public class IdentityController : ApiController
     {
         private readonly IIdentityContract _identityContract;
-        private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
 
         public IdentityController(IIdentityContract identityContract,
             UserManager<User> userManager,
@@ -54,34 +56,63 @@ namespace OSharp.Template.Web.Controllers
             _signInManager = signInManager;
         }
 
+        /// <summary>
+        /// 用户名是否存在
+        /// </summary>
+        /// <param name="userName">用户名</param>
+        /// <returns>是否存在</returns>
+        [HttpGet]
         [Description("用户名是否存在")]
-        public IActionResult CheckUserNameExists(string userName)
+        public bool CheckUserNameExists(string userName)
         {
             bool exists = _userManager.Users.Any(m => m.NormalizedUserName == _userManager.NormalizeKey(userName));
-            return Json(exists);
+            return exists;
         }
 
+        /// <summary>
+        /// 用户Email是否存在
+        /// </summary>
+        /// <param name="email">电子邮箱</param>
+        /// <returns>是否存在</returns>
+        [HttpGet]
         [Description("用户Email是否存在")]
-        public IActionResult CheckEmailExists(string email)
+        public bool CheckEmailExists(string email)
         {
             bool exists = _userManager.Users.Any(m => m.NormalizeEmail == _userManager.NormalizeKey(email));
-            return Json(exists);
+            return exists;
         }
 
+        /// <summary>
+        /// 用户Email是否不存在
+        /// </summary>
+        /// <param name="email">电子邮箱</param>
+        /// <returns>是否不存在</returns>
+        [HttpGet]
         [Description("用户Email是否不存在")]
-        public IActionResult CheckEmailNotExists(string email)
+        public bool CheckEmailNotExists(string email)
         {
             bool exists = !_userManager.Users.Any(m => m.NormalizeEmail == _userManager.NormalizeKey(email));
-            return Json(exists);
+            return exists;
         }
 
+        /// <summary>
+        /// 用户昵称是否存在
+        /// </summary>
+        /// <param name="nickName">用户昵称</param>
+        /// <returns>是否存在</returns>
+        [HttpGet]
         [Description("用户昵称是否存在")]
-        public IActionResult CheckNickNameExists(string nickName)
+        public bool CheckNickNameExists(string nickName)
         {
             bool exists = _userManager.Users.Any(m => m.NickName == nickName);
-            return Json(exists);
+            return exists;
         }
 
+        /// <summary>
+        /// 新用户注册
+        /// </summary>
+        /// <param name="dto">注册信息</param>
+        /// <returns>JSON操作结果</returns>
         [HttpPost]
         [ServiceFilter(typeof(UnitOfWorkAttribute))]
         [ModuleInfo]
@@ -89,13 +120,13 @@ namespace OSharp.Template.Web.Controllers
         [DependOnFunction("CheckEmailExists")]
         [DependOnFunction("CheckNickNameExists")]
         [Description("用户注册")]
-        public async Task<IActionResult> Register([FromBody]RegisterDto dto)
+        public async Task<AjaxResult> Register([FromBody] RegisterDto dto)
         {
             Check.NotNull(dto, nameof(dto));
 
             if (!ModelState.IsValid)
             {
-                return Json(new AjaxResult("提交信息验证失败", AjaxResultType.Error));
+                return new AjaxResult("提交信息验证失败", AjaxResultType.Error);
             }
             //todo: 校验验证码
 
@@ -118,19 +149,24 @@ namespace OSharp.Template.Web.Controllers
                 await SendMailAsync(user.Email, "柳柳软件 注册邮箱激活邮件", body);
             }
 
-            return Json(result.ToAjaxResult());
+            return result.ToAjaxResult();
         }
 
+        /// <summary>
+        /// 用户登录
+        /// </summary>
+        /// <param name="dto">登录信息</param>
+        /// <returns>JSON操作结果</returns>
         [HttpPost]
         [ModuleInfo]
         [Description("用户登录")]
-        public async Task<IActionResult> Login([FromBody]LoginDto dto)
+        public async Task<AjaxResult> Login([FromBody] LoginDto dto)
         {
             Check.NotNull(dto, nameof(dto));
 
             if (!ModelState.IsValid)
             {
-                return Json(new AjaxResult("提交信息验证失败", AjaxResultType.Error));
+                return new AjaxResult("提交信息验证失败", AjaxResultType.Error);
             }
             //todo: 校验验证码
 
@@ -143,23 +179,28 @@ namespace OSharp.Template.Web.Controllers
 
             if (!result.Successed)
             {
-                return Json(result.ToAjaxResult());
+                return result.ToAjaxResult();
             }
             User user = result.Data;
             await _signInManager.SignInAsync(user, dto.Remember);
-            return Json(new AjaxResult("登录成功"));
+            return new AjaxResult("登录成功");
         }
 
+        /// <summary>
+        /// Jwt登录
+        /// </summary>
+        /// <param name="dto">登录信息</param>
+        /// <returns>JSON操作结果</returns>
         [HttpPost]
         [ModuleInfo]
         [Description("JWT登录")]
-        public async Task<IActionResult> Jwtoken([FromBody]LoginDto dto)
+        public async Task<AjaxResult> Jwtoken([FromBody] LoginDto dto)
         {
             Check.NotNull(dto, nameof(dto));
 
             if (!ModelState.IsValid)
             {
-                return Json(new AjaxResult("提交信息验证失败", AjaxResultType.Error));
+                return new AjaxResult("提交信息验证失败", AjaxResultType.Error);
             }
             dto.Ip = HttpContext.GetClientIp();
             dto.UserAgent = Request.Headers["User-Agent"].FirstOrDefault();
@@ -170,7 +211,7 @@ namespace OSharp.Template.Web.Controllers
 
             if (!result.Successed)
             {
-                return Json(result.ToAjaxResult());
+                return result.ToAjaxResult();
             }
             User user = result.Data;
             bool isAdmin = _identityContract.Roles.Any(m =>
@@ -190,67 +231,81 @@ namespace OSharp.Template.Web.Controllers
                 new Claim(ClaimTypes.Role, roles.ExpandAndToString())
             };
             string token = JwtHelper.CreateToken(claims);
-            return Json(new AjaxResult("登录成功", AjaxResultType.Success, token));
+            return new AjaxResult("登录成功", AjaxResultType.Success, token);
         }
 
+        /// <summary>
+        /// 用户登出
+        /// </summary>
+        /// <returns>JSON操作结果</returns>
         [HttpPost]
         [ModuleInfo]
         [Description("用户登出")]
         [ServiceFilter(typeof(UnitOfWorkAttribute))]
-        public async Task<IActionResult> Logout()
+        public async Task<AjaxResult> Logout()
         {
             if (!User.Identity.IsAuthenticated)
             {
-                return Json(new AjaxResult("用户登出成功"));
+                return new AjaxResult("用户登出成功");
             }
             int userId = User.Identity.GetUserId<int>();
             OperationResult result = await _identityContract.Logout(userId);
-            return Json(result.ToAjaxResult());
+            return result.ToAjaxResult();
         }
 
+        /// <summary>
+        /// 激活邮箱
+        /// </summary>
+        /// <param name="dto">电子邮箱</param>
+        /// <returns>JSON操作结果</returns>
         [HttpPost]
         [ModuleInfo]
         [Description("激活邮箱")]
         [ServiceFilter(typeof(UnitOfWorkAttribute))]
-        public async Task<IActionResult> ConfirmEmail([FromBody]ConfirmEmailDto dto)
+        public async Task<AjaxResult> ConfirmEmail([FromBody] ConfirmEmailDto dto)
         {
             if (!ModelState.IsValid)
             {
-                return Json(new AjaxResult("邮箱激活失败：参数不正确", AjaxResultType.Error));
+                return new AjaxResult("邮箱激活失败：参数不正确", AjaxResultType.Error);
             }
             User user = await _userManager.FindByIdAsync(dto.UserId.ToString());
             if (user == null)
             {
-                return Json(new AjaxResult("注册邮箱激活失败：用户不存在", AjaxResultType.Error));
+                return new AjaxResult("注册邮箱激活失败：用户不存在", AjaxResultType.Error);
             }
             if (user.EmailConfirmed)
             {
-                return Json(new AjaxResult("注册邮箱已激活，操作取消", AjaxResultType.Info));
+                return new AjaxResult("注册邮箱已激活，操作取消", AjaxResultType.Info);
             }
             string code = UrlBase64ReplaceChar(dto.Code);
             IdentityResult result = await _userManager.ConfirmEmailAsync(user, code);
-            return Json(result.ToOperationResult().ToAjaxResult());
+            return result.ToOperationResult().ToAjaxResult();
         }
 
+        /// <summary>
+        /// 发送激活注册邮件
+        /// </summary>
+        /// <param name="dto">激活邮箱信息</param>
+        /// <returns>JSON操作结果</returns>
         [HttpPost]
         [ModuleInfo]
         [DependOnFunction("CheckEmailNotExists")]
-        [Description("发送激活Email邮件")]
-        public async Task<IActionResult> SendConfirmMail([FromBody]SendMailDto dto)
+        [Description("发送激活注册邮件")]
+        public async Task<AjaxResult> SendConfirmMail([FromBody] SendMailDto dto)
         {
             if (!ModelState.IsValid)
             {
-                return Json(new AjaxResult("提交信息验证失败", AjaxResultType.Error));
+                return new AjaxResult("提交信息验证失败", AjaxResultType.Error);
             }
 
             User user = await _userManager.FindByEmailAsync(dto.Email);
             if (user == null)
             {
-                return Json(new AjaxResult("发送激活邮件失败：用户不存在", AjaxResultType.Error));
+                return new AjaxResult("发送激活邮件失败：用户不存在", AjaxResultType.Error);
             }
             if (user.EmailConfirmed)
             {
-                return Json(new AjaxResult("Email已激活，无需再次激活", AjaxResultType.Info));
+                return new AjaxResult("Email已激活，无需再次激活", AjaxResultType.Info);
             }
             string code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             code = UrlBase64ReplaceChar(code);
@@ -262,43 +317,53 @@ namespace OSharp.Template.Web.Controllers
                 + $"{url}<br>"
                 + $"祝您使用愉快！";
             await SendMailAsync(user.Email, "柳柳软件 注册邮箱激活邮件", body);
-            return Json(new AjaxResult("激活Email邮件发送成功"));
+            return new AjaxResult("激活Email邮件发送成功");
         }
 
+        /// <summary>
+        /// 修改密码
+        /// </summary>
+        /// <param name="dto">修改密码信息</param>
+        /// <returns>JSON操作结果</returns>
         [HttpPost]
         [Logined]
         [ModuleInfo]
         [ServiceFilter(typeof(UnitOfWorkAttribute))]
         [Description("修改密码")]
-        public async Task<IActionResult> ChangePassword(ChangePasswordDto dto)
+        public async Task<AjaxResult> ChangePassword(ChangePasswordDto dto)
         {
             Check.NotNull(dto, nameof(dto));
 
             User user = await _userManager.FindByIdAsync(dto.UserId.ToString());
             if (user == null)
             {
-                return Json(new AjaxResult($"用户不存在", AjaxResultType.Error));
+                return new AjaxResult($"用户不存在", AjaxResultType.Error);
             }
 
             IdentityResult result = await _userManager.ChangePasswordAsync(user, dto.OldPassword, dto.NewPassword);
-            return Json(result.ToOperationResult().ToAjaxResult());
+            return result.ToOperationResult().ToAjaxResult();
         }
 
+        /// <summary>
+        /// 发送重置密码邮件
+        /// </summary>
+        /// <param name="dto">发送邮件信息</param>
+        /// <returns>JSON操作结果</returns>
         [HttpPost]
         [ModuleInfo]
         [DependOnFunction("CheckEmailNotExists")]
         [Description("发送重置密码邮件")]
-        public async Task<IActionResult> SendResetPasswordMail([FromBody]SendMailDto dto)
+        public async Task<AjaxResult> SendResetPasswordMail([FromBody] SendMailDto dto)
         {
             if (!ModelState.IsValid)
             {
-                return Json(new AjaxResult("提交数据验证失败", AjaxResultType.Error));
+                return new AjaxResult("提交数据验证失败", AjaxResultType.Error);
             }
             //todo: 校验验证码
             User user = await _userManager.FindByEmailAsync(dto.Email);
             if (user == null)
             {
-                return Json(new AjaxResult("用户不存在", AjaxResultType.Error));
+                return new AjaxResult("用户不存在", AjaxResultType.Error);
             }
             string token = await _userManager.GeneratePasswordResetTokenAsync(user);
             token = UrlBase64ReplaceChar(token);
@@ -310,26 +375,31 @@ namespace OSharp.Template.Web.Controllers
                 + $"{url}<br>"
                 + $"祝您使用愉快！";
             await sender.SendEmailAsync(user.Email, "柳柳软件 重置密码邮件", body);
-            return Json(new AjaxResult("密码重置邮件发送成功"));
+            return new AjaxResult("密码重置邮件发送成功");
         }
 
+        /// <summary>
+        /// 重置登录密码
+        /// </summary>
+        /// <param name="dto">重置密码信息</param>
+        /// <returns>JSON操作结果</returns>
         [HttpPost]
         [ModuleInfo]
         [ServiceFilter(typeof(UnitOfWorkAttribute))]
         [Description("重置登录密码")]
-        public async Task<IActionResult> ResetPassword([FromBody]ResetPasswordDto dto)
+        public async Task<AjaxResult> ResetPassword([FromBody] ResetPasswordDto dto)
         {
             Check.NotNull(dto, nameof(dto));
 
             User user = await _userManager.FindByIdAsync(dto.UserId.ToString());
             if (user == null)
             {
-                return Json(new AjaxResult($"用户不存在", AjaxResultType.Error));
+                return new AjaxResult($"用户不存在", AjaxResultType.Error);
             }
             string token = UrlBase64ReplaceChar(dto.Token);
             IdentityResult result = await _userManager.ResetPasswordAsync(user, token, dto.NewPassword);
 
-            return Json(result.ToOperationResult().ToAjaxResult());
+            return result.ToOperationResult().ToAjaxResult();
         }
 
         private static async Task SendMailAsync(string email, string subject, string body)

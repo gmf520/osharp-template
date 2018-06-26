@@ -1,6 +1,17 @@
-﻿using System;
+﻿// -----------------------------------------------------------------------
+//  <copyright file="20180625134421_Init.cs" company="OSharp开源团队">
+//      Copyright (c) 2014-2018 OSharp. All rights reserved.
+//  </copyright>
+//  <site>http://www.osharp.org</site>
+//  <last-editor>郭明锋</last-editor>
+//  <last-date>2018-06-27 4:50</last-date>
+// -----------------------------------------------------------------------
+
+using System;
+
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+
 
 namespace OSharp.Template.Web.Migrations
 {
@@ -451,7 +462,13 @@ namespace OSharp.Template.Web.Migrations
                 values: new object[,]
                 {
                     { new Guid("fa84bfa5-47c7-4fa8-9fb0-a90a0166404b"), false, "Site.Name", "\"OSHARP\"", "System.String" },
-                    { new Guid("1928b030-7a4b-48b6-b6ec-a90a01664050"), false, "Site.Description", "\"Osharp with .NetStandard2.0 & Angular6\"", "System.String" }
+                    {
+                        new Guid("1928b030-7a4b-48b6-b6ec-a90a01664050"),
+                        false,
+                        "Site.Description",
+                        "\"Osharp with .NetStandard2.0 & Angular6\"",
+                        "System.String"
+                    }
                 });
 
             migrationBuilder.InsertData(
@@ -461,8 +478,32 @@ namespace OSharp.Template.Web.Migrations
 
             migrationBuilder.InsertData(
                 table: "Role",
-                columns: new[] { "Id", "ConcurrencyStamp", "CreatedTime", "IsAdmin", "IsDefault", "IsLocked", "IsSystem", "Name", "NormalizedName", "Remark" },
-                values: new object[] { 1, "dbecf737-5373-4b96-ac2b-7febd57b363c", new DateTime(2018, 6, 25, 21, 44, 21, 200, DateTimeKind.Local), true, false, false, true, "系统管理员", "系统管理员", "系统最高权限管理角色" });
+                columns: new[]
+                {
+                    "Id",
+                    "ConcurrencyStamp",
+                    "CreatedTime",
+                    "IsAdmin",
+                    "IsDefault",
+                    "IsLocked",
+                    "IsSystem",
+                    "Name",
+                    "NormalizedName",
+                    "Remark"
+                },
+                values: new object[]
+                {
+                    1,
+                    "dbecf737-5373-4b96-ac2b-7febd57b363c",
+                    new DateTime(2018, 6, 25, 21, 44, 21, 200, DateTimeKind.Local),
+                    true,
+                    false,
+                    false,
+                    true,
+                    "系统管理员",
+                    "系统管理员",
+                    "系统最高权限管理角色"
+                });
 
             migrationBuilder.InsertData(
                 table: "Module",

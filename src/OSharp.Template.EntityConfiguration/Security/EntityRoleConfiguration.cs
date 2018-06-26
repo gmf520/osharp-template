@@ -4,17 +4,18 @@
 //  </copyright>
 //  <site>http://www.osharp.org</site>
 //  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-05-15 13:57</last-date>
+//  <last-date>2018-06-27 4:48</last-date>
 // -----------------------------------------------------------------------
 
 using System;
+
+using OSharp.Template.Identity.Entities;
+using OSharp.Template.Security.Entities;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 using OSharp.Core.EntityInfos;
-using OSharp.Template.Identity.Entities;
-using OSharp.Template.Security.Entities;
 using OSharp.Entity;
 
 

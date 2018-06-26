@@ -4,19 +4,19 @@
 //  </copyright>
 //  <site>http://www.osharp.org</site>
 //  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-06-09 20:37</last-date>
+//  <last-date>2018-06-27 4:50</last-date>
 // -----------------------------------------------------------------------
 
 using System.ComponentModel;
 
-using Microsoft.AspNetCore.Mvc;
-
 using OSharp.Template.Security;
+
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace OSharp.Template.Web.Areas.Admin.Controllers
 {
-    [Description("管理-主页")] 
+    [Description("管理-主页")]
     public class HomeController : AdminApiController
     {
         private readonly SecurityManager _securityManager;
@@ -26,24 +26,14 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
             _securityManager = securityManager;
         }
 
+        /// <summary>
+        /// 获取后台管理主菜单
+        /// </summary>
+        /// <returns>菜单信息</returns>
+        [HttpGet]
         [Description("主菜单")]
         public ActionResult MainMenu()
         {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             return Content("MainMenu");
         }
     }

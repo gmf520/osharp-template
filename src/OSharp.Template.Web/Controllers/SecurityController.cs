@@ -4,13 +4,16 @@
 //  </copyright>
 //  <site>http://www.osharp.org</site>
 //  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-06-11 2:18</last-date>
+//  <last-date>2018-06-27 4:50</last-date>
 // -----------------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+
+using OSharp.Template.Security;
+using OSharp.Template.Security.Entities;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,9 +22,6 @@ using OSharp.AspNetCore.Mvc;
 using OSharp.Collections;
 using OSharp.Core.Functions;
 using OSharp.Core.Modules;
-using OSharp.Template.Security;
-using OSharp.Template.Security.Entities;
-using OSharp.Security;
 using OSharp.Secutiry;
 
 
@@ -37,18 +37,29 @@ namespace OSharp.Template.Web.Controllers
         {
             _securityManager = securityManager;
         }
-         
+
+        /// <summary>
+        /// 检查URL授权
+        /// </summary>
+        /// <param name="url">要检查的URL</param>
+        /// <returns>是否有权</returns>
+        [HttpGet]
         [ModuleInfo]
         [Description("检查URL授权")]
-        public IActionResult CheckUrlAuth(string url)
+        public bool CheckUrlAuth(string url)
         {
             bool ok = this.CheckFunctionAuth(url);
-            return Json(ok);
+            return ok;
         }
 
+        /// <summary>
+        /// 获取授权信息
+        /// </summary>
+        /// <returns>权限节点</returns>
+        [HttpGet]
         [ModuleInfo]
         [Description("获取授权信息")]
-        public IActionResult GetAuthInfo()
+        public List<string> GetAuthInfo()
         {
             Module[] modules = _securityManager.Modules.ToArray();
             List<AuthItem> list = new List<AuthItem>();
@@ -71,16 +82,8 @@ namespace OSharp.Template.Web.Controllers
                     codes.Add(item.Code);
                 }
             }
-            return Json(codes);
+            return codes;
             //return Content(codes.ExpandAndToString("\r\n"));
-        }
-
-
-        private class AuthItem
-        {
-            public string Code { get; set; }
-
-            public bool HasFunc { get; set; }
         }
 
         private bool CheckFuncAuth(Module module, out bool empty)
@@ -108,11 +111,19 @@ namespace OSharp.Template.Web.Controllers
         /// <summary>
         /// 获取模块的树形路径代码串
         /// </summary>
-        public static string GetModuleTreeCode(Module module, Module[] source)
+        private static string GetModuleTreeCode(Module module, Module[] source)
         {
             var pathIds = module.TreePathIds;
             string[] names = pathIds.Select(m => source.First(n => n.Id == m)).Select(m => m.Code).ToArray();
             return names.ExpandAndToString(".");
+        }
+
+
+        private class AuthItem
+        {
+            public string Code { get; set; }
+
+            public bool HasFunc { get; set; }
         }
     }
 }

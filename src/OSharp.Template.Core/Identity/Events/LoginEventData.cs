@@ -4,16 +4,20 @@
 //  </copyright>
 //  <site>http://www.osharp.org</site>
 //  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-04-30 0:29</last-date>
+//  <last-date>2018-06-27 4:44</last-date>
 // -----------------------------------------------------------------------
 
 using OSharp.Template.Identity.Dtos;
 using OSharp.Template.Identity.Entities;
+
 using OSharp.EventBuses;
 
 
 namespace OSharp.Template.Identity.Events
 {
+    /// <summary>
+    /// 登录事件数据
+    /// </summary>
     public class LoginEventData : EventDataBase
     {
         /// <summary>

@@ -4,7 +4,7 @@
 //  </copyright>
 //  <site>http://www.osharp.org</site>
 //  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-04-30 0:01</last-date>
+//  <last-date>2018-06-27 4:44</last-date>
 // -----------------------------------------------------------------------
 
 using System;
@@ -49,15 +49,15 @@ namespace OSharp.Template.Identity.Entities
         public string UserAgent { get; set; }
 
         /// <summary>
-        /// 获取或设置 创建时间
-        /// </summary>
-        [DisplayName("创建时间")]
-        public DateTime CreatedTime { get; set; }
-
-        /// <summary>
         /// 获取或设置 退出时间
         /// </summary>
         [DisplayName("退出时间")]
         public DateTime? LogoutTime { get; set; }
+
+        /// <summary>
+        /// 获取或设置 创建时间
+        /// </summary>
+        [DisplayName("创建时间")]
+        public DateTime CreatedTime { get; set; }
     }
 }

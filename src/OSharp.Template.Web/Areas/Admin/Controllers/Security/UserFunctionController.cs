@@ -4,26 +4,28 @@
 //  </copyright>
 //  <site>http://www.osharp.org</site>
 //  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-04-13 2:09</last-date>
+//  <last-date>2018-06-27 4:49</last-date>
 // -----------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 
+using OSharp.Template.Identity.Dtos;
+using OSharp.Template.Identity.Entities;
+using OSharp.Template.Security;
+using OSharp.Template.Security.Dtos;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+
 using OSharp.AspNetCore.UI;
 using OSharp.Core.Functions;
 using OSharp.Core.Modules;
-using OSharp.Template.Identity.Entities;
-using OSharp.Template.Security;
 using OSharp.Entity;
 using OSharp.Filter;
 using OSharp.Linq;
-using OSharp.Security;
 
 
 namespace OSharp.Template.Web.Areas.Admin.Controllers
@@ -32,9 +34,9 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
     [Description("管理-用户功能")]
     public class UserFunctionController : AdminApiController
     {
+        private readonly RoleManager<Role> _roleManager;
         private readonly SecurityManager _securityManager;
         private readonly UserManager<User> _userManager;
-        private readonly RoleManager<Role> _roleManager;
 
         public UserFunctionController(SecurityManager securityManager, UserManager<User> userManager, RoleManager<Role> roleManager)
         {
@@ -43,32 +45,36 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
             _roleManager = roleManager;
         }
 
+        /// <summary>
+        /// 读取用户信息
+        /// </summary>
+        /// <returns>用户信息</returns>
+        [HttpPost]
         [ModuleInfo]
         [Description("读取")]
-        public IActionResult Read()
+        public PageData<UserOutputDto2> Read()
         {
             PageRequest request = new PageRequest(Request);
             request.FilterGroup.Rules.Add(new FilterRule("IsLocked", false, FilterOperate.Equal));
             Expression<Func<User, bool>> predicate = FilterHelper.GetExpression<User>(request.FilterGroup);
-            var page = _userManager.Users.ToPage(predicate,
-                request.PageCondition,
-                m => new
-                {
-                    m.Id,
-                    m.UserName,
-                    m.Email
-                });
-            return Json(page.ToPageData());
+            var page = _userManager.Users.ToPage<User, UserOutputDto2>(predicate, request.PageCondition);
+            return page.ToPageData();
         }
 
+        /// <summary>
+        /// 读取用户功能信息
+        /// </summary>
+        /// <param name="userId">用户编号</param>
+        /// <returns>用户功能信息</returns>
+        [HttpPost]
         [ModuleInfo]
         [DependOnFunction("Read")]
         [Description("读取功能")]
-        public IActionResult ReadFunctions(int userId)
+        public PageData<FunctionOutputDto2> ReadFunctions(int userId)
         {
             if (userId == 0)
             {
-                return Json(new PageData<object>());
+                return new PageData<FunctionOutputDto2>();
             }
 
             int[] moduleIds = _securityManager.GetUserWithRoleModuleIds(userId);
@@ -76,7 +82,7 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
                 .ToArray();
             if (functionIds.Length == 0)
             {
-                return Json(new PageData<object>());
+                return new PageData<FunctionOutputDto2>();
             }
 
             PageRequest request = new PageRequest(Request);
@@ -87,10 +93,8 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
                 request.PageCondition.SortConditions = new[] { new SortCondition("Area"), new SortCondition("Controller") };
             }
 
-            var page = _securityManager.Functions.ToPage(funcExp,
-                request.PageCondition,
-                m => new { m.Id, m.Name, m.AccessType, m.Area, m.Controller });
-            return Json(page.ToPageData());
+            PageResult<FunctionOutputDto2> page = _securityManager.Functions.ToPage<Function, FunctionOutputDto2>(funcExp, request.PageCondition);
+            return page.ToPageData();
         }
     }
 }

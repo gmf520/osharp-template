@@ -4,7 +4,7 @@
 //  </copyright>
 //  <site>http://www.osharp.org</site>
 //  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-06-25 21:20</last-date>
+//  <last-date>2018-06-27 4:48</last-date>
 // -----------------------------------------------------------------------
 
 using System;
@@ -27,7 +27,7 @@ namespace OSharp.Template.EntityConfiguration.System
         {
             builder.HasData(
                 new KeyValueCouple() { Key = SystemSettingKeys.SiteName, Value = "OSHARP" },
-                new KeyValueCouple() { Key = SystemSettingKeys.SiteDescription,Value = "Osharp with .NetStandard2.0 & Angular6"}
+                new KeyValueCouple() { Key = SystemSettingKeys.SiteDescription, Value = "Osharp with .NetStandard2.0 & Angular6" }
             );
         }
     }

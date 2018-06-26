@@ -4,7 +4,7 @@
 //  </copyright>
 //  <site>http://www.osharp.org</site>
 //  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-04-13 2:03</last-date>
+//  <last-date>2018-06-27 4:49</last-date>
 // -----------------------------------------------------------------------
 
 using System;
@@ -12,17 +12,20 @@ using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 
+using OSharp.Template.Identity.Dtos;
+using OSharp.Template.Identity.Entities;
+using OSharp.Template.Security;
+using OSharp.Template.Security.Dtos;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+
 using OSharp.AspNetCore.UI;
 using OSharp.Core.Functions;
 using OSharp.Core.Modules;
-using OSharp.Template.Identity.Entities;
-using OSharp.Template.Security;
 using OSharp.Entity;
 using OSharp.Filter;
 using OSharp.Linq;
-using OSharp.Security;
 
 
 namespace OSharp.Template.Web.Areas.Admin.Controllers
@@ -31,8 +34,8 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
     [Description("管理-角色功能")]
     public class RoleFunctionController : AdminApiController
     {
-        private readonly SecurityManager _securityManager;
         private readonly RoleManager<Role> _roleManager;
+        private readonly SecurityManager _securityManager;
 
         public RoleFunctionController(SecurityManager securityManager, RoleManager<Role> roleManager)
         {
@@ -40,40 +43,43 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
             _roleManager = roleManager;
         }
 
+        /// <summary>
+        /// 读取角色信息
+        /// </summary>
+        /// <returns>角色信息</returns>
+        [HttpPost]
         [ModuleInfo]
         [Description("读取")]
-        public IActionResult Read()
+        public PageData<RoleOutputDto2> Read()
         {
             PageRequest request = new PageRequest(Request);
             request.FilterGroup.Rules.Add(new FilterRule("IsLocked", false, FilterOperate.Equal));
             Expression<Func<Role, bool>> predicate = FilterHelper.GetExpression<Role>(request.FilterGroup);
-            var page = _roleManager.Roles.ToPage(predicate,
-                request.PageCondition,
-                m => new
-                {
-                    m.Id,
-                    m.Name,
-                    m.Remark,
-                    m.IsAdmin
-                });
-            return Json(page.ToPageData());
+            PageResult<RoleOutputDto2> page = _roleManager.Roles.ToPage<Role, RoleOutputDto2>(predicate, request.PageCondition);
+            return page.ToPageData();
         }
 
+        /// <summary>
+        /// 读取角色功能信息
+        /// </summary>
+        /// <param name="roleId">角色编号</param>
+        /// <returns>角色功能信息</returns>
+        [HttpPost]
         [ModuleInfo]
         [DependOnFunction("Read")]
         [Description("读取功能")]
-        public IActionResult ReadFunctions(int roleId)
+        public PageData<FunctionOutputDto2> ReadFunctions(int roleId)
         {
             if (roleId == 0)
             {
-                return Json(new PageData<object>());
+                return new PageData<FunctionOutputDto2>();
             }
             int[] moduleIds = _securityManager.GetRoleModuleIds(roleId);
             Guid[] functionIds = _securityManager.ModuleFunctions.Where(m => moduleIds.Contains(m.ModuleId)).Select(m => m.FunctionId).Distinct()
                 .ToArray();
             if (functionIds.Length == 0)
             {
-                return Json(new PageData<object>());
+                return new PageData<FunctionOutputDto2>();
             }
 
             PageRequest request = new PageRequest(Request);
@@ -84,10 +90,8 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
                 request.PageCondition.SortConditions = new[] { new SortCondition("Area"), new SortCondition("Controller") };
             }
 
-            var page = _securityManager.Functions.ToPage(funcExp,
-                request.PageCondition,
-                m => new { m.Id, m.Name, m.AccessType, m.Area, m.Controller });
-            return Json(page.ToPageData());
+            var page = _securityManager.Functions.ToPage<Function, FunctionOutputDto2>(funcExp, request.PageCondition);
+            return page.ToPageData();
         }
     }
 }
