@@ -10,20 +10,26 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 
+using OSharp.Template.Common;
+using OSharp.Template.Security;
+using OSharp.Template.Security.Dtos;
+
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 
+using OSharp.AspNetCore;
 using OSharp.AspNetCore.Mvc;
-using OSharp.Collections;
-using OSharp.Core;
+using OSharp.AspNetCore.Mvc.Filters;
 using OSharp.Core.Modules;
 using OSharp.Core.Packs;
-using OSharp.Entity;
+using OSharp.Drawing;
+using OSharp.Filter;
 using OSharp.Reflection;
 
 
@@ -33,6 +39,15 @@ namespace OSharp.Template.Web.Controllers
     [ModuleInfo(Order = 3)]
     public class CommonController : ApiController
     {
+        private readonly ICommonContract _commonContract;
+        private readonly SecurityManager _securityManager;
+
+        public CommonController(ICommonContract commonContract, SecurityManager securityManager)
+        {
+            _commonContract = commonContract;
+            _securityManager = securityManager;
+        }
+
         /// <summary>
         /// 获取验证码图片
         /// </summary>
@@ -40,9 +55,33 @@ namespace OSharp.Template.Web.Controllers
         [HttpGet]
         [ModuleInfo]
         [Description("验证码")]
-        public IActionResult VerifyCode()
+        public string VerifyCode()
         {
-            return Json("");
+            ValidateCoder coder = new ValidateCoder()
+            {
+                RandomColor = true,
+                RandomItalic = true,
+                RandomLineCount = 7,
+                RandomPointPercent = 10,
+                RandomPosition = true
+            };
+            Bitmap bitmap = coder.CreateImage(4, out string code);
+            VerifyCodeHandler.SetCode(code, out string id);
+            return VerifyCodeHandler.GetImageString(bitmap, id);
+        }
+
+        /// <summary>
+        /// 验证验证码的有效性，只作为前端Ajax验证，验证成功不移除验证码，验证码仍需传到后端进行再次验证
+        /// </summary>
+        /// <param name="code">验证码字符串</param>
+        /// <param name="id">验证码编号</param>
+        /// <returns>是否无效</returns>
+        [HttpGet]
+        [ModuleInfo]
+        [Description("验证验证码的有效性")]
+        public bool CheckVerifyCode(string code, string id)
+        {
+            return VerifyCodeHandler.CheckCode(code, id, false);
         }
 
         /// <summary>
@@ -52,7 +91,7 @@ namespace OSharp.Template.Web.Controllers
         [HttpGet]
         [ModuleInfo]
         [Description("系统信息")]
-        public IActionResult SystemInfo()
+        public object SystemInfo()
         {
             IServiceProvider provider = HttpContext.RequestServices;
 
@@ -69,17 +108,28 @@ namespace OSharp.Template.Web.Controllers
 
             string version = Assembly.GetExecutingAssembly().GetProductVersion();
 
-            MvcOptions mvcOps = provider.GetService<IOptions<MvcOptions>>().Value;
-
             info.Lines = new List<string>()
             {
                 "WebApi 数据服务已启动",
-                $"版本号：{version}",
-                $"数据连接：{provider.GetOSharpOptions().GetDbContextOptions(typeof(DefaultDbContext)).ConnectionString}",
-                $"MvcFilters：\r\n{mvcOps.Filters.ExpandAndToString(m => $"{m.ToString()}-{m.GetHashCode()}", "\r\n")}"
+                $"当前版本：{version}"
             };
 
-            return Json(info);
+            return info;
+        }
+
+        [HttpGet]
+        [ServiceFilter(typeof(UnitOfWorkAttribute))]
+        [Description("测试")]
+        public object Test()
+        {
+            EntityRoleInputDto dto = new EntityRoleInputDto()
+            {
+                RoleId = 3,
+                EntityId = Guid.Parse("a0f5a8cf-f774-45e2-be2f-a9130053ab73"),
+                FilterGroup = new FilterGroup()
+            };
+            dto.FilterGroup.AddRule(new FilterRule("Id", 5, FilterOperate.GreaterOrEqual));
+            return _securityManager.CreateEntityRoles(dto);
         }
     }
 }

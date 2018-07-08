@@ -1,32 +1,27 @@
 ﻿// -----------------------------------------------------------------------
-//  <copyright file="ValidateCodeType.cs" company="OSharp开源团队">
+//  <copyright file="UserSetRoleDto.cs" company="OSharp开源团队">
 //      Copyright (c) 2014-2018 OSharp. All rights reserved.
 //  </copyright>
 //  <site>http://www.osharp.org</site>
 //  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-06-27 4:50</last-date>
+//  <last-date>2018-07-08 12:21</last-date>
 // -----------------------------------------------------------------------
 
-namespace OSharp.Template.Web.Helpers
+namespace OSharp.Template.Security.Dtos
 {
     /// <summary>
-    /// 验证码类型
+    /// 用户设置角色DTO
     /// </summary>
-    public enum ValidateCodeType
+    public class UserSetRoleDto
     {
         /// <summary>
-        /// 纯数值
+        /// 获取或设置 用户编号
         /// </summary>
-        Number,
+        public int UserId { get; set; }
 
         /// <summary>
-        /// 数值与字母的组合
+        /// 获取或设置 要设置的角色编号
         /// </summary>
-        NumberAndLetter,
-
-        /// <summary>
-        /// 汉字
-        /// </summary>
-        Hanzi
+        public int[] RoleIds { get; set; }
     }
 }

@@ -17,6 +17,7 @@ using OSharp.Template.Security.Entities;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 using OSharp.AspNetCore.Mvc;
 using OSharp.Collections;
@@ -32,10 +33,14 @@ namespace OSharp.Template.Web.Controllers
     public class SecurityController : ApiController
     {
         private readonly SecurityManager _securityManager;
+        private readonly ILogger<SecurityController> _logger;
 
-        public SecurityController(SecurityManager securityManager)
+        public SecurityController(
+            SecurityManager securityManager,
+            ILoggerFactory loggerFactory)
         {
             _securityManager = securityManager;
+            _logger = loggerFactory.CreateLogger<SecurityController>();
         }
 
         /// <summary>
@@ -83,9 +88,14 @@ namespace OSharp.Template.Web.Controllers
                 }
             }
             return codes;
-            //return Content(codes.ExpandAndToString("\r\n"));
         }
 
+        /// <summary>
+        /// 验证是否拥有指定模块的权限
+        /// </summary>
+        /// <param name="module">要验证的模块</param>
+        /// <param name="empty">返回模块是否为空模块，即是否分配有功能</param>
+        /// <returns></returns>
         private bool CheckFuncAuth(Module module, out bool empty)
         {
             IServiceProvider services = HttpContext.RequestServices;

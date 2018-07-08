@@ -2,14 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>OSharpNS.Template.Mvc_Angular</id>
-    <version>0.2.5</version>
+    <version>0.3.0</version>
     <title></title>
     <authors>柳柳软件(66soft.net)</authors>
     <owners>柳柳软件(66soft.net)</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>https://choosealicense.com/licenses/apache-2.0/</licenseUrl>
     <projectUrl>https://github.com/i66soft/osharp-ns20</projectUrl>
-    <iconUrl>http://core.osharp.org/assets/osharp/logo-color.png</iconUrl>
+    <iconUrl>https://en.gravatar.com/userimage/140788132/0ff3b1e68fa0154337b1528c4276e276.png?size=80</iconUrl>
     <description>osharp with .netstandard2.0 &amp; angular6，项目启动模板代码，以WebApi为后端，Angular6为前端，实现了系统初始化、身份认证、权限授权等通用功能。</description>
     <copyright>Copyright © 66SOFT 2014-2018</copyright>
     <tags>osharp osharpns</tags>
@@ -24,7 +24,7 @@
     <file src="cmd\.template.config/template.json" target="content\OSharp.CMD\.template.config"/>
     <file src="cmd\cmd_build.bat" target="content\OSharp.CMD"/>
     <file src="..\src\**"
-      exclude="**/node_modules/**;**/bin/**;**/obj/**;**/log/**;**/logs/**;**/.vs/**;**/.vscode/**;**/dist/**;**/wwwroot/dist/**"
+      exclude="**/node_modules/**;**/bin/**;**/obj/**;**/log/**;**/logs/**;**/.vs/**;**/.vscode/**;**/dist/**;**/wwwroot/dist/**;**/assets/tmp/**"
       target="content" />
   </files>
 </package>
