@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 using OSharp.Template.Security;
 using OSharp.Template.Security.Dtos;
@@ -20,13 +19,11 @@ using OSharp.Template.Security.Entities;
 
 using Microsoft.AspNetCore.Mvc;
 
-using OSharp.AspNetCore.Mvc.Filters;
 using OSharp.AspNetCore.UI;
 using OSharp.Core.Modules;
 using OSharp.Data;
 using OSharp.Entity;
 using OSharp.Filter;
-using OSharp.Mapping;
 
 
 namespace OSharp.Template.Web.Areas.Admin.Controllers
@@ -53,7 +50,7 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
         {
             ListFilterGroup group = new ListFilterGroup(Request);
             Expression<Func<Module, bool>> predicate = FilterHelper.GetExpression<Module>(group);
-            List<ModuleOutputDto> modules = _securityManager.Modules.Where(predicate).OrderBy(m => m.OrderCode).ToOutput<ModuleOutputDto>().ToList();
+            List<ModuleOutputDto> modules = _securityManager.Modules.Where(predicate).OrderBy(m => m.OrderCode).ToOutput<Module, ModuleOutputDto>().ToList();
             return modules;
         }
 

@@ -192,6 +192,7 @@ namespace OSharp.Template.Web.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     RoleId = table.Column<int>(nullable: false),
                     EntityId = table.Column<Guid>(nullable: false),
+                    Operation = table.Column<int>(nullable: false),
                     FilterGroupJson = table.Column<string>(nullable: true),
                     IsLocked = table.Column<bool>(nullable: false),
                     CreatedTime = table.Column<DateTime>(nullable: false)
@@ -450,8 +451,8 @@ namespace OSharp.Template.Web.Migrations
                 columns: new[] { "Id", "IsLocked", "Key", "ValueJson", "ValueType" },
                 values: new object[,]
                 {
-                    { new Guid("4b2f3f7f-874e-4f85-82a1-a91300538f00"), false, "Site.Name", "\"OSHARP\"", "System.String" },
-                    { new Guid("1a972119-cf36-4314-8ddd-a91300538f04"), false, "Site.Description", "\"Osharp with .NetStandard2.0 & Angular6\"", "System.String" }
+                    { new Guid("335aa013-7f51-4c09-8906-a92400019394"), false, "Site.Name", "\"OSHARP\"", "System.String" },
+                    { new Guid("ce212e4d-4c07-4427-94d8-a92400019398"), false, "Site.Description", "\"Osharp with .NetStandard2.0 & Angular6\"", "System.String" }
                 });
 
             migrationBuilder.InsertData(
@@ -462,7 +463,7 @@ namespace OSharp.Template.Web.Migrations
             migrationBuilder.InsertData(
                 table: "Role",
                 columns: new[] { "Id", "ConcurrencyStamp", "CreatedTime", "IsAdmin", "IsDefault", "IsLocked", "IsSystem", "Name", "NormalizedName", "Remark" },
-                values: new object[] { 1, "b2194acf-2bfd-46e4-b2ea-1be822ac3052", new DateTime(2018, 7, 4, 5, 4, 13, 700, DateTimeKind.Local), true, false, false, true, "系统管理员", "系统管理员", "系统最高权限管理角色" });
+                values: new object[] { 1, "cdc8bb72-73ab-46cd-9ce4-2ab533ec5ce7", new DateTime(2018, 7, 21, 0, 5, 44, 429, DateTimeKind.Local), true, false, false, true, "系统管理员", "系统管理员", "系统最高权限管理角色" });
 
             migrationBuilder.InsertData(
                 table: "Module",
@@ -503,7 +504,7 @@ namespace OSharp.Template.Web.Migrations
             migrationBuilder.CreateIndex(
                 name: "EntityRoleIndex",
                 table: "EntityRole",
-                columns: new[] { "EntityId", "RoleId" },
+                columns: new[] { "EntityId", "RoleId", "Operation" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
