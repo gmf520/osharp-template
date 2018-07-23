@@ -19,7 +19,6 @@ using OSharp.Template.Common;
 using OSharp.Template.Security;
 using OSharp.Template.Security.Dtos;
 
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
