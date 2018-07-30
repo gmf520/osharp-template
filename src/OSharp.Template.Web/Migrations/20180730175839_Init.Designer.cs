@@ -10,7 +10,7 @@ using OSharp.Entity;
 namespace OSharp.Template.Web.Migrations
 {
     [DbContext(typeof(DefaultDbContext))]
-    [Migration("20180723154304_Init")]
+    [Migration("20180730175839_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -106,8 +106,8 @@ namespace OSharp.Template.Web.Migrations
                     b.ToTable("KeyValueCouple");
 
                     b.HasData(
-                        new { Id = new Guid("6981ff3c-1e33-453c-9de0-a9260186dbcd"), IsLocked = false, Key = "Site.Name", ValueJson = "\"OSHARP\"", ValueType = "System.String" },
-                        new { Id = new Guid("6ee8b968-daae-48a5-9b1d-a9260186dbd2"), IsLocked = false, Key = "Site.Description", ValueJson = "\"Osharp with .NetStandard2.0 & Angular6\"", ValueType = "System.String" }
+                        new { Id = new Guid("4c2504fe-bceb-437c-988f-a92e0020967b"), IsLocked = false, Key = "Site.Name", ValueJson = "\"OSHARP\"", ValueType = "System.String" },
+                        new { Id = new Guid("267d7ba4-4313-4be8-8da9-a92e0020967f"), IsLocked = false, Key = "Site.Description", ValueJson = "\"Osharp with .NetStandard2.0 & Angular6\"", ValueType = "System.String" }
                     );
                 });
 
@@ -190,7 +190,7 @@ namespace OSharp.Template.Web.Migrations
                     b.ToTable("Role");
 
                     b.HasData(
-                        new { Id = 1, ConcurrencyStamp = "6fec5849-25e2-4ca0-b217-0e516dd84a9d", CreatedTime = new DateTime(2018, 7, 23, 23, 43, 4, 397, DateTimeKind.Local), IsAdmin = true, IsDefault = false, IsLocked = false, IsSystem = true, Name = "系统管理员", NormalizedName = "系统管理员", Remark = "系统最高权限管理角色" }
+                        new { Id = 1, ConcurrencyStamp = "ecd764d7-394b-49dc-a6fd-9c7858351080", CreatedTime = new DateTime(2018, 7, 31, 1, 58, 38, 956, DateTimeKind.Local), IsAdmin = true, IsDefault = false, IsLocked = false, IsSystem = true, Name = "系统管理员", NormalizedName = "系统管理员", Remark = "系统最高权限管理角色" }
                     );
                 });
 

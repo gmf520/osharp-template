@@ -451,8 +451,8 @@ namespace OSharp.Template.Web.Migrations
                 columns: new[] { "Id", "IsLocked", "Key", "ValueJson", "ValueType" },
                 values: new object[,]
                 {
-                    { new Guid("6981ff3c-1e33-453c-9de0-a9260186dbcd"), false, "Site.Name", "\"OSHARP\"", "System.String" },
-                    { new Guid("6ee8b968-daae-48a5-9b1d-a9260186dbd2"), false, "Site.Description", "\"Osharp with .NetStandard2.0 & Angular6\"", "System.String" }
+                    { new Guid("4c2504fe-bceb-437c-988f-a92e0020967b"), false, "Site.Name", "\"OSHARP\"", "System.String" },
+                    { new Guid("267d7ba4-4313-4be8-8da9-a92e0020967f"), false, "Site.Description", "\"Osharp with .NetStandard2.0 & Angular6\"", "System.String" }
                 });
 
             migrationBuilder.InsertData(
@@ -463,7 +463,7 @@ namespace OSharp.Template.Web.Migrations
             migrationBuilder.InsertData(
                 table: "Role",
                 columns: new[] { "Id", "ConcurrencyStamp", "CreatedTime", "IsAdmin", "IsDefault", "IsLocked", "IsSystem", "Name", "NormalizedName", "Remark" },
-                values: new object[] { 1, "6fec5849-25e2-4ca0-b217-0e516dd84a9d", new DateTime(2018, 7, 23, 23, 43, 4, 397, DateTimeKind.Local), true, false, false, true, "系统管理员", "系统管理员", "系统最高权限管理角色" });
+                values: new object[] { 1, "ecd764d7-394b-49dc-a6fd-9c7858351080", new DateTime(2018, 7, 31, 1, 58, 38, 956, DateTimeKind.Local), true, false, false, true, "系统管理员", "系统管理员", "系统最高权限管理角色" });
 
             migrationBuilder.InsertData(
                 table: "Module",

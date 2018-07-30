@@ -36,5 +36,7 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
         {
             return Content("MainMenu");
         }
+
+
     }
 }

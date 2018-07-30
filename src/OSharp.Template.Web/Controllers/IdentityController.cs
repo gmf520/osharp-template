@@ -7,11 +7,10 @@
 //  <last-date>2018-06-27 4:50</last-date>
 // -----------------------------------------------------------------------
 
-using System.Collections.Generic;
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Security.Claims;
-using System.Security.Principal;
 using System.Threading.Tasks;
 
 using OSharp.Template.Identity;
@@ -27,13 +26,11 @@ using OSharp.AspNetCore;
 using OSharp.AspNetCore.Mvc;
 using OSharp.AspNetCore.Mvc.Filters;
 using OSharp.AspNetCore.UI;
-using OSharp.Collections;
 using OSharp.Core;
 using OSharp.Core.Modules;
 using OSharp.Data;
 using OSharp.Dependency;
 using OSharp.Entity;
-using OSharp.Extensions;
 using OSharp.Identity;
 using OSharp.Identity.JwtBearer;
 using OSharp.Json;
@@ -146,7 +143,14 @@ namespace OSharp.Template.Web.Controllers
                     + $"如果上面的链接无法点击，您可以复制以下地址，并粘贴到浏览器的地址栏中打开。<br>"
                     + $"{url}<br>"
                     + $"祝您使用愉快！";
-                await SendMailAsync(user.Email, "柳柳软件 注册邮箱激活邮件", body);
+                try
+                {
+                    await SendMailAsync(user.Email, "柳柳软件 注册邮箱激活邮件", body);
+                }
+                catch (Exception ex)
+                {
+
+                }
             }
 
             return result.ToAjaxResult();
