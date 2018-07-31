@@ -15,7 +15,7 @@ export class KendouiService {
   ) { }
 
   // #region 工具操作
- 
+
   /**
    * 获取osharp查询条件组
    * @param filter kendo发出的filter

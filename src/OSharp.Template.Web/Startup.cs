@@ -14,7 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 using OSharp.AspNetCore;
-using OSharp.Data; 
+using OSharp.Data;
 
 
 namespace OSharp.Template.Web

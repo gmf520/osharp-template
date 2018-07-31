@@ -451,8 +451,8 @@ namespace OSharp.Template.Web.Migrations
                 columns: new[] { "Id", "IsLocked", "Key", "ValueJson", "ValueType" },
                 values: new object[,]
                 {
-                    { new Guid("4c2504fe-bceb-437c-988f-a92e0020967b"), false, "Site.Name", "\"OSHARP\"", "System.String" },
-                    { new Guid("267d7ba4-4313-4be8-8da9-a92e0020967f"), false, "Site.Description", "\"Osharp with .NetStandard2.0 & Angular6\"", "System.String" }
+                    { new Guid("ef448233-b4a1-4fb1-bc64-a92f0001fd44"), false, "Site.Name", "\"OSHARP\"", "System.String" },
+                    { new Guid("9044df5f-21df-43a0-a63d-a92f0001fd48"), false, "Site.Description", "\"Osharp with .NetStandard2.0 & Angular6\"", "System.String" }
                 });
 
             migrationBuilder.InsertData(
@@ -463,32 +463,7 @@ namespace OSharp.Template.Web.Migrations
             migrationBuilder.InsertData(
                 table: "Role",
                 columns: new[] { "Id", "ConcurrencyStamp", "CreatedTime", "IsAdmin", "IsDefault", "IsLocked", "IsSystem", "Name", "NormalizedName", "Remark" },
-                values: new object[] { 1, "ecd764d7-394b-49dc-a6fd-9c7858351080", new DateTime(2018, 7, 31, 1, 58, 38, 956, DateTimeKind.Local), true, false, false, true, "系统管理员", "系统管理员", "系统最高权限管理角色" });
-
-            migrationBuilder.InsertData(
-                table: "Module",
-                columns: new[] { "Id", "Code", "Name", "OrderCode", "ParentId", "Remark", "TreePathString" },
-                values: new object[] { 2, "Site", "网站", 1.0, 1, "网站前台", "$1$,$2$" });
-
-            migrationBuilder.InsertData(
-                table: "Module",
-                columns: new[] { "Id", "Code", "Name", "OrderCode", "ParentId", "Remark", "TreePathString" },
-                values: new object[] { 3, "Admin", "管理", 2.0, 1, "管理后台", "$1$,$3$" });
-
-            migrationBuilder.InsertData(
-                table: "Module",
-                columns: new[] { "Id", "Code", "Name", "OrderCode", "ParentId", "Remark", "TreePathString" },
-                values: new object[] { 4, "Identity", "身份认证模块", 1.0, 3, "身份认证模块节点", "$1$,$3$,$4$" });
-
-            migrationBuilder.InsertData(
-                table: "Module",
-                columns: new[] { "Id", "Code", "Name", "OrderCode", "ParentId", "Remark", "TreePathString" },
-                values: new object[] { 5, "Security", "权限安全模块", 2.0, 3, "权限安全模块节点", "$1$,$3$,$5$" });
-
-            migrationBuilder.InsertData(
-                table: "Module",
-                columns: new[] { "Id", "Code", "Name", "OrderCode", "ParentId", "Remark", "TreePathString" },
-                values: new object[] { 6, "System", "系统管理模块", 3.0, 3, "系统管理模块节点", "$1$,$3$,$6$" });
+                values: new object[] { 1, "ac2e225e-b0eb-4e51-9235-d619be62f07e", new DateTime(2018, 8, 1, 0, 7, 14, 615, DateTimeKind.Local), true, false, false, true, "系统管理员", "系统管理员", "系统最高权限管理角色" });
 
             migrationBuilder.CreateIndex(
                 name: "ClassFullNameIndex",

@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <AssemblyVersion>0.3.0.6</AssemblyVersion>
-    <FileVersion>0.3.0.6</FileVersion>
+    <AssemblyVersion>0.3.0.7</AssemblyVersion>
+    <FileVersion>0.3.0.7</FileVersion>
     <UserSecretsId>166558f9-be39-46bb-8d0c-1bfc1bc5f26f</UserSecretsId>
   </PropertyGroup>
 
@@ -18,7 +18,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
-    <PackageReference Include="OSharpNS" Version="0.3.0-beta06" />
+    <PackageReference Include="OSharpNS" Version="0.3.0-beta07" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
   </ItemGroup>
 

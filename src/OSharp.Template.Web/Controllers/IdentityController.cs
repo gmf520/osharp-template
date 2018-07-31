@@ -7,7 +7,6 @@
 //  <last-date>2018-06-27 4:50</last-date>
 // -----------------------------------------------------------------------
 
-using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Security.Claims;
@@ -143,14 +142,7 @@ namespace OSharp.Template.Web.Controllers
                     + $"如果上面的链接无法点击，您可以复制以下地址，并粘贴到浏览器的地址栏中打开。<br>"
                     + $"{url}<br>"
                     + $"祝您使用愉快！";
-                try
-                {
-                    await SendMailAsync(user.Email, "柳柳软件 注册邮箱激活邮件", body);
-                }
-                catch (Exception ex)
-                {
-
-                }
+                await SendMailAsync(user.Email, "柳柳软件 注册邮箱激活邮件", body);
             }
 
             return result.ToAjaxResult();

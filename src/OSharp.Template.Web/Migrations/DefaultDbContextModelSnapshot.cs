@@ -104,8 +104,8 @@ namespace OSharp.Template.Web.Migrations
                     b.ToTable("KeyValueCouple");
 
                     b.HasData(
-                        new { Id = new Guid("4c2504fe-bceb-437c-988f-a92e0020967b"), IsLocked = false, Key = "Site.Name", ValueJson = "\"OSHARP\"", ValueType = "System.String" },
-                        new { Id = new Guid("267d7ba4-4313-4be8-8da9-a92e0020967f"), IsLocked = false, Key = "Site.Description", ValueJson = "\"Osharp with .NetStandard2.0 & Angular6\"", ValueType = "System.String" }
+                        new { Id = new Guid("ef448233-b4a1-4fb1-bc64-a92f0001fd44"), IsLocked = false, Key = "Site.Name", ValueJson = "\"OSHARP\"", ValueType = "System.String" },
+                        new { Id = new Guid("9044df5f-21df-43a0-a63d-a92f0001fd48"), IsLocked = false, Key = "Site.Description", ValueJson = "\"Osharp with .NetStandard2.0 & Angular6\"", ValueType = "System.String" }
                     );
                 });
 
@@ -188,7 +188,7 @@ namespace OSharp.Template.Web.Migrations
                     b.ToTable("Role");
 
                     b.HasData(
-                        new { Id = 1, ConcurrencyStamp = "ecd764d7-394b-49dc-a6fd-9c7858351080", CreatedTime = new DateTime(2018, 7, 31, 1, 58, 38, 956, DateTimeKind.Local), IsAdmin = true, IsDefault = false, IsLocked = false, IsSystem = true, Name = "系统管理员", NormalizedName = "系统管理员", Remark = "系统最高权限管理角色" }
+                        new { Id = 1, ConcurrencyStamp = "ac2e225e-b0eb-4e51-9235-d619be62f07e", CreatedTime = new DateTime(2018, 8, 1, 0, 7, 14, 615, DateTimeKind.Local), IsAdmin = true, IsDefault = false, IsLocked = false, IsSystem = true, Name = "系统管理员", NormalizedName = "系统管理员", Remark = "系统最高权限管理角色" }
                     );
                 });
 
@@ -464,12 +464,7 @@ namespace OSharp.Template.Web.Migrations
                     b.ToTable("Module");
 
                     b.HasData(
-                        new { Id = 1, Code = "Root", Name = "根节点", OrderCode = 1.0, Remark = "系统根节点", TreePathString = "$1$" },
-                        new { Id = 2, Code = "Site", Name = "网站", OrderCode = 1.0, ParentId = 1, Remark = "网站前台", TreePathString = "$1$,$2$" },
-                        new { Id = 3, Code = "Admin", Name = "管理", OrderCode = 2.0, ParentId = 1, Remark = "管理后台", TreePathString = "$1$,$3$" },
-                        new { Id = 4, Code = "Identity", Name = "身份认证模块", OrderCode = 1.0, ParentId = 3, Remark = "身份认证模块节点", TreePathString = "$1$,$3$,$4$" },
-                        new { Id = 5, Code = "Security", Name = "权限安全模块", OrderCode = 2.0, ParentId = 3, Remark = "权限安全模块节点", TreePathString = "$1$,$3$,$5$" },
-                        new { Id = 6, Code = "System", Name = "系统管理模块", OrderCode = 3.0, ParentId = 3, Remark = "系统管理模块节点", TreePathString = "$1$,$3$,$6$" }
+                        new { Id = 1, Code = "Root", Name = "根节点", OrderCode = 1.0, Remark = "系统根节点", TreePathString = "$1$" }
                     );
                 });
 
