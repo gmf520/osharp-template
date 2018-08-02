@@ -9,6 +9,29 @@ namespace OSharp.Template.Web.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "AuditOperation",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    FunctionName = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true),
+                    UserName = table.Column<string>(nullable: true),
+                    NickName = table.Column<string>(nullable: true),
+                    Ip = table.Column<string>(nullable: true),
+                    OperationSystem = table.Column<string>(nullable: true),
+                    Browser = table.Column<string>(nullable: true),
+                    UserAgent = table.Column<string>(nullable: true),
+                    ResultType = table.Column<int>(nullable: false),
+                    Message = table.Column<string>(nullable: true),
+                    Elapsed = table.Column<int>(nullable: false),
+                    CreatedTime = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuditOperation", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "EntityInfo",
                 columns: table => new
                 {
@@ -158,6 +181,28 @@ namespace OSharp.Template.Web.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AuditEntity",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    TypeName = table.Column<string>(nullable: true),
+                    EntityKey = table.Column<string>(nullable: true),
+                    OperateType = table.Column<int>(nullable: false),
+                    OperationId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuditEntity", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AuditEntity_AuditOperation_OperationId",
+                        column: x => x.OperationId,
+                        principalTable: "AuditOperation",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -446,13 +491,36 @@ namespace OSharp.Template.Web.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "AuditProperty",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    DisplayName = table.Column<string>(nullable: true),
+                    FieldName = table.Column<string>(nullable: true),
+                    OriginalValue = table.Column<string>(nullable: true),
+                    NewValue = table.Column<string>(nullable: true),
+                    DataType = table.Column<string>(nullable: true),
+                    AuditEntityId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuditProperty", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AuditProperty_AuditEntity_AuditEntityId",
+                        column: x => x.AuditEntityId,
+                        principalTable: "AuditEntity",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "KeyValueCouple",
                 columns: new[] { "Id", "IsLocked", "Key", "ValueJson", "ValueType" },
                 values: new object[,]
                 {
-                    { new Guid("ef448233-b4a1-4fb1-bc64-a92f0001fd44"), false, "Site.Name", "\"OSHARP\"", "System.String" },
-                    { new Guid("9044df5f-21df-43a0-a63d-a92f0001fd48"), false, "Site.Description", "\"Osharp with .NetStandard2.0 & Angular6\"", "System.String" }
+                    { new Guid("81957c5d-994a-48cf-9bf8-a931004f11a1"), false, "Site.Name", "\"OSHARP\"", "System.String" },
+                    { new Guid("dd171fc0-1c96-4a10-a934-a931004f11a5"), false, "Site.Description", "\"Osharp with .NetStandard2.0 & Angular6\"", "System.String" }
                 });
 
             migrationBuilder.InsertData(
@@ -463,7 +531,17 @@ namespace OSharp.Template.Web.Migrations
             migrationBuilder.InsertData(
                 table: "Role",
                 columns: new[] { "Id", "ConcurrencyStamp", "CreatedTime", "IsAdmin", "IsDefault", "IsLocked", "IsSystem", "Name", "NormalizedName", "Remark" },
-                values: new object[] { 1, "ac2e225e-b0eb-4e51-9235-d619be62f07e", new DateTime(2018, 8, 1, 0, 7, 14, 615, DateTimeKind.Local), true, false, false, true, "系统管理员", "系统管理员", "系统最高权限管理角色" });
+                values: new object[] { 1, "29f55a57-6575-4397-aad5-5adac4d25936", new DateTime(2018, 8, 3, 4, 47, 52, 898, DateTimeKind.Local), true, false, false, true, "系统管理员", "系统管理员", "系统最高权限管理角色" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuditEntity_OperationId",
+                table: "AuditEntity",
+                column: "OperationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuditProperty_AuditEntityId",
+                table: "AuditProperty",
+                column: "AuditEntityId");
 
             migrationBuilder.CreateIndex(
                 name: "ClassFullNameIndex",
@@ -614,6 +692,9 @@ namespace OSharp.Template.Web.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AuditProperty");
+
+            migrationBuilder.DropTable(
                 name: "EntityRole");
 
             migrationBuilder.DropTable(
@@ -656,6 +737,9 @@ namespace OSharp.Template.Web.Migrations
                 name: "UserToken");
 
             migrationBuilder.DropTable(
+                name: "AuditEntity");
+
+            migrationBuilder.DropTable(
                 name: "EntityInfo");
 
             migrationBuilder.DropTable(
@@ -669,6 +753,9 @@ namespace OSharp.Template.Web.Migrations
 
             migrationBuilder.DropTable(
                 name: "User");
+
+            migrationBuilder.DropTable(
+                name: "AuditOperation");
         }
     }
 }
