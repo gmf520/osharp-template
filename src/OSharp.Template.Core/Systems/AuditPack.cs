@@ -13,7 +13,7 @@ using OSharp.Audits;
 using OSharp.Core.Packs;
 
 
-namespace OSharp.Template.System
+namespace OSharp.Template.Systems
 {
     /// <summary>
     /// 审计模块

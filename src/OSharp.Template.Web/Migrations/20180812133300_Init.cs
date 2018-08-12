@@ -71,18 +71,18 @@ namespace OSharp.Template.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "KeyValueCouple",
+                name: "KeyValue",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Key = table.Column<string>(nullable: false),
                     ValueJson = table.Column<string>(nullable: true),
                     ValueType = table.Column<string>(nullable: true),
+                    Key = table.Column<string>(nullable: false),
                     IsLocked = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_KeyValueCouple", x => x.Id);
+                    table.PrimaryKey("PK_KeyValue", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -515,12 +515,12 @@ namespace OSharp.Template.Web.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "KeyValueCouple",
+                table: "KeyValue",
                 columns: new[] { "Id", "IsLocked", "Key", "ValueJson", "ValueType" },
                 values: new object[,]
                 {
-                    { new Guid("81957c5d-994a-48cf-9bf8-a931004f11a1"), false, "Site.Name", "\"OSHARP\"", "System.String" },
-                    { new Guid("dd171fc0-1c96-4a10-a934-a931004f11a5"), false, "Site.Description", "\"Osharp with .NetStandard2.0 & Angular6\"", "System.String" }
+                    { new Guid("57698689-9f60-4fee-abd6-a93a0163223b"), false, "Site.Name", "\"OSHARP\"", "System.String" },
+                    { new Guid("ca09f90c-0050-42c8-b984-a93a01632240"), false, "Site.Description", "\"Osharp with .NetStandard2.0 & Angular6\"", "System.String" }
                 });
 
             migrationBuilder.InsertData(
@@ -531,7 +531,7 @@ namespace OSharp.Template.Web.Migrations
             migrationBuilder.InsertData(
                 table: "Role",
                 columns: new[] { "Id", "ConcurrencyStamp", "CreatedTime", "IsAdmin", "IsDefault", "IsLocked", "IsSystem", "Name", "NormalizedName", "Remark" },
-                values: new object[] { 1, "29f55a57-6575-4397-aad5-5adac4d25936", new DateTime(2018, 8, 3, 4, 47, 52, 898, DateTimeKind.Local), true, false, false, true, "系统管理员", "系统管理员", "系统最高权限管理角色" });
+                values: new object[] { 1, "655e0216-eea2-4a3d-910d-09a971b28b0d", new DateTime(2018, 8, 12, 21, 33, 0, 177, DateTimeKind.Local), true, false, false, true, "系统管理员", "系统管理员", "系统最高权限管理角色" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AuditEntity_OperationId",
@@ -701,7 +701,7 @@ namespace OSharp.Template.Web.Migrations
                 name: "EntityUser");
 
             migrationBuilder.DropTable(
-                name: "KeyValueCouple");
+                name: "KeyValue");
 
             migrationBuilder.DropTable(
                 name: "LoginLog");

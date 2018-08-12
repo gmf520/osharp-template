@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 
-using OSharp.Template.System.Entities;
+using OSharp.Template.Systems.Entities;
 
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 using OSharp.Entity;
 
 
-namespace OSharp.Template.EntityConfiguration.System
+namespace OSharp.Template.EntityConfiguration.Systems
 {
     public class AuditPropertyConfiguration : EntityTypeConfigurationBase<AuditProperty, Guid>
     {

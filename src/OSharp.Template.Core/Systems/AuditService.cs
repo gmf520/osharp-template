@@ -11,13 +11,13 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-using OSharp.Template.System.Entities;
+using OSharp.Template.Systems.Entities;
 
 using OSharp.Data;
 using OSharp.Entity;
 
 
-namespace OSharp.Template.System
+namespace OSharp.Template.Systems
 {
     /// <summary>
     /// 服务实现：审计模块

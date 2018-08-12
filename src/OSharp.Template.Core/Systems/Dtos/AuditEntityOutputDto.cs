@@ -14,7 +14,7 @@ using OSharp.Audits;
 using OSharp.Entity;
 
 
-namespace OSharp.Template.System.Dtos
+namespace OSharp.Template.Systems.Dtos
 {
     /// <summary>
     /// 输入DTO：数据审计信息

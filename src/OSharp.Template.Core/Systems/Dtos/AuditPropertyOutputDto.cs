@@ -12,7 +12,7 @@ using System;
 using OSharp.Entity;
 
 
-namespace OSharp.Template.System.Dtos
+namespace OSharp.Template.Systems.Dtos
 {
     /// <summary>
     /// 输出DTO：实体属性审计

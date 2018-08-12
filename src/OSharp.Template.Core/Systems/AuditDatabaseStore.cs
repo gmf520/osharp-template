@@ -11,7 +11,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-using OSharp.Template.System.Entities;
+using OSharp.Template.Systems.Entities;
 
 using OSharp.Audits;
 using OSharp.Entity;
@@ -19,7 +19,7 @@ using OSharp.Mapping;
 using OSharp.Net;
 
 
-namespace OSharp.Template.System
+namespace OSharp.Template.Systems
 {
     /// <summary>
     /// 数据库审计存储

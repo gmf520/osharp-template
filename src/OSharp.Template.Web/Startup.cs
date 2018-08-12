@@ -19,7 +19,7 @@ using OSharp.Data;
 
 namespace OSharp.Template.Web
 {
-    public class Startup
+    public class Startup 
     { 
         public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
@@ -30,7 +30,7 @@ namespace OSharp.Template.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddOSharp();
+            services.AddOSharp<AspOsharpPackManager>();
         }
          
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

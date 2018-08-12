@@ -1,25 +1,29 @@
 ﻿// -----------------------------------------------------------------------
-//  <copyright file="SignalrPack.cs" company="OSharp开源团队">
+//  <copyright file="CodeGeneratorPack.cs" company="OSharp开源团队">
 //      Copyright (c) 2014-2018 OSharp. All rights reserved.
 //  </copyright>
 //  <site>http://www.osharp.org</site>
-//  <last-editor></last-editor>
-//  <last-date>2018-07-26 12:15</last-date>
+//  <last-editor>郭明锋</last-editor>
+//  <last-date>2018-08-06 15:04</last-date>
 // -----------------------------------------------------------------------
 
+using System;
+
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
-using OSharp.AspNetCore;
+using OSharp.CodeGenerator;
 using OSharp.Core.Packs;
+using OSharp.Data;
 
 
 namespace OSharp.Template.Web.Startups
 {
     /// <summary>
-    /// SignalR模块
+    /// 代码生成模块
     /// </summary>
-    public class SignalRPack : AspOsharpPack
+    public class CodeGeneratorPack : OsharpPack
     {
         /// <summary>
         /// 获取 模块级别，级别越小越先启动
@@ -39,21 +43,24 @@ namespace OSharp.Template.Web.Startups
         /// <returns></returns>
         public override IServiceCollection AddServices(IServiceCollection services)
         {
-            services.AddSignalR();
+            if (Singleton<IHostingEnvironment>.Instance.IsDevelopment())
+            {
+                services.AddSingleton<ITypeMetadataHandler, TypeMetadataHandler>();
+            }
             return services;
         }
 
         /// <summary>
         /// 应用模块服务
         /// </summary>
-        /// <param name="app">应用程序构建器</param>
-        public override void UsePack(IApplicationBuilder app)
+        /// <param name="provider">服务提供者</param>
+        public override void UsePack(IServiceProvider provider)
         {
-            app.UseSignalR(options =>
+            IHostingEnvironment environment = provider.GetService<IHostingEnvironment>();
+            if (environment.IsDevelopment())
             {
-                //options.MapHub<>();
-            });
-            IsEnabled = true;
+                IsEnabled = true;
+            }
         }
     }
 }

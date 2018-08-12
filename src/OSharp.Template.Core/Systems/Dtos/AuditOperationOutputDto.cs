@@ -1,32 +1,31 @@
 ﻿// -----------------------------------------------------------------------
-//  <copyright file="AuditOperation.cs" company="OSharp开源团队">
+//  <copyright file="AuditOperationOutputDto.cs" company="OSharp开源团队">
 //      Copyright (c) 2014-2018 OSharp. All rights reserved.
 //  </copyright>
 //  <site>http://www.osharp.org</site>
 //  <last-editor>郭明锋</last-editor>
-//  <last-date>2018-08-02 4:07</last-date>
+//  <last-date>2018-08-02 15:43</last-date>
 // -----------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 
 using OSharp.AspNetCore.UI;
-using OSharp.Audits;
 using OSharp.Data;
 using OSharp.Entity;
-using OSharp.Mapping;
 
 
-namespace OSharp.Template.System.Entities
+namespace OSharp.Template.Systems.Dtos
 {
     /// <summary>
-    /// 实体类：审计操作信息
+    /// 输入DTO：操作审计信息
     /// </summary>
-    [MapFrom(typeof(AuditOperationEntry))]
-    [Description("审计操作信息")]
-    public class AuditOperation : EntityBase<Guid>
+    public class AuditOperationOutputDto : IOutputDto
     {
+        /// <summary>
+        /// 获取或设置 数据编号
+        /// </summary>
+        public Guid Id { get; set; }
+
         /// <summary>
         /// 获取或设置 执行的功能名
         /// </summary>
@@ -63,11 +62,6 @@ namespace OSharp.Template.System.Entities
         public string Browser { get; set; }
 
         /// <summary>
-        /// 获取或设置 当前访问UserAgent
-        /// </summary>
-        public string UserAgent { get; set; }
-
-        /// <summary>
         /// 获取或设置 操作结果
         /// </summary>
         public AjaxResultType ResultType { get; set; } = AjaxResultType.Success;
@@ -86,10 +80,5 @@ namespace OSharp.Template.System.Entities
         /// 获取或设置 信息添加时间
         /// </summary>
         public DateTime CreatedTime { get; set; }
-
-        /// <summary>
-        /// 获取或设置 审计实体信息集合
-        /// </summary>
-        public virtual ICollection<AuditEntity> AuditEntities { get; set; } = new List<AuditEntity>();
     }
 }

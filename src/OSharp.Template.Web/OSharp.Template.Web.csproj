@@ -2,13 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <AssemblyVersion>0.3.0.8</AssemblyVersion>
-    <FileVersion>0.3.0.8</FileVersion>
+    <AssemblyVersion>0.3.0.10</AssemblyVersion>
+    <FileVersion>0.3.0.10</FileVersion>
     <UserSecretsId>166558f9-be39-46bb-8d0c-1bfc1bc5f26f</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\netcoreapp2.1\OSharp.Template.Web.xml</DocumentationFile>
+    <NoWarn>1701;1702;1591;</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,7 +19,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
-    <PackageReference Include="OSharpNS" Version="0.3.0-beta08" />
+    <PackageReference Include="OSharpNS" Version="0.3.0-beta10" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
   </ItemGroup>
 

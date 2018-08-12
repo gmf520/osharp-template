@@ -16,7 +16,7 @@ using OSharp.Entity;
 using OSharp.Mapping;
 
 
-namespace OSharp.Template.System.Entities
+namespace OSharp.Template.Systems.Entities
 {
     /// <summary>
     /// 实体类：审计实体信息

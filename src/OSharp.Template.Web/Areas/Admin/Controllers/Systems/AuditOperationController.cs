@@ -11,9 +11,9 @@ using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
 
-using OSharp.Template.System;
-using OSharp.Template.System.Dtos;
-using OSharp.Template.System.Entities;
+using OSharp.Template.Systems;
+using OSharp.Template.Systems.Dtos;
+using OSharp.Template.Systems.Entities;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,7 +24,7 @@ using OSharp.Filter;
 
 namespace OSharp.Template.Web.Areas.Admin.Controllers
 {
-    [ModuleInfo(Order = 2, Position = "System", PositionName = "系统管理模块")]
+    [ModuleInfo(Order = 2, Position = "Systems", PositionName = "系统管理模块")]
     [Description("管理-操作审计信息")]
     public class AuditOperationController : AdminApiController
     {

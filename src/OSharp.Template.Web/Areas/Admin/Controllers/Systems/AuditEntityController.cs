@@ -12,23 +12,20 @@ using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 
-using OSharp.Template.System;
-using OSharp.Template.System.Dtos;
-using OSharp.Template.System.Entities;
+using OSharp.Template.Systems;
+using OSharp.Template.Systems.Dtos;
+using OSharp.Template.Systems.Entities;
 
 using Microsoft.AspNetCore.Mvc;
 
 using OSharp.Core.Modules;
 using OSharp.Entity;
 using OSharp.Filter;
-using OSharp.IO;
-
-using Z.EntityFramework.Plus;
 
 
 namespace OSharp.Template.Web.Areas.Admin.Controllers
 {
-    [ModuleInfo(Order = 3, Position = "System", PositionName = "系统管理模块")]
+    [ModuleInfo(Order = 3, Position = "Systems", PositionName = "系统管理模块")]
     [Description("管理-数据审计信息")]
     public class AuditEntityController : AdminApiController
     {
@@ -42,6 +39,11 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
             _auditContract = auditContract;
         }
 
+        /// <summary>
+        /// 读取数据审计信息列表
+        /// </summary>
+        /// <param name="request">页请求</param>
+        /// <returns></returns>
         [HttpPost]
         [ModuleInfo]
         [Description("读取")]
