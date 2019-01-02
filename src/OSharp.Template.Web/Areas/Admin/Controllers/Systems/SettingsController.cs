@@ -16,6 +16,6 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
 {
     [ModuleInfo(Order = 1, Position = "Systems", PositionName = "系统管理模块")]
     [Description("管理-系统设置")]
-    public partial class SettingsController : AdminApiController
+    public class SettingsController : AdminApiController
     { }
 }

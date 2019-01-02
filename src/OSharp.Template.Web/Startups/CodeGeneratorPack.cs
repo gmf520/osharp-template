@@ -8,14 +8,14 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
 
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
+using OSharp.AspNetCore;
 using OSharp.CodeGenerator;
 using OSharp.Core.Packs;
-using OSharp.Data;
 
 
 namespace OSharp.Template.Web.Startups
@@ -23,6 +23,7 @@ namespace OSharp.Template.Web.Startups
     /// <summary>
     /// 代码生成模块
     /// </summary>
+    [Description("代码生成模块")]
     public class CodeGeneratorPack : OsharpPack
     {
         /// <summary>
@@ -43,7 +44,7 @@ namespace OSharp.Template.Web.Startups
         /// <returns></returns>
         public override IServiceCollection AddServices(IServiceCollection services)
         {
-            if (Singleton<IHostingEnvironment>.Instance.IsDevelopment())
+            if (services.GetHostingEnvironment().IsDevelopment())
             {
                 services.AddSingleton<ITypeMetadataHandler, TypeMetadataHandler>();
             }

@@ -13,7 +13,7 @@ namespace OSharp.Template.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    FunctionName = table.Column<string>(nullable: true),
+                    FunctionName = table.Column<string>(nullable: false),
                     UserId = table.Column<string>(nullable: true),
                     UserName = table.Column<string>(nullable: true),
                     NickName = table.Column<string>(nullable: true),
@@ -188,9 +188,9 @@ namespace OSharp.Template.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    TypeName = table.Column<string>(nullable: true),
-                    EntityKey = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
+                    TypeName = table.Column<string>(nullable: false),
+                    EntityKey = table.Column<string>(nullable: false),
                     OperateType = table.Column<int>(nullable: false),
                     OperationId = table.Column<Guid>(nullable: false)
                 },
@@ -496,8 +496,8 @@ namespace OSharp.Template.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DisplayName = table.Column<string>(nullable: true),
-                    FieldName = table.Column<string>(nullable: true),
+                    DisplayName = table.Column<string>(nullable: false),
+                    FieldName = table.Column<string>(nullable: false),
                     OriginalValue = table.Column<string>(nullable: true),
                     NewValue = table.Column<string>(nullable: true),
                     DataType = table.Column<string>(nullable: true),
@@ -519,8 +519,8 @@ namespace OSharp.Template.Web.Migrations
                 columns: new[] { "Id", "IsLocked", "Key", "ValueJson", "ValueType" },
                 values: new object[,]
                 {
-                    { new Guid("57698689-9f60-4fee-abd6-a93a0163223b"), false, "Site.Name", "\"OSHARP\"", "System.String" },
-                    { new Guid("ca09f90c-0050-42c8-b984-a93a01632240"), false, "Site.Description", "\"Osharp with .NetStandard2.0 & Angular6\"", "System.String" }
+                    { new Guid("a239920c-574f-4928-b7a8-a93a01097d29"), false, "Site.Name", "\"OSHARP\"", "System.String" },
+                    { new Guid("eba477b4-fc46-484a-8d04-a93a01097d30"), false, "Site.Description", "\"Osharp with .NetStandard2.0 & Angular6\"", "System.String" }
                 });
 
             migrationBuilder.InsertData(
@@ -531,7 +531,7 @@ namespace OSharp.Template.Web.Migrations
             migrationBuilder.InsertData(
                 table: "Role",
                 columns: new[] { "Id", "ConcurrencyStamp", "CreatedTime", "IsAdmin", "IsDefault", "IsLocked", "IsSystem", "Name", "NormalizedName", "Remark" },
-                values: new object[] { 1, "655e0216-eea2-4a3d-910d-09a971b28b0d", new DateTime(2018, 8, 12, 21, 33, 0, 177, DateTimeKind.Local), true, false, false, true, "系统管理员", "系统管理员", "系统最高权限管理角色" });
+                values: new object[] { 1, "1b18fbe8-a1b9-4b9b-afc9-090eff89dcd6", new DateTime(2018, 8, 12, 16, 6, 36, 998, DateTimeKind.Local), true, false, false, true, "系统管理员", "系统管理员", "系统最高权限管理角色" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AuditEntity_OperationId",

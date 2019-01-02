@@ -19,96 +19,6 @@ namespace OSharp.Template.Web.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("OSharp.Core.EntityInfos.EntityInfo", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<bool>("AuditEnabled");
-
-                    b.Property<string>("Name")
-                        .IsRequired();
-
-                    b.Property<string>("PropertyJson")
-                        .IsRequired();
-
-                    b.Property<string>("TypeName")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TypeName")
-                        .IsUnique()
-                        .HasName("ClassFullNameIndex");
-
-                    b.ToTable("EntityInfo");
-                });
-
-            modelBuilder.Entity("OSharp.Core.Functions.Function", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccessType");
-
-                    b.Property<string>("Action");
-
-                    b.Property<string>("Area");
-
-                    b.Property<bool>("AuditEntityEnabled");
-
-                    b.Property<bool>("AuditOperationEnabled");
-
-                    b.Property<int>("CacheExpirationSeconds");
-
-                    b.Property<string>("Controller");
-
-                    b.Property<bool>("IsAccessTypeChanged");
-
-                    b.Property<bool>("IsAjax");
-
-                    b.Property<bool>("IsCacheSliding");
-
-                    b.Property<bool>("IsController");
-
-                    b.Property<bool>("IsLocked");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Area", "Controller", "Action")
-                        .IsUnique()
-                        .HasName("AreaControllerActionIndex")
-                        .HasFilter("[Area] IS NOT NULL AND [Controller] IS NOT NULL AND [Action] IS NOT NULL");
-
-                    b.ToTable("Function");
-                });
-
-            modelBuilder.Entity("OSharp.Core.Systems.KeyValue", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<bool>("IsLocked");
-
-                    b.Property<string>("Key")
-                        .IsRequired();
-
-                    b.Property<string>("ValueJson");
-
-                    b.Property<string>("ValueType");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("KeyValue");
-
-                    b.HasData(
-                        new { Id = new Guid("57698689-9f60-4fee-abd6-a93a0163223b"), IsLocked = false, Key = "Site.Name", ValueJson = "\"OSHARP\"", ValueType = "System.String" },
-                        new { Id = new Guid("ca09f90c-0050-42c8-b984-a93a01632240"), IsLocked = false, Key = "Site.Description", ValueJson = "\"Osharp with .NetStandard2.0 & Angular6\"", ValueType = "System.String" }
-                    );
-                });
-
             modelBuilder.Entity("OSharp.Template.Identity.Entities.LoginLog", b =>
                 {
                     b.Property<Guid>("Id")
@@ -188,7 +98,7 @@ namespace OSharp.Template.Web.Migrations
                     b.ToTable("Role");
 
                     b.HasData(
-                        new { Id = 1, ConcurrencyStamp = "655e0216-eea2-4a3d-910d-09a971b28b0d", CreatedTime = new DateTime(2018, 8, 12, 21, 33, 0, 177, DateTimeKind.Local), IsAdmin = true, IsDefault = false, IsLocked = false, IsSystem = true, Name = "系统管理员", NormalizedName = "系统管理员", Remark = "系统最高权限管理角色" }
+                        new { Id = 1, ConcurrencyStamp = "1b18fbe8-a1b9-4b9b-afc9-090eff89dcd6", CreatedTime = new DateTime(2018, 8, 12, 16, 6, 36, 998, DateTimeKind.Local), IsAdmin = true, IsDefault = false, IsLocked = false, IsSystem = true, Name = "系统管理员", NormalizedName = "系统管理员", Remark = "系统最高权限管理角色" }
                     );
                 });
 
@@ -535,15 +445,18 @@ namespace OSharp.Template.Web.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("EntityKey");
+                    b.Property<string>("EntityKey")
+                        .IsRequired();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<int>("OperateType");
 
                     b.Property<Guid>("OperationId");
 
-                    b.Property<string>("TypeName");
+                    b.Property<string>("TypeName")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -563,7 +476,8 @@ namespace OSharp.Template.Web.Migrations
 
                     b.Property<int>("Elapsed");
 
-                    b.Property<string>("FunctionName");
+                    b.Property<string>("FunctionName")
+                        .IsRequired();
 
                     b.Property<string>("Ip");
 
@@ -595,9 +509,11 @@ namespace OSharp.Template.Web.Migrations
 
                     b.Property<string>("DataType");
 
-                    b.Property<string>("DisplayName");
+                    b.Property<string>("DisplayName")
+                        .IsRequired();
 
-                    b.Property<string>("FieldName");
+                    b.Property<string>("FieldName")
+                        .IsRequired();
 
                     b.Property<string>("NewValue");
 
@@ -608,6 +524,96 @@ namespace OSharp.Template.Web.Migrations
                     b.HasIndex("AuditEntityId");
 
                     b.ToTable("AuditProperty");
+                });
+
+            modelBuilder.Entity("OSharp.Core.EntityInfos.EntityInfo", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("AuditEnabled");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<string>("PropertyJson")
+                        .IsRequired();
+
+                    b.Property<string>("TypeName")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TypeName")
+                        .IsUnique()
+                        .HasName("ClassFullNameIndex");
+
+                    b.ToTable("EntityInfo");
+                });
+
+            modelBuilder.Entity("OSharp.Core.Functions.Function", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessType");
+
+                    b.Property<string>("Action");
+
+                    b.Property<string>("Area");
+
+                    b.Property<bool>("AuditEntityEnabled");
+
+                    b.Property<bool>("AuditOperationEnabled");
+
+                    b.Property<int>("CacheExpirationSeconds");
+
+                    b.Property<string>("Controller");
+
+                    b.Property<bool>("IsAccessTypeChanged");
+
+                    b.Property<bool>("IsAjax");
+
+                    b.Property<bool>("IsCacheSliding");
+
+                    b.Property<bool>("IsController");
+
+                    b.Property<bool>("IsLocked");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Area", "Controller", "Action")
+                        .IsUnique()
+                        .HasName("AreaControllerActionIndex")
+                        .HasFilter("[Area] IS NOT NULL AND [Controller] IS NOT NULL AND [Action] IS NOT NULL");
+
+                    b.ToTable("Function");
+                });
+
+            modelBuilder.Entity("OSharp.Core.Systems.KeyValue", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("IsLocked");
+
+                    b.Property<string>("Key")
+                        .IsRequired();
+
+                    b.Property<string>("ValueJson");
+
+                    b.Property<string>("ValueType");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("KeyValue");
+
+                    b.HasData(
+                        new { Id = new Guid("a239920c-574f-4928-b7a8-a93a01097d29"), IsLocked = false, Key = "Site.Name", ValueJson = "\"OSHARP\"", ValueType = "System.String" },
+                        new { Id = new Guid("eba477b4-fc46-484a-8d04-a93a01097d30"), IsLocked = false, Key = "Site.Description", ValueJson = "\"Osharp with .NetStandard2.0 & Angular6\"", ValueType = "System.String" }
+                    );
                 });
 
             modelBuilder.Entity("OSharp.Template.Identity.Entities.LoginLog", b =>

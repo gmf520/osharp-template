@@ -13,9 +13,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="OSharpNS.AspNetCore" Version="0.3.0-beta10" />
-    <PackageReference Include="OSharpNS.AutoMapper" Version="0.3.0-beta10" />
-    <PackageReference Include="OSharpNS.Permissions" Version="0.3.0-beta10" />
+    <PackageReference Include="OSharpNS.AspNetCore" Version="0.4.0-beta02" />
+    <PackageReference Include="OSharpNS.AutoMapper" Version="0.4.0-beta02" />
+    <PackageReference Include="OSharpNS.Permissions" Version="0.4.0-beta02" />
   </ItemGroup>
 
 </Project>
