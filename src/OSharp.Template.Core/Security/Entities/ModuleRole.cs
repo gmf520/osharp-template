@@ -9,6 +9,8 @@
 
 using System.ComponentModel;
 
+using OSharp.Template.Identity.Entities;
+
 using OSharp.Security;
 
 
@@ -19,5 +21,15 @@ namespace OSharp.Template.Security.Entities
     /// </summary>
     [Description("角色模块信息")]
     public class ModuleRole : ModuleRoleBase<int, int>
-    { }
+    {
+        /// <summary>
+        /// 获取或设置 模块信息
+        /// </summary>
+        public virtual Module Module { get; set; }
+
+        /// <summary>
+        /// 获取或设置 角色信息
+        /// </summary>
+        public virtual Role Role { get; set; }
+    }
 }

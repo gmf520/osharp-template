@@ -21,6 +21,7 @@ namespace OSharp.Template.Web.Startups
     /// <summary>
     /// SignalR模块
     /// </summary>
+    [DependsOnPacks(typeof(AspNetCorePack))]
     [Description("SignalR模块")]
     public class SignalRPack : AspOsharpPack
     {

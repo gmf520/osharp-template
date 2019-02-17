@@ -10,7 +10,9 @@
 using System;
 using System.ComponentModel;
 
+using OSharp.Core.Packs;
 using OSharp.Entity;
+using OSharp.Entity.SqlServer;
 
 
 namespace OSharp.Template.Web.Startups
@@ -18,6 +20,7 @@ namespace OSharp.Template.Web.Startups
     /// <summary>
     /// SqlServer-DefaultDbContext迁移模块
     /// </summary>
+    [DependsOnPacks(typeof(SqlServerEntityFrameworkCorePack))]
     [Description("SqlServer-DefaultDbContext迁移模块")]
     public class SqlServerDefaultDbContextMigrationPack : MigrationPackBase<DefaultDbContext>
     {

@@ -7,9 +7,9 @@
 //  <last-date>2018-06-27 4:44</last-date>
 // -----------------------------------------------------------------------
 
-using System.ComponentModel;
-
 using OSharp.Identity;
+using System.Collections.Generic;
+using System.ComponentModel;
 
 
 namespace OSharp.Template.Identity.Entities
@@ -19,5 +19,15 @@ namespace OSharp.Template.Identity.Entities
     /// </summary>
     [Description("角色信息")]
     public class Role : RoleBase<int>
-    { }
+    {
+        /// <summary>
+        /// 获取或设置 分配的用户角色信息集合
+        /// </summary>
+        public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
+
+        /// <summary>
+        /// 获取或设置 角色声明信息集合
+        /// </summary>
+        public virtual ICollection<RoleClaim> RoleClaims { get; set; } = new List<RoleClaim>();
+    }
 }

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AssemblyVersion>0.4.0</AssemblyVersion>
-    <FileVersion>0.4.0.3</FileVersion>
+    <FileVersion>0.4.0.6</FileVersion>
     <UserSecretsId>166558f9-be39-46bb-8d0c-1bfc1bc5f26f</UserSecretsId>
   </PropertyGroup>
 
@@ -13,15 +13,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Startups\MySqlDefaultDbContextMigrationPack.cs" />
+    <Compile Remove="Startups\MySqlDesignTimeDefaultDbContextFactory.cs" />
+    <Compile Remove="Startups\PostgreSqlDefaultDbContextMigrationPack.cs" />
+    <Compile Remove="Startups\PostgreSqlDesignTimeDefaultDbContextFactory.cs" />
+    <Compile Remove="Startups\SqliteDefaultDbContextMigrationPack.cs" />
+    <Compile Remove="Startups\SqliteDesignTimeDefaultDbContextFactory.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="log\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
-    <PackageReference Include="OSharpNS" Version="0.4.0-beta02" />
-    <PackageReference Include="OSharpNS.EntityFrameworkCore.Sqlite" Version="0.4.0-beta02" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.2" />
+    <PackageReference Include="OSharpNS" Version="0.4.0-beta06" />
+    <PackageReference Include="OSharpNS.EntityFrameworkCore.Sqlite" Version="0.4.0-beta06" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
   </ItemGroup>
 

@@ -59,6 +59,5 @@ namespace OSharp.Template.Systems
         Task<OperationResult> DeleteAuditEntitys(params Guid[] ids);
 
         #endregion
-
     }
 }

@@ -7,6 +7,7 @@
 //  <last-date>2018-06-27 4:50</last-date>
 // -----------------------------------------------------------------------
 
+using OSharp.Template.Web.Startups;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 using OSharp.AspNetCore;
+using OSharp.Core.Builders;
 
 
 namespace OSharp.Template.Web
@@ -34,7 +36,7 @@ namespace OSharp.Template.Web
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
-            else 
+            else
             {
                 app.UseExceptionHandler("/#/500");
                 app.UseHsts().UseHttpsRedirection();
