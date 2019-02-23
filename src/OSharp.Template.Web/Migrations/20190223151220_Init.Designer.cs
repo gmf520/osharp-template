@@ -10,16 +10,119 @@ using OSharp.Entity;
 namespace OSharp.Template.Web.Migrations
 {
     [DbContext(typeof(DefaultDbContext))]
-    [Migration("20190104081715_Init")]
+    [Migration("20190223151220_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
+                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("OSharp.Core.EntityInfos.EntityInfo", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("AuditEnabled");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<string>("PropertyJson")
+                        .IsRequired();
+
+                    b.Property<string>("TypeName")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TypeName")
+                        .IsUnique()
+                        .HasName("ClassFullNameIndex");
+
+                    b.ToTable("EntityInfo");
+                });
+
+            modelBuilder.Entity("OSharp.Core.Functions.Function", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessType");
+
+                    b.Property<string>("Action");
+
+                    b.Property<string>("Area");
+
+                    b.Property<bool>("AuditEntityEnabled");
+
+                    b.Property<bool>("AuditOperationEnabled");
+
+                    b.Property<int>("CacheExpirationSeconds");
+
+                    b.Property<string>("Controller");
+
+                    b.Property<bool>("IsAccessTypeChanged");
+
+                    b.Property<bool>("IsAjax");
+
+                    b.Property<bool>("IsCacheSliding");
+
+                    b.Property<bool>("IsController");
+
+                    b.Property<bool>("IsLocked");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Area", "Controller", "Action")
+                        .IsUnique()
+                        .HasName("AreaControllerActionIndex")
+                        .HasFilter("[Area] IS NOT NULL AND [Controller] IS NOT NULL AND [Action] IS NOT NULL");
+
+                    b.ToTable("Function");
+                });
+
+            modelBuilder.Entity("OSharp.Core.Systems.KeyValue", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("IsLocked");
+
+                    b.Property<string>("Key")
+                        .IsRequired();
+
+                    b.Property<string>("ValueJson");
+
+                    b.Property<string>("ValueType");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("KeyValue");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("534d7813-0eea-44cc-b88e-a9cb010c6981"),
+                            IsLocked = false,
+                            Key = "Site.Name",
+                            ValueJson = "\"OSHARP\"",
+                            ValueType = "System.String,System.Private.CoreLib"
+                        },
+                        new
+                        {
+                            Id = new Guid("977e4bba-97b2-4759-a768-a9cb010c698c"),
+                            IsLocked = false,
+                            Key = "Site.Description",
+                            ValueJson = "\"Osharp with .NetStandard2.0 & Angular6\"",
+                            ValueType = "System.String,System.Private.CoreLib"
+                        });
+                });
 
             modelBuilder.Entity("OSharp.Template.Identity.Entities.LoginLog", b =>
                 {
@@ -104,7 +207,7 @@ namespace OSharp.Template.Web.Migrations
                         {
                             Id = 1,
                             ConcurrencyStamp = "97313840-7874-47e5-81f2-565613c8cdcc",
-                            CreatedTime = new DateTime(2019, 1, 4, 16, 17, 15, 580, DateTimeKind.Local).AddTicks(4000),
+                            CreatedTime = new DateTime(2019, 2, 23, 23, 12, 20, 162, DateTimeKind.Local).AddTicks(5600),
                             IsAdmin = true,
                             IsDefault = false,
                             IsLocked = false,
@@ -540,109 +643,6 @@ namespace OSharp.Template.Web.Migrations
                     b.ToTable("AuditProperty");
                 });
 
-            modelBuilder.Entity("OSharp.Core.EntityInfos.EntityInfo", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<bool>("AuditEnabled");
-
-                    b.Property<string>("Name")
-                        .IsRequired();
-
-                    b.Property<string>("PropertyJson")
-                        .IsRequired();
-
-                    b.Property<string>("TypeName")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TypeName")
-                        .IsUnique()
-                        .HasName("ClassFullNameIndex");
-
-                    b.ToTable("EntityInfo");
-                });
-
-            modelBuilder.Entity("OSharp.Core.Functions.Function", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccessType");
-
-                    b.Property<string>("Action");
-
-                    b.Property<string>("Area");
-
-                    b.Property<bool>("AuditEntityEnabled");
-
-                    b.Property<bool>("AuditOperationEnabled");
-
-                    b.Property<int>("CacheExpirationSeconds");
-
-                    b.Property<string>("Controller");
-
-                    b.Property<bool>("IsAccessTypeChanged");
-
-                    b.Property<bool>("IsAjax");
-
-                    b.Property<bool>("IsCacheSliding");
-
-                    b.Property<bool>("IsController");
-
-                    b.Property<bool>("IsLocked");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Area", "Controller", "Action")
-                        .IsUnique()
-                        .HasName("AreaControllerActionIndex")
-                        .HasFilter("[Area] IS NOT NULL AND [Controller] IS NOT NULL AND [Action] IS NOT NULL");
-
-                    b.ToTable("Function");
-                });
-
-            modelBuilder.Entity("OSharp.Core.Systems.KeyValue", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<bool>("IsLocked");
-
-                    b.Property<string>("Key")
-                        .IsRequired();
-
-                    b.Property<string>("ValueJson");
-
-                    b.Property<string>("ValueType");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("KeyValue");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("534d7813-0eea-44cc-b88e-a9cb010c6981"),
-                            IsLocked = false,
-                            Key = "Site.Name",
-                            ValueJson = "\"OSHARP\"",
-                            ValueType = "System.String,System.Private.CoreLib"
-                        },
-                        new
-                        {
-                            Id = new Guid("977e4bba-97b2-4759-a768-a9cb010c698c"),
-                            IsLocked = false,
-                            Key = "Site.Description",
-                            ValueJson = "\"Osharp with .NetStandard2.0 & Angular6\"",
-                            ValueType = "System.String,System.Private.CoreLib"
-                        });
-                });
-
             modelBuilder.Entity("OSharp.Template.Identity.Entities.LoginLog", b =>
                 {
                     b.HasOne("OSharp.Template.Identity.Entities.User", "User")
@@ -660,65 +660,65 @@ namespace OSharp.Template.Web.Migrations
 
             modelBuilder.Entity("OSharp.Template.Identity.Entities.RoleClaim", b =>
                 {
-                    b.HasOne("OSharp.Template.Identity.Entities.Role")
-                        .WithMany()
+                    b.HasOne("OSharp.Template.Identity.Entities.Role", "Role")
+                        .WithMany("RoleClaims")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("OSharp.Template.Identity.Entities.UserClaim", b =>
                 {
-                    b.HasOne("OSharp.Template.Identity.Entities.User")
-                        .WithMany()
+                    b.HasOne("OSharp.Template.Identity.Entities.User", "User")
+                        .WithMany("UserClaims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("OSharp.Template.Identity.Entities.UserDetail", b =>
                 {
-                    b.HasOne("OSharp.Template.Identity.Entities.User")
-                        .WithOne()
+                    b.HasOne("OSharp.Template.Identity.Entities.User", "User")
+                        .WithOne("UserDetail")
                         .HasForeignKey("OSharp.Template.Identity.Entities.UserDetail", "UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("OSharp.Template.Identity.Entities.UserLogin", b =>
                 {
-                    b.HasOne("OSharp.Template.Identity.Entities.User")
-                        .WithMany()
+                    b.HasOne("OSharp.Template.Identity.Entities.User", "User")
+                        .WithMany("UserLogins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("OSharp.Template.Identity.Entities.UserRole", b =>
                 {
-                    b.HasOne("OSharp.Template.Identity.Entities.Role")
-                        .WithMany()
+                    b.HasOne("OSharp.Template.Identity.Entities.Role", "Role")
+                        .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("OSharp.Template.Identity.Entities.User")
-                        .WithMany()
+                    b.HasOne("OSharp.Template.Identity.Entities.User", "User")
+                        .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("OSharp.Template.Identity.Entities.UserToken", b =>
                 {
-                    b.HasOne("OSharp.Template.Identity.Entities.User")
-                        .WithMany()
+                    b.HasOne("OSharp.Template.Identity.Entities.User", "User")
+                        .WithMany("UserTokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("OSharp.Template.Security.Entities.EntityRole", b =>
                 {
-                    b.HasOne("OSharp.Core.EntityInfos.EntityInfo")
+                    b.HasOne("OSharp.Core.EntityInfos.EntityInfo", "EntityInfo")
                         .WithMany()
                         .HasForeignKey("EntityId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("OSharp.Template.Identity.Entities.Role")
+                    b.HasOne("OSharp.Template.Identity.Entities.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -726,12 +726,12 @@ namespace OSharp.Template.Web.Migrations
 
             modelBuilder.Entity("OSharp.Template.Security.Entities.EntityUser", b =>
                 {
-                    b.HasOne("OSharp.Core.EntityInfos.EntityInfo")
+                    b.HasOne("OSharp.Core.EntityInfos.EntityInfo", "EntityInfo")
                         .WithMany()
                         .HasForeignKey("EntityId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("OSharp.Template.Identity.Entities.User")
+                    b.HasOne("OSharp.Template.Identity.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -739,19 +739,19 @@ namespace OSharp.Template.Web.Migrations
 
             modelBuilder.Entity("OSharp.Template.Security.Entities.Module", b =>
                 {
-                    b.HasOne("OSharp.Template.Security.Entities.Module")
-                        .WithMany()
+                    b.HasOne("OSharp.Template.Security.Entities.Module", "Parent")
+                        .WithMany("Children")
                         .HasForeignKey("ParentId");
                 });
 
             modelBuilder.Entity("OSharp.Template.Security.Entities.ModuleFunction", b =>
                 {
-                    b.HasOne("OSharp.Core.Functions.Function")
+                    b.HasOne("OSharp.Core.Functions.Function", "Function")
                         .WithMany()
                         .HasForeignKey("FunctionId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("OSharp.Template.Security.Entities.Module")
+                    b.HasOne("OSharp.Template.Security.Entities.Module", "Module")
                         .WithMany()
                         .HasForeignKey("ModuleId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -759,12 +759,12 @@ namespace OSharp.Template.Web.Migrations
 
             modelBuilder.Entity("OSharp.Template.Security.Entities.ModuleRole", b =>
                 {
-                    b.HasOne("OSharp.Template.Security.Entities.Module")
+                    b.HasOne("OSharp.Template.Security.Entities.Module", "Module")
                         .WithMany()
                         .HasForeignKey("ModuleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("OSharp.Template.Identity.Entities.Role")
+                    b.HasOne("OSharp.Template.Identity.Entities.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -772,12 +772,12 @@ namespace OSharp.Template.Web.Migrations
 
             modelBuilder.Entity("OSharp.Template.Security.Entities.ModuleUser", b =>
                 {
-                    b.HasOne("OSharp.Template.Security.Entities.Module")
+                    b.HasOne("OSharp.Template.Security.Entities.Module", "Module")
                         .WithMany()
                         .HasForeignKey("ModuleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("OSharp.Template.Identity.Entities.User")
+                    b.HasOne("OSharp.Template.Identity.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

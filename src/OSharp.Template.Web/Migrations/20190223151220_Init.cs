@@ -531,7 +531,7 @@ namespace OSharp.Template.Web.Migrations
             migrationBuilder.InsertData(
                 table: "Role",
                 columns: new[] { "Id", "ConcurrencyStamp", "CreatedTime", "IsAdmin", "IsDefault", "IsLocked", "IsSystem", "Name", "NormalizedName", "Remark" },
-                values: new object[] { 1, "97313840-7874-47e5-81f2-565613c8cdcc", new DateTime(2019, 1, 4, 16, 17, 15, 580, DateTimeKind.Local).AddTicks(4000), true, false, false, true, "系统管理员", "系统管理员", "系统最高权限管理角色" });
+                values: new object[] { 1, "97313840-7874-47e5-81f2-565613c8cdcc", new DateTime(2019, 2, 23, 23, 12, 20, 162, DateTimeKind.Local).AddTicks(5600), true, false, false, true, "系统管理员", "系统管理员", "系统最高权限管理角色" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AuditEntity_OperationId",
