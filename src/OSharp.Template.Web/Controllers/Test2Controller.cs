@@ -13,7 +13,7 @@ using OSharp.Core.Modules;
 using OSharp.Entity;
 
 
-namespace OSharp.Template.Controllers
+namespace OSharp.Template.Web.Controllers
 {
     public class Test2Controller:ApiController
     {

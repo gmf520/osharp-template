@@ -26,7 +26,7 @@ using OSharp.Entity;
 using OSharp.Filter;
 
 
-namespace OSharp.Template.Areas.Admin.Controllers
+namespace OSharp.Template.Web.Areas.Admin.Controllers
 {
     [ModuleInfo(Order = 1, Position = "Security", PositionName = "权限安全模块")]
     [Description("管理-模块信息")]

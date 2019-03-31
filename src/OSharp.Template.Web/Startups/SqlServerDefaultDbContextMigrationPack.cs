@@ -15,7 +15,7 @@ using OSharp.Entity;
 using OSharp.Entity.SqlServer;
 
 
-namespace OSharp.Template.Startups
+namespace OSharp.Template.Web.Startups
 {
     /// <summary>
     /// SqlServer-DefaultDbContext迁移模块

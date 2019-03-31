@@ -25,7 +25,7 @@ using OSharp.Core.Modules;
 using OSharp.Entity;
 
 
-namespace OSharp.Template.Areas.Admin.Controllers
+namespace OSharp.Template.Web.Areas.Admin.Controllers
 {
     [ModuleInfo(Order = 1)]
     [Description("管理-信息汇总")]

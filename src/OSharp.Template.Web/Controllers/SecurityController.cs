@@ -26,7 +26,7 @@ using OSharp.Core.Modules;
 using OSharp.Secutiry;
 
 
-namespace OSharp.Template.Controllers
+namespace OSharp.Template.Web.Controllers
 {
     [Description("网站-授权")]
     [ModuleInfo(Order = 2)]

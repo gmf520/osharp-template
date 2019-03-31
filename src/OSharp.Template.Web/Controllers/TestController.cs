@@ -35,7 +35,7 @@ using OSharp.Identity;
 using OSharp.Json;
 
 
-namespace OSharp.Template.Controllers
+namespace OSharp.Template.Web.Controllers
 {
     [Description("网站-测试")]
     [ClassFilter]

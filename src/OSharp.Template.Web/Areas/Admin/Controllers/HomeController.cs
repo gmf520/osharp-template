@@ -14,7 +14,7 @@ using OSharp.Template.Security;
 using Microsoft.AspNetCore.Mvc;
 
 
-namespace OSharp.Template.Areas.Admin.Controllers
+namespace OSharp.Template.Web.Areas.Admin.Controllers
 {
     [Description("管理-主页")]
     public class HomeController : AdminApiController

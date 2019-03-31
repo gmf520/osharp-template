@@ -25,7 +25,7 @@ using OSharp.Data;
 using OSharp.Exceptions;
 
 
-namespace OSharp.Template.Areas.Admin.Controllers
+namespace OSharp.Template.Web.Areas.Admin.Controllers
 {
     [ModuleInfo(Order = 1, Position = "Systems", PositionName = "系统管理模块")]
     [Description("管理-系统设置")]

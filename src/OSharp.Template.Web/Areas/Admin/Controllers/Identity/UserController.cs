@@ -37,7 +37,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 
-namespace OSharp.Template.Areas.Admin.Controllers
+namespace OSharp.Template.Web.Areas.Admin.Controllers
 {
     [ModuleInfo(Order = 1, Position = "Identity", PositionName = "身份认证模块")]
     [Description("管理-用户信息")]

@@ -32,7 +32,7 @@ using OSharp.Filter;
 using OSharp.Secutiry;
 
 
-namespace OSharp.Template.Areas.Admin.Controllers
+namespace OSharp.Template.Web.Areas.Admin.Controllers
 {
     [ModuleInfo(Order = 6, Position = "Security", PositionName = "权限安全模块")]
     [Description("管理-角色数据权限")]

@@ -28,7 +28,7 @@ using OSharp.Filter;
 using OSharp.Secutiry;
 
 
-namespace OSharp.Template.Areas.Admin.Controllers
+namespace OSharp.Template.Web.Areas.Admin.Controllers
 {
     [ModuleInfo(Order = 3, Position = "Identity", PositionName = "身份认证模块")]
     [Description("管理-用户角色信息")]

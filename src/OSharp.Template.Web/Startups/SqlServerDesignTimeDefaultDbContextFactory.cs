@@ -23,7 +23,7 @@ using OSharp.Extensions;
 using OSharp.Reflection;
 
 
-namespace OSharp.Template.Startups
+namespace OSharp.Template.Web.Startups
 {
     public class SqlServerDesignTimeDefaultDbContextFactory : DesignTimeDbContextFactoryBase<DefaultDbContext>
     {

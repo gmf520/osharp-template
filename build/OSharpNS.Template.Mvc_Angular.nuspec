@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>OSharpNS.Template.Mvc_Angular</id>
-    <version>0.5.0.1</version>
+    <version>0.5.0.2</version>
     <title></title>
     <authors>柳柳软件(66soft.net)</authors>
     <owners>柳柳软件(66soft.net)</owners>
@@ -27,7 +27,7 @@
     <file src="cmd\.template.config/template.json" target="content\OSharp.CMD\.template.config"/>
     <file src="cmd\cmd_build.bat" target="content\OSharp.CMD"/>
     <file src="..\src\**"
-      exclude="**/node_modules/**;**/bin/**;**/obj/**;**/log/**;**/logs/**;**/.vs/**;**/.vscode/**;**/dist/**;**/wwwroot/dist/**;**/assets/tmp/**"
+      exclude="**/node_modules/**;**/bin/**;**/obj/**;**/log/**;**/logs/**;**/.vs/**;**/.vscode/**;**/dist/**;**/wwwroot/**;**/assets/tmp/**"
       target="content" />
   </files>
 </package>

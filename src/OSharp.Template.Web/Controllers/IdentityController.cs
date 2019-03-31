@@ -42,7 +42,7 @@ using System.Threading.Tasks;
 using OSharp.Filter;
 
 
-namespace OSharp.Template.Controllers
+namespace OSharp.Template.Web.Controllers
 {
     [Description("网站-认证")]
     [ModuleInfo(Order = 1)]

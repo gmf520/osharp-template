@@ -13,7 +13,7 @@ using System;
 using System.ComponentModel;
 
 
-namespace OSharp.Template.Startups
+namespace OSharp.Template.Web.Startups
 {
     /// <summary>
     /// SignalR模块

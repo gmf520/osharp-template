@@ -38,7 +38,7 @@ using OSharp.IO;
 using OSharp.Reflection;
 
 
-namespace OSharp.Template.Controllers
+namespace OSharp.Template.Web.Controllers
 {
     [Description("网站-通用")]
     [ModuleInfo(Order = 3)]

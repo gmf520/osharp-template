@@ -37,7 +37,7 @@ using OSharp.Identity;
 using OSharp.Mapping;
 
 
-namespace OSharp.Template.Areas.Admin.Controllers
+namespace OSharp.Template.Web.Areas.Admin.Controllers
 {
     [ModuleInfo(Order = 2, Position = "Identity", PositionName = "身份认证模块")]
     [Description("管理-角色信息")]

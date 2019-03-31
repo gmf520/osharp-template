@@ -23,7 +23,7 @@ using OSharp.Entity;
 using OSharp.Filter;
 
 
-namespace OSharp.Template.Areas.Admin.Controllers
+namespace OSharp.Template.Web.Areas.Admin.Controllers
 {
     [ModuleInfo(Order = 3, Position = "Systems", PositionName = "系统管理模块")]
     [Description("管理-数据审计信息")]
