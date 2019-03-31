@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
+using OSharp.Core.Options;
 using OSharp.Exceptions;
 using OSharp.Extensions;
 using OSharp.Identity;
@@ -138,64 +140,53 @@ namespace OSharp.Template.Identity
                 };
             });
 
-            bool enabled = configuration["OSharp:OAuth2:QQ:Enabled"].CastTo(false);
-            if (enabled)
+            // OAuth2
+            IConfigurationSection section = configuration.GetSection("OSharp:OAuth2");
+            IDictionary<string, OAuth2Options> dict = section.Get<Dictionary<string, OAuth2Options>>();
+            if (dict == null)
             {
-                string appId = configuration["OSharp:OAuth2:QQ:ClientId"];
-                if (string.IsNullOrEmpty(appId))
-                {
-                    throw new OsharpException("配置文件中OSharp:OAuth2配置的QQ节点的ClientId不能为空");
-                }
-                string appKey = configuration["OSharp:OAuth2:QQ:ClientSecret"];
-                if (string.IsNullOrEmpty(appKey))
-                {
-                    throw new OsharpException("配置文件中OSharp:OAuth2配置的QQ节点的ClientSecret不能为空");
-                }
-                authenticationBuilder.AddQQ(opts =>
-                {
-                    opts.AppId = appId;
-                    opts.AppKey = appKey;
-                });
+                return;
             }
-
-            enabled = configuration["OSharp:OAuth2:Microsoft:Enabled"].CastTo(false);
-            if (enabled)
+            foreach (KeyValuePair<string, OAuth2Options> pair in dict)
             {
-                string clientId = configuration["OSharp:OAuth2:Microsoft:ClientId"];
-                if (string.IsNullOrEmpty(clientId))
+                OAuth2Options value = pair.Value;
+                if (!value.Enabled)
                 {
-                    throw new OsharpException("配置文件中OSharp:OAuth2配置的Microsoft节点的ClientId不能为空");
+                    continue;
                 }
-                string clientSecret = configuration["OSharp:OAuth2:Microsoft:ClientSecret"];
-                if (string.IsNullOrEmpty(clientSecret))
+                if (string.IsNullOrEmpty(value.ClientId))
                 {
-                    throw new OsharpException("配置文件中OSharp:OAuth2配置的Microsoft节点的ClientSecret不能为空");
+                    throw new OsharpException($"配置文件中OSharp:OAuth2配置的{pair.Key}节点的ClientId不能为空");
                 }
-                authenticationBuilder.AddMicrosoftAccount(opts =>
+                if (string.IsNullOrEmpty(value.ClientSecret))
                 {
-                    opts.ClientId = clientId;
-                    opts.ClientSecret = clientSecret;
-                });
-            }
+                    throw new OsharpException($"配置文件中OSharp:OAuth2配置的{pair.Key}节点的ClientSecret不能为空");
+                }
 
-            enabled = configuration["OSharp:OAuth2:GitHub:Enabled"].CastTo(false);
-            if (enabled)
-            {
-                string clientId = configuration["OSharp:OAuth2:GitHub:ClientId"];
-                if (string.IsNullOrEmpty(clientId))
+                switch (pair.Key)
                 {
-                    throw new OsharpException("配置文件中OSharp:OAuth2配置的GitHub节点的ClientId不能为空");
+                    case "QQ":
+                        authenticationBuilder.AddQQ(opts =>
+                        {
+                            opts.AppId = value.ClientId;
+                            opts.AppKey = value.ClientSecret;
+                        });
+                        break;
+                    case "Microsoft":
+                        authenticationBuilder.AddMicrosoftAccount(opts =>
+                        {
+                            opts.ClientId = value.ClientId;
+                            opts.ClientSecret = value.ClientSecret;
+                        });
+                        break;
+                    case "GitHub":
+                        authenticationBuilder.AddGitHub(opts =>
+                        {
+                            opts.ClientId = value.ClientId;
+                            opts.ClientSecret = value.ClientSecret;
+                        });
+                        break;
                 }
-                string clientSecret = configuration["OSharp:OAuth2:GitHub:ClientSecret"];
-                if (string.IsNullOrEmpty(clientSecret))
-                {
-                    throw new OsharpException("配置文件中OSharp:OAuth2配置的GitHub节点的ClientSecret不能为空");
-                }
-                authenticationBuilder.AddGitHub(opts =>
-                {
-                    opts.ClientId = clientId;
-                    opts.ClientSecret = clientSecret;
-                });
             }
         }
 

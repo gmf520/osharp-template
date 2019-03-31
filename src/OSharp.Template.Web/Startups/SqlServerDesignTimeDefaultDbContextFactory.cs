@@ -43,7 +43,7 @@ namespace OSharp.Template.Web.Startups
             {
                 IConfiguration configuration = Singleton<IConfiguration>.Instance;
                 string str = configuration["OSharp:DbContexts:SqlServer:ConnectionString"]
-                             ?? configuration["ConnectionStrings:DefaultDbContext"];
+                    ?? configuration["ConnectionStrings:DefaultDbContext"];
                 return str;
             }
             OsharpOptions options = _serviceProvider.GetOSharpOptions();

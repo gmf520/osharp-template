@@ -15,7 +15,7 @@ namespace OSharp.Template.Web.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
+                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -102,7 +102,7 @@ namespace OSharp.Template.Web.Migrations
                         {
                             Id = 1,
                             ConcurrencyStamp = "97313840-7874-47e5-81f2-565613c8cdcc",
-                            CreatedTime = new DateTime(2019, 3, 31, 15, 26, 27, 162, DateTimeKind.Local).AddTicks(7216),
+                            CreatedTime = new DateTime(2019, 3, 24, 15, 31, 48, 570, DateTimeKind.Local).AddTicks(642),
                             IsAdmin = true,
                             IsDefault = false,
                             IsLocked = false,
