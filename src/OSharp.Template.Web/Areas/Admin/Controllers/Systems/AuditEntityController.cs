@@ -23,7 +23,7 @@ using OSharp.Entity;
 using OSharp.Filter;
 
 
-namespace OSharp.Template.Web.Areas.Admin.Controllers
+namespace OSharp.Template.Areas.Admin.Controllers
 {
     [ModuleInfo(Order = 3, Position = "Systems", PositionName = "系统管理模块")]
     [Description("管理-数据审计信息")]
@@ -58,6 +58,7 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
             {
                 page = _auditContract.AuditEntitys.ToPage(predicate, request.PageCondition, m => new AuditEntityOutputDto
                 {
+                    Id = m.Id,
                     Name = m.Name,
                     TypeName = m.TypeName,
                     EntityKey = m.EntityKey,
@@ -76,6 +77,7 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
             request.AddDefaultSortCondition(new SortCondition("Operation.CreatedTime", ListSortDirection.Descending));
             page = _auditContract.AuditEntitys.ToPage(predicate, request.PageCondition, m => new AuditEntityOutputDto
             {
+                Id = m.Id,
                 Name = m.Name,
                 TypeName = m.TypeName,
                 EntityKey = m.EntityKey,

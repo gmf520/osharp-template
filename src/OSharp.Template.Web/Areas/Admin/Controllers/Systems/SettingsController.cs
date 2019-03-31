@@ -25,7 +25,7 @@ using OSharp.Data;
 using OSharp.Exceptions;
 
 
-namespace OSharp.Template.Web.Areas.Admin.Controllers
+namespace OSharp.Template.Areas.Admin.Controllers
 {
     [ModuleInfo(Order = 1, Position = "Systems", PositionName = "系统管理模块")]
     [Description("管理-系统设置")]
@@ -84,7 +84,7 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
             }
             ISetting setting = JsonConvert.DeserializeObject(dto.SettingJson, type) as ISetting;
             OperationResult result = await _keyValueStore.SaveSetting(setting);
-            if (result.Successed)
+            if (result.Succeeded)
             {
                 return new AjaxResult("设置保存成功");
             }

@@ -1,35 +1,25 @@
-import { NgModule, } from '@angular/core';
-import { CustomFormsModule } from "ng2-validation";
-import { IdentityComponent } from './identity.component';
-import { IdentityRoutingModule, } from './identity.routing';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { ConfirmEmailComponent } from './email/confirm-email.component';
-import { SendConfirmMailComponent } from './email/send-confirm-mail.component';
-import { ForgotPasswordComponent } from './password/forgot-password.component';
-import { ResetPasswordComponent } from './password/reset-password.component';
-import { SharedModule } from '@shared/shared.module';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { UserComponent } from './user/user.component';
+import { RoleComponent } from './role/role.component';
+import { UserRoleComponent } from './user-role/user-role.component';
+import { SharedModule } from '@shared';
+import { IdentityRoutingModule } from './identity.routing';
 
-const COMPONENTS = [
-  IdentityComponent,
-  LoginComponent,
-  RegisterComponent,
-  ConfirmEmailComponent,
-  SendConfirmMailComponent,
-  ForgotPasswordComponent,
-  ResetPasswordComponent,
-];
+import '@progress/kendo-ui/js/kendo.web.js';
+import '@progress/kendo-ui/js/cultures/kendo.culture.zh-CN';
+import '@progress/kendo-ui/js/messages/kendo.messages.zh-CN';
 
 @NgModule({
-  declarations: [
-    ...COMPONENTS
-  ],
   imports: [
-    CustomFormsModule,
-    IdentityRoutingModule,
-    SharedModule
+    CommonModule,
+    SharedModule,
+    IdentityRoutingModule
   ],
-  providers: [
+  declarations: [
+    UserComponent,
+    RoleComponent,
+    UserRoleComponent,
   ]
 })
 export class IdentityModule { }

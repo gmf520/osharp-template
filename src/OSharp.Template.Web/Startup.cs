@@ -6,18 +6,17 @@
 //  <last-editor>郭明锋</last-editor>
 //  <last-date>2018-06-27 4:50</last-date>
 // -----------------------------------------------------------------------
-
-using OSharp.Template.Web.Startups;
-
+ 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 using OSharp.AspNetCore;
-using OSharp.Core.Builders;
+using OSharp.Data;
 
-
+ 
 namespace OSharp.Template.Web
 {
     public class Startup
@@ -25,6 +24,7 @@ namespace OSharp.Template.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            Singleton<IConfiguration>.Instance = services.GetConfiguration();
             services.AddOSharp<AspOsharpPackManager>();
         }
 

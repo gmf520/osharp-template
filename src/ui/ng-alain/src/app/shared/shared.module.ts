@@ -1,4 +1,4 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -7,26 +7,39 @@ import { AlainThemeModule } from '@delon/theme';
 import { DelonABCModule } from '@delon/abc';
 import { DelonACLModule } from '@delon/acl';
 import { DelonFormModule } from '@delon/form';
+// i18n
+import { TranslateModule } from '@ngx-translate/core';
 
-// region: third libs
+// #region third libs
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CountdownModule } from 'ngx-countdown';
-
-import { OsharpModule } from "@shared/osharp/osharp.module";
-import { MaterialModule } from '@shared/material.module';
-
+import { AngularSplitModule } from "angular-split";
 const THIRDMODULES = [
   NgZorroAntdModule,
   CountdownModule,
-  OsharpModule,
+  AngularSplitModule,
 ];
-// endregion
 
-// region: your componets & directives
+// #endregion
+
+import { OsharpModule } from "./osharp/osharp.module";
+
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/distinctUntilChanged';
+
+import { ModalTreeComponent } from './components/modal-tree/modal-tree.component';
+import { FilterGroupComponent } from './components/filter-group/filter-group.component';
+import { FilterRuleComponent } from './components/filter-group/filter-rule.component';
+
+// #region your componets & directives
 const COMPONENTS = [
+  ModalTreeComponent,
+  FilterGroupComponent,
+  FilterRuleComponent
 ];
 const DIRECTIVES = [];
-// endregion
+// #endregion
 
 @NgModule({
   imports: [
@@ -38,7 +51,7 @@ const DIRECTIVES = [];
     DelonABCModule,
     DelonACLModule,
     DelonFormModule,
-    MaterialModule,
+    OsharpModule,
     // third libs
     ...THIRDMODULES
   ],
@@ -56,7 +69,9 @@ const DIRECTIVES = [];
     DelonABCModule,
     DelonACLModule,
     DelonFormModule,
-    MaterialModule,
+    OsharpModule,
+    // i18n
+    TranslateModule,
     // third libs
     ...THIRDMODULES,
     // your components
@@ -64,10 +79,4 @@ const DIRECTIVES = [];
     ...DIRECTIVES
   ]
 })
-export class SharedModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: SharedModule
-    };
-  }
-}
+export class SharedModule { }

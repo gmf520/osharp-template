@@ -14,16 +14,15 @@ using System.Threading.Tasks;
 
 using OSharp.Template.Identity.Entities;
 
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
-using OSharp.Data;
 using OSharp.Exceptions;
 using OSharp.Extensions;
 using OSharp.Identity;
@@ -65,12 +64,12 @@ namespace OSharp.Template.Identity
             return options =>
             {
                 //登录
-                options.SignIn.RequireConfirmedEmail = true;
+                options.SignIn.RequireConfirmedEmail = false;
                 //密码
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
                 //用户
-                options.User.RequireUniqueEmail = true;
+                options.User.RequireUniqueEmail = false;
                 //锁定
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
             };
@@ -99,7 +98,7 @@ namespace OSharp.Template.Identity
         protected override void AddAuthentication(IServiceCollection services)
         {
             IConfiguration configuration = services.GetConfiguration();
-            services.AddAuthentication(options =>
+            AuthenticationBuilder authenticationBuilder = services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -108,12 +107,13 @@ namespace OSharp.Template.Identity
                 string secret = configuration["OSharp:Jwt:Secret"];
                 if (secret.IsNullOrEmpty())
                 {
-                    throw new OsharpException("配置文件中Jwt节点的Secret不能为空");
+                    throw new OsharpException("配置文件中OSharp配置的Jwt节点的Secret不能为空");
                 }
+
                 jwt.TokenValidationParameters = new TokenValidationParameters()
                 {
-                    ValidIssuer = configuration["OSharp:Jwt:Issuer"],
-                    ValidAudience = configuration["OSharp:Jwt:Audience"],
+                    ValidIssuer = configuration["OSharp:Jwt:Issuer"] ?? "osharp identity",
+                    ValidAudience = configuration["OSharp:Jwt:Audience"] ?? "osharp client",
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret)),
                     LifetimeValidator = (before, expires, token, param) => expires > DateTime.Now,
                     ValidateLifetime = true
@@ -132,15 +132,71 @@ namespace OSharp.Template.Identity
                         {
                             context.Token = token;
                         }
+
                         return Task.CompletedTask;
                     }
                 };
-            //}).AddQQ(qq =>
-            //{
-            //    qq.AppId = configuration["Authentication:QQ:AppId"];
-            //    qq.AppKey = configuration["Authentication:QQ:AppKey"];
-            //    qq.CallbackPath = new PathString("/api/identity/OAuth2Callback");
             });
+
+            bool enabled = configuration["OSharp:OAuth2:QQ:Enabled"].CastTo(false);
+            if (enabled)
+            {
+                string appId = configuration["OSharp:OAuth2:QQ:ClientId"];
+                if (string.IsNullOrEmpty(appId))
+                {
+                    throw new OsharpException("配置文件中OSharp:OAuth2配置的QQ节点的ClientId不能为空");
+                }
+                string appKey = configuration["OSharp:OAuth2:QQ:ClientSecret"];
+                if (string.IsNullOrEmpty(appKey))
+                {
+                    throw new OsharpException("配置文件中OSharp:OAuth2配置的QQ节点的ClientSecret不能为空");
+                }
+                authenticationBuilder.AddQQ(opts =>
+                {
+                    opts.AppId = appId;
+                    opts.AppKey = appKey;
+                });
+            }
+
+            enabled = configuration["OSharp:OAuth2:Microsoft:Enabled"].CastTo(false);
+            if (enabled)
+            {
+                string clientId = configuration["OSharp:OAuth2:Microsoft:ClientId"];
+                if (string.IsNullOrEmpty(clientId))
+                {
+                    throw new OsharpException("配置文件中OSharp:OAuth2配置的Microsoft节点的ClientId不能为空");
+                }
+                string clientSecret = configuration["OSharp:OAuth2:Microsoft:ClientSecret"];
+                if (string.IsNullOrEmpty(clientSecret))
+                {
+                    throw new OsharpException("配置文件中OSharp:OAuth2配置的Microsoft节点的ClientSecret不能为空");
+                }
+                authenticationBuilder.AddMicrosoftAccount(opts =>
+                {
+                    opts.ClientId = clientId;
+                    opts.ClientSecret = clientSecret;
+                });
+            }
+
+            enabled = configuration["OSharp:OAuth2:GitHub:Enabled"].CastTo(false);
+            if (enabled)
+            {
+                string clientId = configuration["OSharp:OAuth2:GitHub:ClientId"];
+                if (string.IsNullOrEmpty(clientId))
+                {
+                    throw new OsharpException("配置文件中OSharp:OAuth2配置的GitHub节点的ClientId不能为空");
+                }
+                string clientSecret = configuration["OSharp:OAuth2:GitHub:ClientSecret"];
+                if (string.IsNullOrEmpty(clientSecret))
+                {
+                    throw new OsharpException("配置文件中OSharp:OAuth2配置的GitHub节点的ClientSecret不能为空");
+                }
+                authenticationBuilder.AddGitHub(opts =>
+                {
+                    opts.ClientId = clientId;
+                    opts.ClientSecret = clientSecret;
+                });
+            }
         }
 
         /// <summary>

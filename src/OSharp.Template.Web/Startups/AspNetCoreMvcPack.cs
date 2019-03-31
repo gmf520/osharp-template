@@ -12,7 +12,7 @@ using System.ComponentModel;
 using OSharp.AspNetCore.Mvc;
 
 
-namespace OSharp.Template.Web.Startups
+namespace OSharp.Template.Startups
 {
     /// <summary>
     /// MVC模块，此模块需要在Identity之后启动

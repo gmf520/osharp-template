@@ -18,8 +18,10 @@ export enum AjaxResultType {
 
 /** 分页数据 */
 export class PageData<T> {
-  rows: T[];
-  total: number;
+  /** 数据行 */
+  Rows: T[];
+  /** 总数据量 */
+  Total: number;
 }
 export class ListNode {
   id: number;
@@ -183,6 +185,7 @@ export class VerifyCode {
 
 //#region Identity Model
 export class LoginDto {
+  Type: number;
   Account: string;
   Password: string;
   VerifyCode: string;
@@ -191,11 +194,9 @@ export class LoginDto {
   ReturnUrl: string;
 }
 export class RegisterDto {
-  UserName: string;
+  Email: string;
   Password: string;
   ConfirmPassword: string;
-  NickName: string;
-  Email: string;
   VerifyCode: string;
   VerifyCodeId: string;
 }
@@ -203,7 +204,7 @@ export class ChangePasswordDto {
   UserId: string;
   OldPassword: string;
   NewPassword: string;
-  ConfirmPassword: string;
+  ConfirmNewPassword: string;
 }
 export class ConfirmEmailDto {
   UserId: string;
@@ -220,12 +221,27 @@ export class ResetPasswordDto {
   NewPassword: string;
   ConfirmPassword: string;
 }
-/**权限配置信息 */
+export class ProfileEditDto {
+  Id: number;
+  UserName: string;
+  NickName: string;
+  Email?: string;
+  HeadImg?: string;
+}
+export class UserLoginInfoEx {
+  constructor(key: string) {
+    this.ProviderKey = key;
+  }
+  ProviderKey: string;
+  Email?: string;
+  Password?: string;
+}
+/** 权限配置信息 */
 export class AuthConfig {
   constructor(
-    /**当前模块的位置，即上级模块的路径，如Root,Root.Admin,Root.Admin.Identity */
+    /** 当前模块的位置，即上级模块的路径，如Root,Root.Admin,Root.Admin.Identity */
     public position: string,
-    /**要权限控制的功能名称，可以是节点名称或全路径 */
+    /** 要权限控制的功能名称，可以是节点名称或全路径 */
     public funcs: string[]
   ) { }
 }
@@ -271,7 +287,7 @@ export class AdResult {
    * 是否显示结果框
    */
   show: boolean = false;
-  /**结果类型，可选为： 'success' | 'error' | 'minus-circle-o'*/
+  /** 结果类型，可选为： 'success' | 'error' | 'minus-circle-o' */
   type: 'success' | 'error' | 'minus-circle-o';
   /** 结果标题 */
   title: string;

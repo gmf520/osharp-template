@@ -28,7 +28,7 @@ using OSharp.Filter;
 using OSharp.Secutiry;
 
 
-namespace OSharp.Template.Web.Areas.Admin.Controllers
+namespace OSharp.Template.Areas.Admin.Controllers
 {
     [ModuleInfo(Order = 3, Position = "Identity", PositionName = "身份认证模块")]
     [Description("管理-用户角色信息")]
@@ -87,5 +87,22 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
             OperationResult result = await _identityContract.UpdateUserRoles(dtos);
             return result.ToAjaxResult();
         }
+
+        /// <summary>
+        /// 删除用户角色信息
+        /// </summary>
+        /// <param name="ids">要删除的用户角色编号</param>
+        /// <returns>JSON操作结果</returns>
+        [HttpPost]
+        [ModuleInfo]
+        [DependOnFunction("Read")]
+        [ServiceFilter(typeof(UnitOfWorkAttribute))]
+        [Description("删除")]
+        public async Task<AjaxResult> Delete(Guid[] ids)
+        {
+            OperationResult result = await _identityContract.DeleteUserRoles(ids);
+            return result.ToAjaxResult();
+        }
+
     }
 }

@@ -3,26 +3,29 @@ import { ListNode, AjaxResult, AjaxResultType, AuthConfig, VerifyCode } from '@s
 import { NzMessageService, NzMessageDataOptions } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
 import { Buffer } from "buffer";
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { List } from "linqts";
-import { CacheService } from '@shared/osharp/cache/cache.service';
+import { _HttpClient } from '@delon/theme';
+import { ACLService } from '@delon/acl';
+import { ErrorData } from '@delon/form';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class OsharpService {
 
   public msgSrv: NzMessageService;
   private router: Router;
-  private http: HttpClient;
-  private cache: CacheService;
+  public http: _HttpClient;
+  private aclSrv: ACLService;
 
   constructor(
     injector: Injector
   ) {
     this.msgSrv = injector.get(NzMessageService);
     this.router = injector.get(Router);
-    this.http = injector.get(HttpClient);
-    this.cache = injector.get(CacheService);
+    this.http = injector.get(_HttpClient);
+    this.aclSrv = injector.get(ACLService);
   }
 
   // #region 工具方法
@@ -103,10 +106,10 @@ export class OsharpService {
    * @param array 数据节点集合
    * @param defaultText 转换失败时的默认文字
    */
-  valueToText(id: number, array: Array<ListNode>, defaultText: string = null) {
-    let text = defaultText == null ? id : defaultText;
+  valueToText(id: number, array: { id: number, text: string }[] | ListNode[], defaultText: string = null) {
+    let text = defaultText == null ? id.toString() : defaultText;
     array.forEach(item => {
-      if (item.id == id) {
+      if (item.id === id) {
         text = item.text;
         return false;
       }
@@ -178,7 +181,7 @@ export class OsharpService {
         break;
       case AjaxResultType.UnAuth:
         this.warning("用户未登录或登录已失效");
-        this.router.navigateByUrl("/identity/login");
+        this.router.navigateByUrl("/passport/login");
         break;
       case AjaxResultType.Success:
         this.success(content);
@@ -194,6 +197,7 @@ export class OsharpService {
         break;
     }
   }
+
   /**
    * 处理Ajax错误
    * @param xhr 错误响应
@@ -213,6 +217,41 @@ export class OsharpService {
     }
   }
 
+  //#region 远程验证
+
+  private timeout1;
+  remoteSFValidator(url: string, error: ErrorData): ErrorData[] | Observable<ErrorData[]> {
+    clearTimeout(this.timeout1);
+    return new Observable(observer => {
+      this.timeout1 = setTimeout(() => {
+        this.http.get(url).subscribe(res => {
+          if (res !== true) {
+            observer.next([]);
+          } else {
+            observer.next([error]);
+          }
+        });
+      }, 800);
+    });
+  }
+
+  private timeout2;
+  remoteInverseSFValidator(url: string, error: ErrorData): ErrorData[] | Observable<ErrorData[]> {
+    clearTimeout(this.timeout2);
+    return new Observable(observer => {
+      this.timeout2 = setTimeout(() => {
+        this.http.get(url).subscribe(res => {
+          if (res !== true) {
+            observer.next([error]);
+          } else {
+            observer.next([]);
+          }
+        });
+      }, 800);
+    });
+  }
+  //#endregion
+
   //#region 验证码处理
 
   /**
@@ -220,7 +259,7 @@ export class OsharpService {
    */
   refreshVerifyCode(): Observable<VerifyCode> {
     let url = "api/common/verifycode";
-    return this.http.get(url, { responseType: 'text' }).map(res => {
+    return this.http.get(url, null, { responseType: 'text' }).map(res => {
       let str = this.fromBase64(res.toString());
       let strs: string[] = str.split("#$#");
       let code: VerifyCode = new VerifyCode();
@@ -240,8 +279,7 @@ export class OsharpService {
   getTreeNodes(root: any, array: Array<any>) {
     array.push(root);
     if (root.hasChildren) {
-      for (let i = 0; i < root.Items.length; i++) {
-        const item = root.Items[i];
+      for (const item of root.Items) {
         this.getTreeNodes(item, array);
       }
     }
@@ -261,12 +299,19 @@ export class OsharpService {
   }
 
   /**
-   * 刷新权限信息，缓存10分钟有效
+   * 获取当前用户的权限点数据(string[])，如本地 ACLServer 中不存在，则从远程获取，并更新到 ACLServer 中
    */
-  refreshAuthInfo(): Promise<string[]> {
-    let key = "api/security/getauthinfo";
-    this.cache.remove(key);
-    return this.cache.get<string[]>(key, { expire: 60 * 10 }).toPromise();
+  getAuthInfo(refresh?: boolean): Observable<string[]> {
+    if (!refresh && this.aclSrv.data.abilities && this.aclSrv.data.abilities.length) {
+      let authInfo: string[] = this.aclSrv.data.abilities as string[];
+      return of(authInfo);
+    }
+
+    let url = "api/security/getauthinfo";
+    return this.http.get<string[]>(url).map(auth => {
+      this.aclSrv.setAbility(auth);
+      return auth;
+    });
   }
 
   // #endregion
@@ -339,7 +384,7 @@ export abstract class ComponentBase {
   /**
    * 权限字典，以模块代码为键，是否有权限为值
    */
-  public auth: { [key: string]: boolean; } = {};
+  public auth: any | { [key: string]: boolean; } = {};
   private authConfig: AuthConfig = null;
 
   constructor(injector: Injector) {
@@ -360,7 +405,7 @@ export abstract class ComponentBase {
       this.authConfig.funcs.forEach(key => this.auth[key] = true);
     }
     let position = this.authConfig.position;
-    let codes = await this.osharp.refreshAuthInfo();
+    let codes = await this.osharp.getAuthInfo().toPromise();
     if (!codes) {
       return this.auth;
     }

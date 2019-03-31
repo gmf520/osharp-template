@@ -13,7 +13,7 @@ using OSharp.AspNetCore.Mvc;
 using OSharp.Core;
 
 
-namespace OSharp.Template.Web.Areas.Admin.Controllers
+namespace OSharp.Template.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [RoleLimit]

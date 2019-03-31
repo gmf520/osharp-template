@@ -15,7 +15,7 @@ using OSharp.Entity;
 using OSharp.Entity.MySql;
 
 
-namespace OSharp.Template.Web.Startups
+namespace Liuliu.Demo.Web.Startups
 {
     /// <summary>
     /// MySql-DefaultDbContext迁移模块

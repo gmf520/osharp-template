@@ -18,7 +18,7 @@ using OSharp.CodeGenerator;
 using OSharp.Core.Packs;
 
 
-namespace OSharp.Template.Web.Startups
+namespace OSharp.Template.Startups
 {
     /// <summary>
     /// 代码生成模块

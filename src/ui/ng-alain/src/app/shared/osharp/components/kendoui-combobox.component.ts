@@ -1,7 +1,7 @@
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { Component, Input, OnInit, forwardRef, ElementRef } from '@angular/core';
-import { DataSource } from '../../../../../node_modules/@angular/cdk/table';
-import { Observable } from '../../../../../node_modules/rxjs';
+import { DataSource } from '@angular/cdk/table';
+import { Observable } from 'rxjs';
 
 export const KendouiComboBox_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -10,6 +10,7 @@ export const KendouiComboBox_VALUE_ACCESSOR: any = {
 };
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'kendoui-combo',
   template: `<input/>`,
   providers: [KendouiComboBox_VALUE_ACCESSOR]

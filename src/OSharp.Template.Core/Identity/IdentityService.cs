@@ -7,22 +7,26 @@
 //  <last-date>2018-06-27 4:44</last-date>
 // -----------------------------------------------------------------------
 
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-
 using OSharp.Template.Identity.Dtos;
 using OSharp.Template.Identity.Entities;
 using OSharp.Template.Identity.Events;
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-
 using OSharp.Data;
 using OSharp.Entity;
 using OSharp.EventBuses;
 using OSharp.Extensions;
 using OSharp.Identity;
+using OSharp.Identity.OAuth2;
+using System;
+using System.Linq;
+using System.Security.Principal;
+using System.Threading.Tasks;
+
+using Microsoft.Extensions.Caching.Distributed;
+
+using OSharp.Caching;
+using OSharp.Json;
 
 
 namespace OSharp.Template.Identity
@@ -34,11 +38,12 @@ namespace OSharp.Template.Identity
     {
         private readonly IEventBus _eventBus;
         private readonly RoleManager<Role> _roleManager;
-        private readonly IRepository<Role, int> _roleRepository;
         private readonly SignInManager<User> _signInManager;
         private readonly IRepository<UserDetail, int> _userDetailRepository;
+        private readonly IRepository<UserLogin, Guid> _userLoginRepository;
+        private readonly IDistributedCache _cache;
+        private readonly IPrincipal _currentUser;
         private readonly UserManager<User> _userManager;
-        private readonly IRepository<User, int> _userRepository;
         private readonly IRepository<UserRole, Guid> _userRoleRepository;
         private readonly ILogger<IdentityService> _logger;
 
@@ -50,20 +55,22 @@ namespace OSharp.Template.Identity
             SignInManager<User> signInManager,
             IEventBus eventBus,
             ILoggerFactory loggerFactory,
-            IRepository<User, int> userRepository,
-            IRepository<Role, int> roleRepository,
             IRepository<UserRole, Guid> userRoleRepository,
-            IRepository<UserDetail, int> userDetailRepository)
+            IRepository<UserDetail, int> userDetailRepository,
+            IRepository<UserLogin, Guid> userLoginRepository,
+            IDistributedCache cache,
+            IPrincipal currentUser)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
             _eventBus = eventBus;
-            _userRepository = userRepository;
-            _roleRepository = roleRepository;
             _logger = loggerFactory.CreateLogger<IdentityService>();
             _userRoleRepository = userRoleRepository;
             _userDetailRepository = userDetailRepository;
+            _userLoginRepository = userLoginRepository;
+            _cache = cache;
+            _currentUser = currentUser;
         }
 
         /// <summary>
@@ -109,7 +116,7 @@ namespace OSharp.Template.Identity
             }
             return new OperationResult<User>(OperationResultType.NoChanged);
         }
-
+        
         /// <summary>
         /// 使用账号登录
         /// </summary>
@@ -130,7 +137,7 @@ namespace OSharp.Template.Identity
             }
             SignInResult signInResult = await _signInManager.CheckPasswordSignInAsync(user, dto.Password, true);
             OperationResult<User> result = ToOperationResult(signInResult, user);
-            if (!result.Successed)
+            if (!result.Succeeded)
             {
                 return result;
             }
@@ -141,6 +148,121 @@ namespace OSharp.Template.Identity
             _eventBus.Publish(loginEventData);
 
             return result;
+        }
+
+        /// <summary>
+        /// 使用第三方用户信息进行OAuth2登录
+        /// </summary>
+        /// <param name="loginInfo">第三方用户信息</param>
+        /// <returns>业务操作结果</returns>
+        public async Task<OperationResult> LoginOAuth2(UserLoginInfoEx loginInfo)
+        {
+            SignInResult result = await _signInManager.ExternalLoginSignInAsync(loginInfo.LoginProvider, loginInfo.ProviderKey, true);
+            if (!result.Succeeded)
+            {
+                string cacheId = await SetLoginInfoEx(loginInfo);
+                return new OperationResult(OperationResultType.Error, "登录失败", cacheId);
+            }
+
+            User user = await _userManager.FindByLoginAsync(loginInfo.LoginProvider, loginInfo.ProviderKey);
+            return new OperationResult(OperationResultType.Success, "登录成功", user);
+        }
+
+        /// <summary>
+        /// 登录并绑定现有账号
+        /// </summary>
+        /// <param name="loginInfoEx">第三方登录信息</param>
+        /// <returns>业务操作结果</returns>
+        public virtual async Task<OperationResult<User>> LoginBind(UserLoginInfoEx loginInfoEx)
+        {
+            UserLoginInfoEx existLoginInfoEx = await GetLoginInfoEx(loginInfoEx.ProviderKey);
+            if (existLoginInfoEx == null)
+            {
+                return new OperationResult<User>(OperationResultType.Error, "无法找到相应的第三方登录信息");
+            }
+
+            LoginDto loginDto = new LoginDto() { Account = loginInfoEx.Account, Password = loginInfoEx.Password };
+            OperationResult<User> loginResult = await Login(loginDto);
+            if (!loginResult.Succeeded)
+            {
+                return loginResult;
+            }
+
+            User user = loginResult.Data;
+            IdentityResult result = await CreateOrUpdateUserLogin(user, existLoginInfoEx);
+            if (!result.Succeeded)
+            {
+                return result.ToOperationResult(user);
+            }
+            return new OperationResult<User>(OperationResultType.Success, "登录并绑定账号成功", user);
+        }
+
+        /// <summary>
+        /// 一键创建新用户并登录
+        /// </summary>
+        /// <param name="cacheId">第三方登录信息缓存编号</param>
+        /// <returns>业务操作结果</returns>
+        public virtual async Task<OperationResult<User>> LoginOneKey(string cacheId)
+        {
+            UserLoginInfoEx loginInfoEx = await GetLoginInfoEx(cacheId);
+            if (loginInfoEx == null)
+            {
+                return new OperationResult<User>(OperationResultType.Error, "无法找到相应的第三方登录信息");
+            }
+            IdentityResult result;
+            User user = await _userManager.FindByLoginAsync(loginInfoEx.LoginProvider, loginInfoEx.ProviderKey);
+            if (user == null)
+            {
+                user = new User()
+                {
+                    UserName = $"{loginInfoEx.LoginProvider}_{loginInfoEx.ProviderKey}",
+                    NickName = loginInfoEx.ProviderDisplayName,
+                    HeadImg = loginInfoEx.AvatarUrl
+                };
+                result = await _userManager.CreateAsync(user);
+                if (!result.Succeeded)
+                {
+                    return result.ToOperationResult(user);
+                }
+                UserDetail detail = new UserDetail() { RegisterIp = loginInfoEx.RegisterIp, UserId = user.Id };
+                int count = await _userDetailRepository.InsertAsync(detail);
+                if (count == 0)
+                {
+                    return new OperationResult<User>(OperationResultType.NoChanged);
+                }
+            }
+
+            result = await CreateOrUpdateUserLogin(user, loginInfoEx);
+            if (!result.Succeeded)
+            {
+                return result.ToOperationResult(user);
+            }
+            return new OperationResult<User>(OperationResultType.Success, "第三方用户一键登录成功", user);
+        }
+
+        private async Task<IdentityResult> CreateOrUpdateUserLogin(User user, UserLoginInfoEx loginInfoEx)
+        {
+            if (string.IsNullOrEmpty(user.HeadImg) && !string.IsNullOrEmpty(loginInfoEx.AvatarUrl))
+            {
+                user.HeadImg = loginInfoEx.AvatarUrl;
+            }
+            UserLogin userLogin = _userLoginRepository.GetFirst(m =>
+                m.LoginProvider == loginInfoEx.LoginProvider && m.ProviderKey == loginInfoEx.ProviderKey);
+            if (userLogin == null)
+            {
+                userLogin = new UserLogin()
+                {
+                    LoginProvider = loginInfoEx.LoginProvider, ProviderKey = loginInfoEx.ProviderKey,
+                    ProviderDisplayName = loginInfoEx.ProviderDisplayName, Avatar = loginInfoEx.AvatarUrl, UserId = user.Id
+                };
+                await _userLoginRepository.InsertAsync(userLogin);
+            }
+            else
+            {
+                userLogin.UserId = user.Id;
+                await _userLoginRepository.UpdateAsync(userLogin);
+            }
+            return IdentityResult.Success;
         }
 
         /// <summary>
@@ -219,6 +341,20 @@ namespace OSharp.Template.Identity
             }
             return new OperationResult<User>(OperationResultType.Error,
                 $"用户名或密码错误，剩余 {_userManager.Options.Lockout.MaxFailedAccessAttempts - user.AccessFailedCount} 次机会");
+        }
+
+        private async Task<UserLoginInfoEx> GetLoginInfoEx(string cacheId)
+        {
+            string key = $"Identity_UserLoginInfoEx_{cacheId}";
+            return await _cache.GetAsync<UserLoginInfoEx>(key);
+        }
+
+        private async Task<string> SetLoginInfoEx(UserLoginInfoEx loginInfo)
+        {
+            string cacheId = Guid.NewGuid().ToString("N");
+            string key = $"Identity_UserLoginInfoEx_{cacheId}";
+            await _cache.SetAsync(key, loginInfo, 60 * 5);
+            return cacheId;
         }
     }
 }

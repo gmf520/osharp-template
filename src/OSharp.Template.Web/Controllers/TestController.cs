@@ -30,12 +30,12 @@ using OSharp.Collections;
 using OSharp.Data;
 using OSharp.Dependency;
 using OSharp.Entity;
-using OSharp.Entity.Transactions;
+using OSharp.Exceptions;
 using OSharp.Identity;
 using OSharp.Json;
 
 
-namespace OSharp.Template.Web.Controllers
+namespace OSharp.Template.Controllers
 {
     [Description("网站-测试")]
     [ClassFilter]
@@ -71,7 +71,7 @@ namespace OSharp.Template.Web.Controllers
                 };
 
                 OperationResult<User> result = await _identityContract.Register(dto);
-                if (result.Successed)
+                if (result.Succeeded)
                 {
                     User user = result.Data;
                     user.EmailConfirmed = true;
@@ -88,7 +88,7 @@ namespace OSharp.Template.Web.Controllers
                     RegisterIp = HttpContext.GetClientIp()
                 };
                 result = await _identityContract.Register(dto);
-                if (result.Successed)
+                if (result.Succeeded)
                 {
                     User user = result.Data;
                     user.EmailConfirmed = true;

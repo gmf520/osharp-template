@@ -15,7 +15,7 @@ using OSharp.Entity;
 using OSharp.Entity.PostgreSql;
 
 
-namespace OSharp.Template.Web.Startups
+namespace Liuliu.Demo.Web.Startups
 {
     /// <summary>
     /// PostgreSql-DefaultDbContext迁移模块

@@ -26,7 +26,7 @@ using OSharp.Entity;
 using OSharp.Filter;
 
 
-namespace OSharp.Template.Web.Areas.Admin.Controllers
+namespace OSharp.Template.Areas.Admin.Controllers
 {
     [ModuleInfo(Order = 1, Position = "Security", PositionName = "权限安全模块")]
     [Description("管理-模块信息")]
@@ -114,10 +114,10 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
                     IsChecked = checkedModuleIds.Contains(item.Id),
                     HasChildren = item.ChildIds.Count > 0,
                     item.Remark,
-                    Items = item.ChildIds.Count > 0 ? GetModulesWithChecked(item.ChildIds.ToArray(), checkedModuleIds) : new List<object>()
+                    Children = item.ChildIds.Count > 0 ? GetModulesWithChecked(item.ChildIds.ToArray(), checkedModuleIds) : new List<object>()
                 };
 
-                if (node.Items.Count == 0 && !IsRoleLimit(node.Id))
+                if (node.Children.Count == 0 && !IsRoleLimit(node.Id))
                 {
                     continue;
                 }
