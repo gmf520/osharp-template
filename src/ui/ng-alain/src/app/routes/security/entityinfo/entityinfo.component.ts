@@ -1,5 +1,5 @@
 import { Component, OnInit, Injector } from '@angular/core';
-import { STComponentBase } from '@shared/osharp/services/ng-alain.service';
+import { STComponentBase } from '@shared/osharp/components/st-component-base';
 import { OsharpSTColumn } from '@shared/osharp/services/ng-alain.types';
 import { SFUISchema } from '@delon/form';
 
@@ -22,9 +22,9 @@ export class EntityinfoComponent extends STComponentBase implements OnInit {
   protected GetSTColumns(): OsharpSTColumn[] {
     return [
       { title: '操作', fixed: 'left', width: 65, buttons: [{ text: '修改', icon: 'edit', iif: row => row.Updatable, click: row => this.edit(row) }] },
-      { title: '实体名称', index: 'Name', editable: true, ftype: 'string' },
-      { title: '实体类型', index: 'TypeName', editable: true, ftype: 'string' },
-      { title: '数据审计', index: 'AuditEnabled', type: 'yn', editable: true }
+      { title: '实体名称', index: 'Name', editable: true, ftype: 'string', filterable: true },
+      { title: '实体类型', index: 'TypeName', editable: true, ftype: 'string', filterable: true },
+      { title: '数据审计', index: 'AuditEnabled', type: 'yn', editable: true, filterable: true }
     ];
   }
 

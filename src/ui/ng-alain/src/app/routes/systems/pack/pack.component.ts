@@ -1,5 +1,5 @@
 import { Component, OnInit, Injector } from '@angular/core';
-import { STComponentBase, AlainService } from '@shared/osharp/services/ng-alain.service';
+import { STComponentBase } from '@shared/osharp/components/st-component-base';
 import { OsharpSTColumn } from '@shared/osharp/services/ng-alain.types';
 
 @Component({
@@ -9,7 +9,7 @@ import { OsharpSTColumn } from '@shared/osharp/services/ng-alain.types';
 })
 export class PackComponent extends STComponentBase implements OnInit {
 
-  constructor(injector: Injector, private alain: AlainService) {
+  constructor(injector: Injector) {
     super(injector);
     this.moduleName = 'pack';
   }
@@ -23,9 +23,9 @@ export class PackComponent extends STComponentBase implements OnInit {
       { title: '', index: '', type: 'no' },
       { title: '名称', index: 'Display' },
       { title: '类型', index: 'Class' },
-      { title: '级别', index: 'Level', type: 'tag', tag: this.alain.PackLevelTags },
-      { title: '启动顺序', index: 'Order' },
-      { title: '是否启用', index: 'IsEnabled' },
+      { title: '级别', index: 'Level', type: 'tag', tag: this.alain.PackLevelTags, filterable: true },
+      { title: '启动顺序', index: 'Order', filterable: true },
+      { title: '是否启用', index: 'IsEnabled', filterable: true },
     ];
   }
 }

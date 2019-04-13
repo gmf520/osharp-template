@@ -1,20 +1,19 @@
-import { Component, OnInit, Injector, ViewChild, ViewChildren, QueryList } from '@angular/core';
-import { STComponentBase, AlainService } from '@shared/osharp/services/ng-alain.service';
+import { Component, OnInit, Injector, ViewChildren, QueryList } from '@angular/core';
+import { STComponentBase, } from '@shared/osharp/components/st-component-base';
 import { OsharpSTColumn } from '@shared/osharp/services/ng-alain.types';
-import { STColumn, STData, STChange, STReq, STComponent, STRes, STColumnBadge } from '@delon/abc';
+import { STColumn, STData, STChange, STComponent } from '@delon/abc';
 import { PageRequest, FilterRule, PageData } from '@shared/osharp/osharp.model';
 
 @Component({
   selector: 'app-audit-operation',
-  templateUrl: './audit-operation.component.html',
-  styles: []
+  templateUrl: './audit-operation.component.html'
 })
 export class AuditOperationComponent extends STComponentBase implements OnInit {
 
   keys: string[] = [];
   @ViewChildren(STComponent) sts: QueryList<STComponent>;
 
-  constructor(injector: Injector, private alain: AlainService) {
+  constructor(injector: Injector) {
     super(injector);
     this.moduleName = 'auditOperation';
   }
@@ -27,16 +26,16 @@ export class AuditOperationComponent extends STComponentBase implements OnInit {
 
   protected GetSTColumns(): OsharpSTColumn[] {
     return [
-      { title: '功能', index: 'FunctionName' },
-      { title: '用户名', index: 'UserName' },
-      { title: '昵称', index: 'NickName' },
-      { title: 'IP地址', index: 'Ip' },
-      { title: '操作系统', index: 'OperationSystem' },
-      { title: '浏览器', index: 'Browser' },
-      { title: '结果', index: 'ResultType', type: 'tag', tag: this.alain.AjaxResultTypeTags },
-      { title: '执行时间', index: 'CreatedTime', type: 'date' },
-      { title: '耗时(ms)', index: 'Elapsed' },
-      { title: '消息', index: 'Message', width: 300 },
+      { title: '功能', index: 'FunctionName', filterable: true },
+      { title: '用户名', index: 'UserName', className: 'max-200', filterable: true },
+      { title: '昵称', index: 'NickName', filterable: true },
+      { title: 'IP地址', index: 'Ip', filterable: true },
+      { title: '操作系统', index: 'OperationSystem', filterable: true },
+      { title: '浏览器', index: 'Browser', filterable: true },
+      { title: '结果', index: 'ResultType', type: 'tag', tag: this.alain.AjaxResultTypeTags, filterable: true },
+      { title: '执行时间', index: 'CreatedTime', type: 'date', filterable: true },
+      { title: '耗时(ms)', index: 'Elapsed', type: 'number', filterable: true },
+      { title: '消息', index: 'Message', className: 'max-300', filterable: true },
     ];
   }
 
@@ -80,12 +79,18 @@ export class AuditOperationComponent extends STComponentBase implements OnInit {
 
   private entityInit() {
     this.entityColumns = [
-      { title: '操作', fixed: 'left', width: 65, buttons: [{ text: '变更', icon: 'ordered-list', click: d => this.showProps(d) }] },
       { title: '实体名称', index: 'Name' },
       { title: '实体类型', index: 'TypeName' },
       { title: '数据编号', index: 'EntityKey' },
       { title: '操作', index: 'OperateType', type: 'tag', tag: this.alain.OperateTypeTags },
     ];
+  }
+
+  entityChange(value: STChange) {
+    if (value.type === 'click' && value.click && value.click.item) {
+      let data = value.click.item;
+      this.showProps(data);
+    }
   }
 
   private showProps(data: STData) {

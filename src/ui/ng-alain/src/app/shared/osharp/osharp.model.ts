@@ -13,14 +13,14 @@ export enum AjaxResultType {
   UnAuth = 401,
   Forbidden = 403,
   NoFound = 404,
-  Locked = 423
+  Locked = 423,
 }
 
-/** 分页数据 */
+/**  分页数据 */
 export class PageData<T> {
-  /** 数据行 */
+  /**  数据行 */
   Rows: T[];
-  /** 总数据量 */
+  /**  总数据量 */
   Total: number;
 }
 export class ListNode {
@@ -30,11 +30,11 @@ export class ListNode {
 
 /** 查询条件 */
 export class FilterRule {
-  /**属性名 */
+  /** 属性名 */
   Field: string;
-  /**属性值 */
-  Value: string;
-  /**对比操作 */
+  /** 属性值 */
+  Value: any;
+  /** 对比操作 */
   Operate: FilterOperate;
 
   /**
@@ -43,19 +43,24 @@ export class FilterRule {
    * @param value 属性值
    * @param operate 对比操作
    */
-  constructor(field: string, value: string, operate: FilterOperate = FilterOperate.Equal) {
+  constructor(
+    field: string,
+    value: string,
+    operate: FilterOperate = FilterOperate.Equal,
+  ) {
     this.Field = field;
     this.Value = value;
     this.Operate = operate;
   }
+  [key: string]: any;
 }
-/** 查询条件组 */
+/**  查询条件组 */
 export class FilterGroup {
-  /**条件集合 */
+  /** 条件集合 */
   Rules: FilterRule[] = [];
-  /**条件间操作 */
+  /** 条件间操作 */
   Operate: FilterOperate = FilterOperate.And;
-  /**条件组集合 */
+  /** 条件组集合 */
   Groups: FilterGroup[] = [];
   Level: number = 1;
 
@@ -69,7 +74,7 @@ export class FilterGroup {
     });
   }
 }
-/**比较操作枚举 */
+/** 比较操作枚举 */
 export enum FilterOperate {
   And = 1,
   Or = 2,
@@ -92,62 +97,62 @@ export class FilterOperateEntry {
     this.Operate = operate;
     switch (operate) {
       case FilterOperate.And:
-        this.Display = "并且";
+        this.Display = '并且';
         break;
       case FilterOperate.Or:
-        this.Display = "或者";
+        this.Display = '或者';
         break;
       case FilterOperate.Equal:
-        this.Display = "等于";
+        this.Display = '等于';
         break;
       case FilterOperate.NotEqual:
-        this.Display = "不等于";
+        this.Display = '不等于';
         break;
       case FilterOperate.Less:
-        this.Display = "小于";
+        this.Display = '小于';
         break;
       case FilterOperate.LessOrEqual:
-        this.Display = "小于等于";
+        this.Display = '小于等于';
         break;
       case FilterOperate.Greater:
-        this.Display = "大于";
+        this.Display = '大于';
         break;
       case FilterOperate.GreaterOrEqual:
-        this.Display = "大于等于";
+        this.Display = '大于等于';
         break;
       case FilterOperate.StartsWith:
-        this.Display = "开始于";
+        this.Display = '开始于';
         break;
       case FilterOperate.EndsWith:
-        this.Display = "结束于";
+        this.Display = '结束于';
         break;
       case FilterOperate.Contains:
-        this.Display = "包含";
+        this.Display = '包含';
         break;
       case FilterOperate.NotContains:
-        this.Display = "不包含";
+        this.Display = '不包含';
         break;
       default:
-        this.Display = "未知操作";
+        this.Display = '未知操作';
         break;
     }
     this.Display = `${<number>operate}.${this.Display}`;
   }
 }
-/** 分页请求 */
+/**  分页请求 */
 export class PageRequest {
-  /** 分页条件信息 */
+  /**  分页条件信息 */
   PageCondition: PageCondition = new PageCondition();
-  /** 查询条件组 */
+  /**  查询条件组 */
   FilterGroup: FilterGroup = new FilterGroup();
 }
-/** 分页条件 */
+/**  分页条件 */
 export class PageCondition {
-  /** 页序 */
+  /**  页序 */
   PageIndex: number = 1;
-  /** 分页大小 */
+  /**  分页大小 */
   PageSize: number = 20;
-  /** 排序条件集合 */
+  /**  排序条件集合 */
   SortConditions: SortCondition[] = [];
 }
 export class SortCondition {
@@ -156,11 +161,10 @@ export class SortCondition {
 }
 export enum ListSortDirection {
   Ascending,
-  Descending
+  Descending,
 }
 
-
-/** 实体属性信息 */
+/**  实体属性信息 */
 export class EntityProperty {
   Name: string;
   Display: string;
@@ -173,11 +177,11 @@ export class EntityProperty {
  * 验证码类
  */
 export class VerifyCode {
-  /** 验证码后台编号 */
+  /**  验证码后台编号 */
   id: string;
-  /** 验证码图片的Base64格式 */
-  image: string = "data:image/png;base64,null";
-  /** 输入的验证码 */
+  /**  验证码图片的Base64格式 */
+  image: string = 'data:image/png;base64,null';
+  /**  输入的验证码 */
   code: string;
 }
 
@@ -236,17 +240,17 @@ export class UserLoginInfoEx {
   Email?: string;
   Password?: string;
 }
-/** 权限配置信息 */
+/**  权限配置信息 */
 export class AuthConfig {
   constructor(
-    /** 当前模块的位置，即上级模块的路径，如Root,Root.Admin,Root.Admin.Identity */
+    /**  当前模块的位置，即上级模块的路径，如Root,Root.Admin,Root.Admin.Identity */
     public position: string,
-    /** 要权限控制的功能名称，可以是节点名称或全路径 */
-    public funcs: string[]
-  ) { }
+    /**  要权限控制的功能名称，可以是节点名称或全路径 */
+    public funcs: string[],
+  ) {}
 }
 
-/** 用户信息 */
+/**  用户信息 */
 export class User implements NzUser {
   constructor() {
     this.roles = [];
@@ -287,11 +291,11 @@ export class AdResult {
    * 是否显示结果框
    */
   show: boolean = false;
-  /** 结果类型，可选为： 'success' | 'error' | 'minus-circle-o' */
+  /**  结果类型，可选为： 'success' | 'error' | 'minus-circle-o' */
   type: 'success' | 'error' | 'minus-circle-o';
-  /** 结果标题 */
+  /**  结果标题 */
   title: string;
-  /** 结果描述 */
+  /**  结果描述 */
   description: string;
 }
 
