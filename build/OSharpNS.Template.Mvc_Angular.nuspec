@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>OSharpNS.Template.Mvc_Angular</id>
-    <version>0.5.0.7</version>
+    <version>0.5.0.8</version>
     <title></title>
     <authors>柳柳软件(66soft.net)</authors>
     <owners>柳柳软件(66soft.net)</owners>
@@ -18,14 +18,14 @@
     </packageTypes>
   </metadata>
   <files>
+    <file src="cmd\.template.config/template.json" target="content\OSharp\.template.config"/>
+    <file src="cmd\osharp.cmd" target="content\OSharp"/>
     <file src="..\OSharp.Template.sln" target="content\OSharp.Solution"/>
     <file src="..\README.md" target="content\OSharp.Solution"/>
     <file src="..\LICENSE" target="content\OSharp.Solution"/>
     <file src="..\Dockerfile" target="content\OSharp.Solution"/>
     <file src="..\build.bat" target="content\OSharp.Solution"/>
     <file src="sln\.template.config/template.json" target="content\OSharp.Solution\.template.config"/>
-    <file src="cmd\.template.config/template.json" target="content\OSharp.CMD\.template.config"/>
-    <file src="cmd\cmd_build.bat" target="content\OSharp.CMD"/>
     <file src="..\src\**"
       exclude="**/node_modules/**;**/bin/**;**/obj/**;**/log/**;**/logs/**;**/.vs/**;**/.vscode/**;**/dist/**;**/wwwroot/**;**/assets/tmp/**"
       target="content" />
