@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <AssemblyVersion>0.5.0</AssemblyVersion>
-    <FileVersion>0.5.0.7</FileVersion>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
     <UserSecretsId>166558f9-be39-46bb-8d0c-1bfc1bc5f26f</UserSecretsId>
     <Version>0.5.0.5</Version>
   </PropertyGroup>
@@ -30,11 +30,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.3" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
-    <PackageReference Include="OSharpNS" Version="0.5.0-beta07" />
-    <PackageReference Include="OSharpNS.EntityFrameworkCore.Oracle" Version="0.5.0-beta07" />
-    <PackageReference Include="OSharpNS.EntityFrameworkCore.Sqlite" Version="0.5.0-beta07" />
+    <PackageReference Include="OSharpNS" Version="1.0.0" />
+    <PackageReference Include="OSharpNS.EntityFrameworkCore.Oracle" Version="1.0.0" />
+    <PackageReference Include="OSharpNS.EntityFrameworkCore.Sqlite" Version="1.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
   </ItemGroup>
 

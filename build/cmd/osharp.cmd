@@ -1,9 +1,9 @@
 ::此命令行工具是用来生成项目代码的，一键生成
 @echo off
 echo －－－－－－－－－－－－－－－－－－－－－－－－－
-echo - 欢迎使用 OSharp一键模板 命令
-echo - http://www.osharp.org
-echo - Copyright @ 2014 - 2019 OSHARP.ORG
+echo － 欢迎使用 OSharp一键模板 命令
+echo － http://www.osharp.org
+echo － Copyright @ 2014 - 2019 OSHARP.ORG
 echo －－－－－－－－－－－－－－－－－－－－－－－－－
 echo 请输入项目名称，推荐形如 “公司.项目”的模式：
 set name=:
