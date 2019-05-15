@@ -25,7 +25,7 @@ using OSharp.Core.Modules;
 using OSharp.Data;
 using OSharp.Entity;
 using OSharp.Filter;
-using OSharp.Secutiry;
+using OSharp.Security;
 
 
 namespace OSharp.Template.Web.Areas.Admin.Controllers

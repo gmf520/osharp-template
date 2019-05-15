@@ -15,7 +15,7 @@ using OSharp.Template.Security.Entities;
 using OSharp.Core.EntityInfos;
 using OSharp.Core.Functions;
 using OSharp.Security;
-using OSharp.Secutiry;
+using OSharp.Security;
 
 
 namespace OSharp.Template.Security
