@@ -40,7 +40,7 @@ namespace OSharp.Template.Web
             else
             {
                 app.UseExceptionHandler("/#/500");
-                app.UseHsts().UseHttpsRedirection();
+                //app.UseHsts().UseHttpsRedirection();
             }
 
             app
