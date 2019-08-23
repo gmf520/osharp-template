@@ -15,7 +15,7 @@ import { SFSchema, FormProperty, PropertyGroup, CustomWidget } from '@delon/form
     margin: 0 auto;
   `]
 })
-export class UserRegisterComponent implements OnInit, AfterViewInit {
+export class RegisterComponent implements OnInit, AfterViewInit {
 
   schema: SFSchema;
   dto: RegisterDto = new RegisterDto();
@@ -88,8 +88,8 @@ export class UserRegisterComponent implements OnInit, AfterViewInit {
   submit(value: RegisterDto) {
     this.dto.Email = value.Email;
     this.dto.Password = value.Password;
-    this.dto.ConfirmPassword = value.ConfirmPassword,
-      this.dto.VerifyCode = value.VerifyCode;
+    this.dto.ConfirmPassword = value.ConfirmPassword;
+    this.dto.VerifyCode = value.VerifyCode;
     this.identity.register(this.dto).then(res => {
       res.show = true;
       this.result = res;

@@ -11,22 +11,23 @@ describe('Service: I18n', () => {
   let srv: I18NService;
   const MockSettingsService = {
     layout: {
-      lang: null
-    }
+      lang: null,
+    },
   };
   const MockNzI18nService = {
-    setLocale: () => {}
+    setLocale: () => {},
+    setDateLocale: () => {},
   };
   const MockDelonLocaleService = {
-    setLocale: () => {}
+    setLocale: () => {},
   };
   const MockTranslateService = {
     getBrowserLang: jasmine.createSpy('getBrowserLang'),
     addLangs: () => {},
     setLocale: () => {},
     getDefaultLang: () => '',
-    use: () => of(),
-    instant: jasmine.createSpy('instant')
+    use: (lang: string) => of(lang),
+    instant: jasmine.createSpy('instant'),
   };
 
   function genModule() {
@@ -63,6 +64,7 @@ describe('Service: I18n', () => {
     MockTranslateService.getBrowserLang.and.returnValue('zh-TW');
     genModule();
     expect(srv.defaultLang).toBe('zh-TW');
+    MockTranslateService.getBrowserLang.and.returnValue(null);
   });
 
   it('should be trigger notify when changed language', () => {

@@ -15,7 +15,7 @@ using OSharp.Entity;
 using OSharp.Entity.Oracle;
 
 
-namespace OSharp.Template.Web.Startups
+namespace Liuliu.Demo.Web.Startups
 {
     /// <summary>
     /// Oracle-DefaultDbContext迁移模块

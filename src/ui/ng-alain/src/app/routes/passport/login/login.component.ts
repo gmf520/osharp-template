@@ -5,10 +5,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { SocialService, SocialOpenType, ITokenService, DA_SERVICE_TOKEN, } from '@delon/auth';
 import { ReuseTabService } from '@delon/abc';
-import { environment } from '@env/environment';
 import { StartupService } from '@core';
 import { ComponentBase } from '@shared/osharp/services/osharp.service';
-import { AuthConfig, LoginDto, AjaxResultType } from '@shared/osharp/osharp.model';
+import { AuthConfig, LoginDto, AjaxResultType, TokenDto } from '@shared/osharp/osharp.model';
 import { IdentityService } from '@shared/osharp/services/identity.service';
 
 @Component({
@@ -17,12 +16,7 @@ import { IdentityService } from '@shared/osharp/services/identity.service';
   styleUrls: ['./login.component.less'],
   providers: [SocialService],
 })
-export class UserLoginComponent extends ComponentBase implements OnDestroy {
-
-  form: FormGroup;
-  error = '';
-  type = 0;
-  resendConfirmMail = false;
+export class LoginComponent extends ComponentBase implements OnDestroy {
 
   constructor(
     fb: FormBuilder,
@@ -50,10 +44,6 @@ export class UserLoginComponent extends ComponentBase implements OnDestroy {
     modalSrv.closeAll();
   }
 
-  protected AuthConfig(): AuthConfig {
-    return new AuthConfig('Root.Site.Identity', ["Login", "Jwtoken", "Register", "SendResetPasswordMail", "SendConfirmMail"]);
-  }
-
   // #region fields
 
   get http() {
@@ -73,16 +63,25 @@ export class UserLoginComponent extends ComponentBase implements OnDestroy {
     return this.form.controls.captcha;
   }
 
-  // #endregion
-
-  switch(ret: any) {
-    this.type = ret.index;
-  }
+  form: FormGroup;
+  error = '';
+  type = 0;
+  resendConfirmMail = false;
 
   // #region get captcha
 
   count = 0;
   interval$: any;
+
+  protected AuthConfig(): AuthConfig {
+    return new AuthConfig('Root.Site.Identity', ["Login", "Jwtoken", "Register", "SendResetPasswordMail", "SendConfirmMail"]);
+  }
+
+  // #endregion
+
+  switch(ret: any) {
+    this.type = ret.index;
+  }
 
   getCaptcha() {
     if (this.mobile.invalid) {
@@ -102,7 +101,7 @@ export class UserLoginComponent extends ComponentBase implements OnDestroy {
   submit() {
     this.error = '';
 
-    let dto: LoginDto = new LoginDto();
+    const dto: LoginDto = new LoginDto();
     dto.Type = this.type;
     if (this.type === 0) {
       this.userName.markAsDirty();
@@ -122,8 +121,9 @@ export class UserLoginComponent extends ComponentBase implements OnDestroy {
       dto.Password = this.captcha.value;
     }
 
-    this.identity.login(dto).then(result => {
-      if (result.Type == AjaxResultType.Success) {
+    const tokenDto: TokenDto = { GrantType: 'password', Account: dto.Account, Password: dto.Password };
+    this.identity.token(tokenDto).then(result => {
+      if (result.Type === AjaxResultType.Success) {
         this.msg.success("用户登录成功");
         // 重新获取 StartupService 内容，我们始终认为应用信息一般都会受当前用户授权范围而影响
         this.startupSrv.load().then(() => {
@@ -169,8 +169,8 @@ export class UserLoginComponent extends ComponentBase implements OnDestroy {
   // #region social
 
   open(type: string, openType: SocialOpenType = 'href') {
-    let callback = `/#/callback/${type}`;
-    let url = `api/identity/OAuth2?provider=${type}&returnUrl=${this.osharp.urlEncode(callback)}`;
+    const callback = `/#/callback/${type}`;
+    const url = `api/identity/OAuth2?provider=${type}&returnUrl=${this.osharp.urlEncode(callback)}`;
 
     // switch (type) {
     //   case 'QQ':

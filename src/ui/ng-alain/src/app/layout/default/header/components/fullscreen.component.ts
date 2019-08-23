@@ -4,9 +4,10 @@ import * as screenfull from 'screenfull';
 @Component({
   selector: 'header-fullscreen',
   template: `
-    <i nz-icon [type]="status ? 'fullscreen-exit' : 'fullscreen'"></i>
+    <i nz-icon [nzType]="status ? 'fullscreen-exit' : 'fullscreen'"></i>
     {{ (status ? 'menu.fullscreen.exit' : 'menu.fullscreen') | translate }}
   `,
+  // tslint:disable-next-line: no-host-metadata-property
   host: {
     '[class.d-block]': 'true',
   },

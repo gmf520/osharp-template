@@ -1,14 +1,34 @@
 {
-  "extends": "tslint:recommended",
+  "extends": [
+    "tslint:latest",
+    "tslint-config-prettier"
+  ],
   "rulesDirectory": [
-    "codelyzer"
+    "codelyzer",
+    "ng-alain-codelyzer"
   ],
   "rules": {
+    // Angular parts
     "array-type": false,
     "arrow-parens": false,
     "deprecation": {
       "severity": "warn"
     },
+    "component-class-suffix": true,
+    "contextual-lifecycle": true,
+    "directive-class-suffix": true,
+    "directive-selector": [
+      true,
+      "attribute",
+      ["app", "passport", "exception", "layout", "header"],
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      ["app", "passport", "exception", "layout", "header", "osharp"],
+      "kebab-case"
+    ],
     "import-blacklist": [
       true,
       "rxjs/Rx"
@@ -16,10 +36,9 @@
     "interface-name": false,
     "max-classes-per-file": false,
     "max-line-length": [
-      true,
-      250
+      false,
+      140
     ],
-    "one-variable-per-declaration": false,
     "member-access": false,
     "member-ordering": [
       false,
@@ -41,65 +60,53 @@
       "timeEnd",
       "trace"
     ],
-    "prefer-const": false,
     "no-empty": false,
     "no-inferrable-types": [
       true,
       "ignore-params"
     ],
-    "no-non-null-assertion": true,
+    "no-non-null-assertion": false,
     "no-redundant-jsdoc": true,
     "no-switch-case-fall-through": true,
     "no-use-before-declare": true,
     "no-var-requires": false,
     "object-literal-key-quotes": [
-      true,
+      false,
       "as-needed"
     ],
     "object-literal-sort-keys": false,
     "ordered-imports": false,
     "quotemark": [
       false,
-      "single",
-      "double"
+      "single"
     ],
     "trailing-comma": false,
-    "no-output-on-prefix": true,
-    "use-input-property-decorator": true,
-    "use-output-property-decorator": true,
-    "use-host-property-decorator": false,
+    "no-conflicting-lifecycle": true,
+    "no-host-metadata-property": true,
     "no-input-rename": true,
+    "no-inputs-metadata-property": true,
+    "no-output-native": true,
+    "no-output-on-prefix": true,
     "no-output-rename": true,
-    "use-life-cycle-interface": true,
+    "no-outputs-metadata-property": true,
+    "prefer-const": false,
+    "template-banana-in-box": true,
+    "template-no-negated-async": true,
+    "use-lifecycle-interface": true,
     "use-pipe-transform-interface": true,
-    "component-class-suffix": true,
-    "directive-class-suffix": true,
+    // Custom parts
+    "no-submodule-imports": false,
+    "no-implicit-dependencies": false,
     "curly": false,
-    "directive-selector": [
+    "variable-name": false,
+    "no-this-assignment": false,
+    "ban-types": [
       true,
-      "attribute",
-      [
-        "app",
-        "passport",
-        "exception",
-        "layout",
-        "header",
-        "kendoui"
-      ],
-      "camelCase"
-    ],
-    "component-selector": [
-      true,
-      "element",
-      [
-        "app",
-        "passport",
-        "exception",
-        "layout",
-        "header",
-        "kendoui"
-      ],
-      "kebab-case"
+      ["Object", "Use {} instead."],
+      ["String", "Use string instead."],
+      ["Number", "Use number instead."],
+      ["Boolean", "Use boolean instead."],
+      ["Function", "Use specific callable interface instead."]
     ]
   }
 }

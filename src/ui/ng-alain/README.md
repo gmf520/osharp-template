@@ -4,12 +4,9 @@
   </a>
 </p>
 
-<h1 align="center">
-Ng Alain
-</h1>
+<h1 align="center">NG-ALAIN</h1>
 
 <div align="center">
-
   Out-of-box UI solution for enterprise applications, Let developers focus on business.
 
   [![Build Status](https://img.shields.io/travis/ng-alain/ng-alain/master.svg?style=flat-square)](https://travis-ci.org/ng-alain/ng-alain)
@@ -26,21 +23,9 @@ Ng Alain
 
 English | [简体中文](README-zh_CN.md)
 
-## Quick start
+## Quickstart
 
-```bash
-# Make sure you are using the latest version of Angular cli
-ng new demo --style less
-cd demo
-ng add ng-alain
-ng serve
-# or hmr mode
-npm run hmr
-```
-
-> Please refer to [Cli](https://ng-alain.com/cli) for more details.
->
-> [vscode] recommended install [ng-zorro-vscode](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-zorro-vscode) & [ng-alain-vscode](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode) plugins.
+- [Getting Started](https://ng-alain.com/docs/getting-started)
 
 ## Links
 

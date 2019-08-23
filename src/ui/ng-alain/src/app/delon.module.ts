@@ -1,6 +1,6 @@
 /**
  * 进一步对基础模块的导入提炼
- * 有关模块注册指导原则请参考：https://github.com/ng-alain/ng-alain/issues/180
+ * 有关模块注册指导原则请参考：https://ng-alain.com/docs/module
  */
 import { NgModule, Optional, SkipSelf, ModuleWithProviders } from '@angular/core';
 import { throwIfAlreadyLoaded } from '@core';
@@ -11,9 +11,7 @@ import { AlainThemeModule } from '@delon/theme';
 import { DelonMockModule } from '@delon/mock';
 import * as MOCKDATA from '../../_mock';
 import { environment } from '@env/environment';
-const MOCK_MODULES = !environment.production
-  ? [DelonMockModule.forRoot({ data: MOCKDATA })]
-  : [];
+const MOCK_MODULES = true ? [DelonMockModule.forRoot({ data: MOCKDATA })] : [];
 // #endregion
 
 // #region reuse-tab
@@ -45,7 +43,7 @@ import { PageHeaderConfig } from '@delon/abc';
 export function fnPageHeaderConfig(): PageHeaderConfig {
   return {
     ...new PageHeaderConfig(),
-    ...{ homeI18n: 'home' } as PageHeaderConfig
+    homeI18n: 'home',
   };
 }
 
@@ -53,13 +51,18 @@ import { DelonAuthConfig } from '@delon/auth';
 export function fnDelonAuthConfig(): DelonAuthConfig {
   return {
     ...new DelonAuthConfig(),
-    ...{ login_url: '/passport/login', ignores: [/\/login/, /assets\//, /api\/(?!admin)[\w_-]+\/\S*/] } as DelonAuthConfig
+    login_url: '/passport/login',
+    ignores: [
+      /assets\//,
+      /passport\//,
+      /api\/(?!admin)[\w_-]+\/\S*/
+    ]
   };
 }
 
-import { DelonACLConfig, ACLCanType, ACLType } from "@delon/acl";
+import { DelonACLModule, DelonACLConfig, ACLType, ACLCanType } from '@delon/acl';
 export function fnDelonACLConfig(): DelonACLConfig {
-  return {
+  const config: DelonACLConfig = {
     guard_url: '/exception/403',
     preCan: (roleOrAbility: ACLCanType) => {
       function isAbility(val: string) {
@@ -70,10 +73,11 @@ export function fnDelonACLConfig(): DelonACLConfig {
       if (typeof roleOrAbility === 'string') {
         return isAbility(roleOrAbility) ? { ability: [roleOrAbility] } : { role: [roleOrAbility] };
       }
+
       // 字符串集合，每项可能是角色或是功能点，逐个处理每项
       if (Array.isArray(roleOrAbility) && roleOrAbility.length > 0 && typeof roleOrAbility[0] === 'string') {
-        let abilities: string[] = [], roles: string[] = [];
-        let type: ACLType = {};
+        const abilities: string[] = []; const roles: string[] = [];
+        const type: ACLType = {};
         (roleOrAbility as string[]).forEach((val: string) => {
           if (isAbility(val)) abilities.push(val);
           else roles.push(val);
@@ -82,18 +86,19 @@ export function fnDelonACLConfig(): DelonACLConfig {
         type.ability = abilities.length > 0 ? abilities : null;
         return type;
       }
-      return roleOrAbility;
+      return roleOrAbility as ACLType;
     }
-  } as DelonACLConfig;
+  };
+  return config;
 }
 
+// tslint:disable-next-line: no-duplicate-imports
 import { STConfig } from '@delon/abc';
+import { DelonCacheConfig } from '@delon/cache';
 export function fnSTConfig(): STConfig {
   return {
     ...new STConfig(),
-    ...{
-      modal: { size: 'lg' }
-    } as STConfig
+    modal: { size: 'lg' },
   };
 }
 
@@ -103,16 +108,12 @@ const GLOBAL_CONFIG_PROVIDES = [
   { provide: PageHeaderConfig, useFactory: fnPageHeaderConfig },
   { provide: DelonAuthConfig, useFactory: fnDelonAuthConfig },
   { provide: DelonACLConfig, useFactory: fnDelonACLConfig },
-  // { provide: ACLService, useClass: OsharpACLService }
 ];
 
 // #endregion
 
 @NgModule({
-  imports: [
-    AlainThemeModule.forRoot(),
-    ...MOCK_MODULES,
-  ],
+  imports: [AlainThemeModule.forRoot(), DelonACLModule.forRoot(), ...MOCK_MODULES],
 })
 export class DelonModule {
   constructor(@Optional() @SkipSelf() parentModule: DelonModule) {

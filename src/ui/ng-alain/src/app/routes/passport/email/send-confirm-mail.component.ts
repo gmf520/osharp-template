@@ -4,10 +4,10 @@ import { Router } from '@angular/router';
 import { IdentityService } from '@shared/osharp/services/identity.service';
 
 @Component({
-  selector: 'app-send-confirm-mail',
+  selector: 'passport-send-confirm-mail',
   template: `
   <div *ngIf="!result.show">
-    <app-passport-send-mail [title]="title" (submited)="onSubmited($event)"></app-passport-send-mail>
+    <passport-send-mail [title]="title" (submited)="onSubmited($event)"></passport-send-mail>
   </div>
   <result *ngIf="result.show" type="{{result.type}}" [title]="result.title" description="{{result.description}}">
     <button nz-button [nzType]="'primary'" (click)="router.navigate(['passport/login'])">立即登录</button>

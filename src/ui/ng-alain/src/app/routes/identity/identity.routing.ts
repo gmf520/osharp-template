@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ACLGuard } from '@delon/acl';
+
 import { UserComponent } from './user/user.component';
 import { RoleComponent } from './role/role.component';
 import { UserRoleComponent } from './user-role/user-role.component';
-import { ACLGuard } from '@delon/acl';
+
 
 const routes: Routes = [
   { path: 'user', component: UserComponent, canActivate: [ACLGuard], data: { title: '用户信息管理', reuse: true, titleI18n: "menu.nav.permission.identity.user", guard: 'Root.Admin.Identity.User.Read' } },

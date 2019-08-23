@@ -1,21 +1,21 @@
-import { AlainService } from '@shared/osharp/services/ng-alain.service';
+import { AlainService } from '@shared/osharp/services/alain.service';
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { OsharpService } from '@shared/osharp/services/osharp.service';
 import { NzModalComponent } from 'ng-zorro-antd';
 import { FilterRule, FilterOperate, PageRequest, FilterGroup } from '@shared/osharp/osharp.model';
 import { List } from 'linqts';
-import { OsharpSTColumn } from '@shared/osharp/services/ng-alain.types';
+import { STColumn } from '@delon/abc';
 
 @Component({
-  selector: 'app-ad-search',
+  selector: 'osharp-ad-search',
   templateUrl: './ad-search.component.html',
   styles: [],
 })
 export class AdSearchComponent implements OnInit {
   @Input() request: PageRequest;
-  @Input() columns: OsharpSTColumn[];
+  @Input() columns: STColumn[];
   @Output() submited: EventEmitter<PageRequest> = new EventEmitter<PageRequest>();
-  @ViewChild('searchModal') searchModal: NzModalComponent;
+  @ViewChild('searchModal', { static: false }) searchModal: NzModalComponent;
 
   rule: FilterRule;
 

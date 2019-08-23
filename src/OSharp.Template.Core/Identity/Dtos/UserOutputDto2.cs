@@ -7,7 +7,10 @@
 //  <last-date>2018-06-27 4:44</last-date>
 // -----------------------------------------------------------------------
 
+using OSharp.Template.Identity.Entities;
+
 using OSharp.Entity;
+using OSharp.Mapping;
 
 
 namespace OSharp.Template.Identity.Dtos
@@ -15,6 +18,7 @@ namespace OSharp.Template.Identity.Dtos
     /// <summary>
     /// 简单用户输出DTO
     /// </summary>
+    [MapFrom(typeof(User))]
     public class UserOutputDto2 : IOutputDto
     {
         /// <summary>

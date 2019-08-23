@@ -4,12 +4,9 @@
   </a>
 </p>
 
-<h1 align="center">
-Ng Alain
-</h1>
+<h1 align="center">NG-ALAIN</h1>
 
 <div align="center">
-
   一个基于 Antd 中后台前端解决方案，提供更多通用性业务模块，让开发者更加专注于业务。
 
   [![Build Status](https://img.shields.io/travis/ng-alain/ng-alain/master.svg?style=flat-square)](https://travis-ci.org/ng-alain/ng-alain)
@@ -28,18 +25,7 @@ Ng Alain
 
 ## 快速入门
 
-```bash
-# 确保使用的是最新版本 Angular cli
-ng new demo --style less
-cd demo
-ng add ng-alain
-ng serve
-```
-
-> 请参考[命令行工具](https://ng-alain.com/cli)了解更多细节。
->
-> [vscode] 建议安装 [ng-zorro-vscode](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-zorro-vscode) 和 [ng-alain-vscode](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode) 插件，开发更爽。
-
+- [如何开始使用？](https://ng-alain.com/docs/getting-started)
 
 ## 链接
 

@@ -4,13 +4,14 @@ import { NzModalService, NzMessageService } from 'ng-zorro-antd';
 @Component({
   selector: 'header-storage',
   template: `
-  <i nz-icon type="tool"></i>
-  {{ 'menu.clear.local.storage' | translate}}
+    <i nz-icon nzType="tool"></i>
+    {{ 'menu.clear.local.storage' | translate }}
   `,
+  // tslint:disable-next-line: no-host-metadata-property
   host: {
     '[class.d-block]': 'true',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderStorageComponent {
   constructor(private modalSrv: NzModalService, private messageSrv: NzMessageService) {}

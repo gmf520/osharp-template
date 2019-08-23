@@ -13,7 +13,7 @@ using OSharp.Extensions;
 using OSharp.Reflection;
 
 
-namespace OSharp.Template.Web.Startups
+namespace Liuliu.Demo.Web.Startups
 {
     public class PostgreSqlDesignTimeDefaultDbContextFactory : DesignTimeDbContextFactoryBase<DefaultDbContext>
     {

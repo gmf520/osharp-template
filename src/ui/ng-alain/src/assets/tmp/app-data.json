@@ -8,16 +8,19 @@
     "avatar": "./assets/tmp/img/avatar.jpg",
     "email": "cipchk@qq.com"
   },
-  "menu": [{
+  "menu": [
+    {
       "text": "主导航",
       "i18n": "menu.main",
       "group": true,
       "hideInBreadcrumb": true,
-      "children": [{
+      "children": [
+        {
           "text": "仪表盘",
           "i18n": "menu.dashboard",
           "icon": "anticon-dashboard",
-          "children": [{
+          "children": [
+            {
               "text": "仪表盘V1",
               "link": "/dashboard/v1",
               "i18n": "menu.dashboard.v1"
@@ -42,7 +45,7 @@
         {
           "text": "快捷菜单",
           "i18n": "menu.shortcut",
-          "icon": "anticon anticon-rocket",
+          "icon": "anticon-rocket",
           "shortcutRoot": true,
           "children": []
         },
@@ -50,7 +53,7 @@
           "text": "小部件",
           "i18n": "menu.widgets",
           "link": "/widgets",
-          "icon": "anticon anticon-appstore",
+          "icon": "anticon-appstore",
           "badge": 2
         }
       ]
@@ -60,11 +63,13 @@
       "i18n": "menu.alain",
       "group": true,
       "hideInBreadcrumb": true,
-      "children": [{
+      "children": [
+        {
           "text": "样式",
           "i18n": "menu.style",
-          "icon": "anticon anticon-info",
-          "children": [{
+          "icon": "anticon-info",
+          "children": [
+            {
               "text": "Typography",
               "link": "/style/typography",
               "i18n": "menu.style.typography",
@@ -85,15 +90,16 @@
         {
           "text": "Delon",
           "i18n": "menu.delon",
-          "icon": "anticon anticon-bulb",
-          "children": [{
+          "icon": "anticon-bulb",
+          "children": [
+            {
               "text": "Dynamic Form",
               "link": "/delon/form",
               "i18n": "menu.delon.form"
             },
             {
               "text": "Simple Table",
-              "link": "/delon/simple-table",
+              "link": "/delon/st",
               "i18n": "menu.delon.table"
             },
             {
@@ -152,12 +158,14 @@
       "i18n": "menu.pro",
       "group": true,
       "hideInBreadcrumb": true,
-      "children": [{
+      "children": [
+        {
           "text": "Form Page",
           "i18n": "menu.form",
           "link": "/pro/form",
-          "icon": "anticon anticon-edit",
-          "children": [{
+          "icon": "anticon-edit",
+          "children": [
+            {
               "text": "Basic Form",
               "link": "/pro/form/basic-form",
               "i18n": "menu.form.basicform",
@@ -178,8 +186,9 @@
         {
           "text": "List",
           "i18n": "menu.list",
-          "icon": "anticon anticon-appstore",
-          "children": [{
+          "icon": "anticon-appstore",
+          "children": [
+            {
               "text": "Table List",
               "link": "/pro/list/table-list",
               "i18n": "menu.list.searchtable",
@@ -198,7 +207,8 @@
             {
               "text": "Search List",
               "i18n": "menu.list.searchlist",
-              "children": [{
+              "children": [
+                {
                   "link": "/pro/list/articles",
                   "i18n": "menu.list.searchlist.articles"
                 },
@@ -218,8 +228,9 @@
         {
           "text": "Profile",
           "i18n": "menu.profile",
-          "icon": "anticon anticon-profile",
-          "children": [{
+          "icon": "anticon-profile",
+          "children": [
+            {
               "text": "Basic",
               "link": "/pro/profile/basic",
               "i18n": "menu.profile.basic"
@@ -235,8 +246,9 @@
         {
           "text": "Result",
           "i18n": "menu.result",
-          "icon": "anticon anticon-check-circle",
-          "children": [{
+          "icon": "anticon-check-circle",
+          "children": [
+            {
               "text": "Success",
               "link": "/pro/result/success",
               "i18n": "menu.result.success"
@@ -252,8 +264,9 @@
           "text": "Exception",
           "i18n": "menu.exception",
           "link": "/",
-          "icon": "anticon anticon-exception",
-          "children": [{
+          "icon": "anticon-exception",
+          "children": [
+            {
               "text": "403",
               "link": "/exception/403",
               "i18n": "menu.exception.not-permission",
@@ -276,8 +289,9 @@
         {
           "text": "Account",
           "i18n": "menu.account",
-          "icon": "anticon anticon-user",
-          "children": [{
+          "icon": "anticon-user",
+          "children": [
+            {
               "text": "center",
               "link": "/pro/account/center",
               "i18n": "menu.account.center"
@@ -296,23 +310,27 @@
       "i18n": "menu.more",
       "group": true,
       "hideInBreadcrumb": true,
-      "children": [{
+      "children": [
+        {
           "text": "Report",
           "i18n": "menu.report",
-          "icon": "anticon anticon-cloud",
-          "children": [{
-            "text": "Relation",
-            "link": "/data-v/relation",
-            "i18n": "menu.report.relation",
-            "reuse": false
-          }]
+          "icon": "anticon-cloud",
+          "children": [
+            {
+              "text": "Relation",
+              "link": "/data-v/relation",
+              "i18n": "menu.report.relation",
+              "reuse": false
+            }
+          ]
         },
         {
           "text": "Extras",
           "i18n": "menu.extras",
           "link": "/extras",
-          "icon": "anticon anticon-link",
-          "children": [{
+          "icon": "anticon-link",
+          "children": [
+            {
               "text": "Help Center",
               "link": "/extras/helpcenter",
               "i18n": "menu.extras.helpcenter"

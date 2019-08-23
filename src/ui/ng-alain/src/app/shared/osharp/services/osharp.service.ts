@@ -13,17 +13,82 @@ import { ErrorData } from '@delon/form';
   providedIn: 'root',
 })
 export class OsharpService {
-  public msgSrv: NzMessageService;
-  private router: Router;
-  public http: _HttpClient;
-  private aclSrv: ACLService;
 
-  constructor(injector: Injector) {
-    this.msgSrv = injector.get(NzMessageService);
-    this.router = injector.get(Router);
-    this.http = injector.get(_HttpClient);
-    this.aclSrv = injector.get(ACLService);
+  constructor(
+    private injector: Injector,
+    public msgSrv: NzMessageService,
+    public http: _HttpClient,
+    private aclSrv: ACLService) {
   }
+
+  public get router(): Router {
+    return this.injector.get(Router);
+  }
+
+  //#region 远程验证
+
+  private timeout1;
+
+  private timeout2;
+
+  // #endregion
+
+  // #region 消息方法
+
+  private msgOptions: NzMessageDataOptions = {
+    nzDuration: 1000 * 3,
+    nzAnimate: true,
+    nzPauseOnHover: true,
+  };
+
+  // #endregion
+
+  // #region 静态数据
+
+  data = {
+    accessType: [
+      { id: 0, text: '匿名访问' },
+      { id: 1, text: '登录访问' },
+      { id: 2, text: '角色访问' },
+    ],
+    stringFilterable: {
+      operators: {
+        string: {
+          contains: '包含',
+          eq: '等于',
+          neq: '不等于',
+          startswith: '开始于',
+          endswith: '结束于',
+          doesnotcontain: '不包含',
+        },
+      },
+    },
+    dataAuthOperations: [
+      { id: 0, text: '读取' },
+      { id: 1, text: '更新' },
+      { id: 2, text: '删除' },
+    ],
+    operateType: [
+      { id: 1, text: '新增' },
+      { id: 2, text: '更新' },
+      { id: 3, text: '删除' },
+    ],
+    ajaxResultType: [
+      { id: 200, text: '成功' },
+      { id: 203, text: '消息' },
+      { id: 401, text: '未登录' },
+      { id: 403, text: '无权操作' },
+      { id: 404, text: '不存在' },
+      { id: 423, text: '锁定' },
+      { id: 500, text: '错误' },
+    ],
+    packLevel: [
+      { id: 1, text: 'Core' },
+      { id: 10, text: 'Framework' },
+      { id: 20, text: 'Application' },
+      { id: 30, text: 'Business' },
+    ],
+  };
 
   // #region 工具方法
 
@@ -78,8 +143,7 @@ export class OsharpService {
    * @param end 结束的字符串
    */
   subStr(str: string, start: string = null, end: string = null): string {
-    let startIndex = 0,
-      endIndex = str.length;
+    let startIndex = 0; let endIndex = str.length;
     if (start) {
       startIndex = str.indexOf(start) + start.length;
     }
@@ -97,7 +161,7 @@ export class OsharpService {
     items: Array<T>,
     exp: (value: T, index: number, obj: T[]) => boolean,
   ) {
-    let index = items.findIndex(exp);
+    const index = items.findIndex(exp);
     items.splice(index, 1);
     return items;
   }
@@ -157,9 +221,13 @@ export class OsharpService {
    * @param email Email地址
    */
   openMailSite(email: string) {
-    let host = this.subStr(email, '@');
-    let url = `http://mail.${host}`;
+    const host = this.subStr(email, '@');
+    const url = `http://mail.${host}`;
     window.open(url);
+  }
+
+  goto(url: string) {
+    setTimeout(() => this.router.navigateByUrl(url));
   }
 
   /**
@@ -219,10 +287,6 @@ export class OsharpService {
         break;
     }
   }
-
-  //#region 远程验证
-
-  private timeout1;
   remoteSFValidator(
     url: string,
     error: ErrorData,
@@ -240,8 +304,6 @@ export class OsharpService {
       }, 800);
     });
   }
-
-  private timeout2;
   remoteInverseSFValidator(
     url: string,
     error: ErrorData,
@@ -267,11 +329,11 @@ export class OsharpService {
    * 获取验证码
    */
   refreshVerifyCode(): Observable<VerifyCode> {
-    let url = 'api/common/verifycode';
+    const url = 'api/common/verifycode';
     return this.http.get(url, null, { responseType: 'text' }).map(res => {
-      let str = this.fromBase64(res.toString());
-      let strs: string[] = str.split('#$#');
-      let code: VerifyCode = new VerifyCode();
+      const str = this.fromBase64(res.toString());
+      const strs: string[] = str.split('#$#');
+      const code: VerifyCode = new VerifyCode();
       code.image = strs[0];
       code.id = strs[1];
       return code;
@@ -307,7 +369,6 @@ export class OsharpService {
       url = `/${url}`;
     }
     url = this.urlEncode(url);
-    console.log(url);
     return this.http.get<boolean>('api/security/CheckUrlAuth?url=' + url).toPromise();
   }
 
@@ -320,11 +381,11 @@ export class OsharpService {
       this.aclSrv.data.abilities &&
       this.aclSrv.data.abilities.length
     ) {
-      let authInfo: string[] = this.aclSrv.data.abilities as string[];
+      const authInfo: string[] = this.aclSrv.data.abilities as string[];
       return of(authInfo);
     }
 
-    let url = 'api/security/getauthinfo';
+    const url = 'api/security/getauthinfo';
     return this.http.get<string[]>(url).map(auth => {
       this.aclSrv.setAbility(auth);
       return auth;
@@ -334,16 +395,6 @@ export class OsharpService {
   getOperateEntries(operates: FilterOperate[]): FilterOperateEntry[] {
     return new List(operates).Select(m => new FilterOperateEntry(m)).ToArray();
   }
-
-  // #endregion
-
-  // #region 消息方法
-
-  private msgOptions: NzMessageDataOptions = {
-    nzDuration: 1000 * 3,
-    nzAnimate: true,
-    nzPauseOnHover: true,
-  };
 
   /**
    * 消息加载中
@@ -386,55 +437,6 @@ export class OsharpService {
   }
 
   // #endregion
-
-  // #region 静态数据
-
-  data = {
-    accessType: [
-      { id: 0, text: '匿名访问' },
-      { id: 1, text: '登录访问' },
-      { id: 2, text: '角色访问' },
-    ],
-    stringFilterable: {
-      operators: {
-        string: {
-          contains: '包含',
-          eq: '等于',
-          neq: '不等于',
-          startswith: '开始于',
-          endswith: '结束于',
-          doesnotcontain: '不包含',
-        },
-      },
-    },
-    dataAuthOperations: [
-      { id: 0, text: '读取' },
-      { id: 1, text: '更新' },
-      { id: 2, text: '删除' },
-    ],
-    operateType: [
-      { id: 1, text: '新增' },
-      { id: 2, text: '更新' },
-      { id: 3, text: '删除' },
-    ],
-    ajaxResultType: [
-      { id: 200, text: '成功' },
-      { id: 203, text: '消息' },
-      { id: 401, text: '未登录' },
-      { id: 403, text: '无权操作' },
-      { id: 404, text: '不存在' },
-      { id: 423, text: '锁定' },
-      { id: 500, text: '错误' },
-    ],
-    packLevel: [
-      { id: 1, text: 'Core' },
-      { id: 10, text: 'Framework' },
-      { id: 20, text: 'Application' },
-      { id: 30, text: 'Business' },
-    ],
-  };
-
-  // #endregion
 }
 
 //#region 组件基类
@@ -468,12 +470,12 @@ export abstract class ComponentBase {
       this.authConfig = this.AuthConfig();
       this.authConfig.funcs.forEach(key => (this.auth[key] = true));
     }
-    let position = this.authConfig.position;
-    let codes = await this.osharp.getAuthInfo().toPromise();
+    const position = this.authConfig.position;
+    const codes = await this.osharp.getAuthInfo().toPromise();
     if (!codes) {
       return this.auth;
     }
-    let list = new List(codes);
+    const list = new List(codes);
     for (const key in this.auth) {
       if (this.auth.hasOwnProperty(key)) {
         let path = key;

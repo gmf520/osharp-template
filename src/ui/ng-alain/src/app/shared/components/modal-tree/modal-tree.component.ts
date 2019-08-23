@@ -1,13 +1,14 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { NzTreeNodeOptions, NzModalComponent, NzTreeComponent, NzTreeNode, NzFormatEmitEvent } from 'ng-zorro-antd';
+import { Component, Input, Output, EventEmitter, ViewChild, OnInit } from '@angular/core';
+import { NzTreeNode, NzTreeNodeOptions, NzModalComponent, NzTreeComponent } from 'ng-zorro-antd';
 import { _HttpClient } from '@delon/theme';
-import { AlainService } from '@shared/osharp/services/ng-alain.service';
+import { AlainService } from '@shared/osharp/services/alain.service';
 
 @Component({
-  selector: 'app-identity-modal-tree',
+  selector: 'app-osharp-modal-tree',
   template: `
-  <nz-modal #modal [(nzVisible)]="visible" [nzTitle]="title" [nzClosable]="false" [nzFooter]="permissFooter" (nzAfterOpen)="loadTreeData()"
+  <nz-modal #modal [(nzVisible)]="visible" [nzTitle]="title" [nzClosable]="false" [nzFooter]="permissFooter"
     [nzBodyStyle]="{'max-height':'600px', 'overflow-y': 'auto'}">
+    <nz-alert *ngIf="loading" nzType="info" nzMessage="正在加载树数据，请稍候……"></nz-alert>
     <nz-tree #tree [nzData]="treeData" nzCheckable nzMultiple [nzExpandAll]="true"></nz-tree>
     <ng-template #permissFooter>
       <button nz-button type="button" (click)="close()">关闭</button>
@@ -26,11 +27,17 @@ export class ModalTreeComponent {
 
   visible: boolean;
   treeData: NzTreeNodeOptions[] = [];
-  @ViewChild("modal") modal: NzModalComponent;
+  @ViewChild("modal", { static: false }) modal: NzModalComponent;
 
   constructor(public http: _HttpClient, private alain: AlainService) { }
 
-  loadTreeData() {
+  // TODO: 不知原因，nzAfterOpen事件会重复调用，暂时使用loading来阻隔
+  loading = false;
+  private loadTreeData() {
+    if (this.loading) {
+      return;
+    }
+    this.loading = true;
     let url = this.treeDataUrl;
     if (!url) {
       return;
@@ -39,11 +46,15 @@ export class ModalTreeComponent {
       return this.alain.ToNzTreeData(res);
     }).subscribe(res => {
       this.treeData = res;
+      this.loading = false;
     });
   }
 
   open() {
     this.modal.open();
+    setTimeout(() => {
+      this.loadTreeData();
+    }, 100);
   }
 
   close() {

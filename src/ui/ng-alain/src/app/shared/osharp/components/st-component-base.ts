@@ -1,12 +1,12 @@
-import { PageRequest, PageCondition, SortCondition, ListSortDirection, AjaxResult, } from '../osharp.model';
-import { STColumn, STReq, STRes, STComponent, STChange, STPage, STRequestOptions, STData, STError, } from '@delon/abc';
+import { STColumn, STReq, STRes, STPage, STComponent, STData, STRequestOptions, STChange, STError } from '@delon/abc';
 import { ViewChild, Injector } from '@angular/core';
 import { SFSchema, SFUISchema, SFSchemaEnumType } from '@delon/form';
 import { _HttpClient } from '@delon/theme';
-import { NzModalComponent, NzTreeNodeOptions, NzTreeNode } from 'ng-zorro-antd';
+import { NzModalComponent } from 'ng-zorro-antd';
+import { PageRequest, PageCondition, SortCondition, ListSortDirection, AjaxResult } from '../osharp.model';
 import { OsharpService } from '../services/osharp.service';
-import { AlainService } from '../services/ng-alain.service';
-import { OsharpSTColumn } from '../services/ng-alain.types';
+import { AlainService } from '../services/alain.service';
+import { OsharpSTColumn } from '../services/alain.types';
 
 export abstract class STComponentBase {
   moduleName: string;
@@ -18,32 +18,32 @@ export abstract class STComponentBase {
   deleteUrl: string;
 
   // 表格属性
-  columns: STColumn[];
+  columns: OsharpSTColumn[];
   request: PageRequest;
   req: STReq;
   res: STRes;
   page: STPage;
-  @ViewChild('st') st: STComponent;
+  @ViewChild('st', { static: false }) st: STComponent;
+
 
   // 编辑属性
-
   schema: SFSchema;
   ui: SFUISchema;
   editRow: STData;
   editTitle = '编辑';
-  @ViewChild('modal') editModal: NzModalComponent;
+  @ViewChild('modal', { static: false }) editModal: NzModalComponent;
 
   osharp: OsharpService;
   alain: AlainService;
   selecteds: STData[] = [];
 
-  public get http(): _HttpClient {
-    return this.osharp.http;
-  }
-
   constructor(injector: Injector) {
     this.osharp = injector.get(OsharpService);
     this.alain = injector.get(AlainService);
+  }
+
+  get http(): _HttpClient {
+    return this.osharp.http;
   }
 
   protected InitBase() {
@@ -65,64 +65,24 @@ export abstract class STComponentBase {
   // #region 表格
 
   /**
-   * 重写以获取表格的列设置Columns
+   * 重写以获取表格的列设置 Columns
    */
   protected abstract GetSTColumns(): OsharpSTColumn[];
 
   protected GetSTReq(request: PageRequest): STReq {
-    let req: STReq = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: request,
-      allInBody: true,
-      process: opt => this.RequestProcess(opt),
-    };
-    return req;
+    return this.alain.GetSTReq(request, opt => this.RequestProcess(opt));
   }
 
   protected GetSTRes(): STRes {
-    let res: STRes = {
-      reName: { list: 'Rows', total: 'Total' },
-      process: data => this.ResponseDataProcess(data),
-    };
-    return res;
+    return this.alain.GetSTRes(this.ResponseDataProcess);
   }
 
   protected GetSTPage(): STPage {
-    let page: STPage = {
-      showSize: true,
-      showQuickJumper: true,
-      toTop: true,
-      toTopOffset: 0,
-    };
-    return page;
+    return this.alain.GetSTPage();
   }
 
   protected RequestProcess(opt: STRequestOptions): STRequestOptions {
-    if (opt.body.PageCondition) {
-      let page: PageCondition = opt.body.PageCondition;
-      page.PageIndex = opt.body.pi;
-      page.PageSize = opt.body.ps;
-      if (opt.body.sort) {
-        page.SortConditions = [];
-        let sorts = opt.body.sort.split('-');
-        for (const item of sorts) {
-          let sort = new SortCondition();
-          let num = item.lastIndexOf('.');
-          let field = item.substr(0, num);
-          field = this.ReplaceFieldName(field);
-          sort.SortField = field;
-          sort.ListSortDirection =
-            item.substr(num + 1) === 'ascend'
-              ? ListSortDirection.Ascending
-              : ListSortDirection.Descending;
-          page.SortConditions.push(sort);
-        }
-      } else {
-        page.SortConditions = [];
-      }
-    }
-    return opt;
+    return this.alain.RequestProcess(opt, field => this.ReplaceFieldName(field));
   }
 
   protected ResponseDataProcess(data: STData[]): STData[] {
@@ -150,7 +110,7 @@ export abstract class STComponentBase {
   }
 
   error(value: STError) {
-    console.log(value);
+    console.error(value);
   }
 
   // #endregion
@@ -158,16 +118,14 @@ export abstract class STComponentBase {
   // #region 编辑
 
   /**
-   * 默认由列配置 `STColumn[]` 来生成SFSchema，不需要可以重写定义自己的SFSchema
+   * 默认由列配置 `OsharpSTColumn[]` 来生成SFSchema，不需要可以重写定义自己的SFSchema
    */
   protected GetSFSchema(): SFSchema {
     let schema: SFSchema = { properties: this.ColumnsToSchemas(this.columns) };
     return schema;
   }
 
-  protected ColumnsToSchemas(
-    columns: OsharpSTColumn[],
-  ): { [key: string]: SFSchema } {
+  protected ColumnsToSchemas(columns: OsharpSTColumn[], ): { [key: string]: SFSchema } {
     let properties: { [key: string]: SFSchema } = {};
     for (const column of columns) {
       if (!column.index || !column.editable || column.buttons) {
@@ -213,7 +171,6 @@ export abstract class STComponentBase {
 
   close() {
     if (!this.editModal) return;
-    console.log(this.editModal);
     this.editModal.destroy();
   }
 
@@ -239,4 +196,5 @@ export abstract class STComponentBase {
   }
 
   // #endregion
+
 }

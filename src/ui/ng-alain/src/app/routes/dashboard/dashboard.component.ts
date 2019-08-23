@@ -1,13 +1,11 @@
 import { Component, OnInit, AfterViewInit, } from '@angular/core';
 
-import * as G2 from '@antv/g2';
-import * as DataSet from '@antv/data-set';
 import * as moment from 'moment';
 import { _HttpClient } from '@delon/theme';
 
 
 @Component({
-  selector: 'admin-dashboard',
+  selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.less']
 })
@@ -25,7 +23,7 @@ export class DashboardComponent implements AfterViewInit {
   };
 
   summaries: Summary[] = [];
-  userLineChart: any;
+  lineChartData: any[] = [];
 
   constructor(private http: _HttpClient) { }
 
@@ -47,6 +45,9 @@ export class DashboardComponent implements AfterViewInit {
   summaryData(start, end) {
     const url = `api/admin/dashboard/SummaryData?start=${start}&end=${end}`;
     this.http.get(url).subscribe((res: any) => {
+      if (!res) {
+        return;
+      }
       this.summaries = [];
       this.summaries.push({ data: `${res.users.ValidCount} / ${res.users.TotalCount}`, text: '用户：已激活 / 总计', bgColor: 'bg-primary' });
       this.summaries.push({ data: `${res.roles.AdminCount} / ${res.roles.TotalCount}`, text: '角色：管理 / 总计', bgColor: 'bg-success' });
@@ -58,20 +59,17 @@ export class DashboardComponent implements AfterViewInit {
   /** 用户曲线 */
   userLine(start, end) {
     let url = `api/admin/dashboard/LineData?start=${start}&end=${end}`;
-    this.http.get(url).subscribe((res: any) => {
-      if (this.userLineChart != null) {
-        this.userLineChart.destroy();
+    this.http.get(url).subscribe((res: any[]) => {
+      if (!res || !res.length) {
+        return;
       }
-      let dv = new DataSet().createView().source(res);
-      dv.transform({ type: 'fold', fields: ['DailyCount', 'DailySum'], key: 'key', value: 'value' });
-      this.userLineChart = new G2.Chart({ container: 'user-line', forceFit: true, height: 300 });
-      let chart = this.userLineChart;
-      chart.source(dv, { Date: { range: [0, 1] } });
-      chart.tooltip({ crosshairs: { type: 'line' } });
-      chart.axis('Date', { label: { formatter: val => new Date(val).toLocaleDateString() } });
-      chart.line().position('Date*value').color('key').shape('smooth');
-      chart.point().position('Date*value').color('key').size(4).shape('circle').style({ stroke: '#fff', lineWidth: 1 });
-      chart.render();
+      for (const item of res) {
+        this.lineChartData.push({
+          x: new Date(item.Date),
+          y1: item.DailyCount,
+          y2: item.DailySum
+        });
+      }
     });
   }
 }

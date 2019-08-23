@@ -1,6 +1,6 @@
 import { Component, OnInit, Injector } from '@angular/core';
 import { STComponentBase } from '@shared/osharp/components/st-component-base';
-import { OsharpSTColumn } from '@shared/osharp/services/ng-alain.types';
+import { OsharpSTColumn } from '@shared/osharp/services/alain.types';
 import { SFUISchema } from '@delon/form';
 import { AjaxResult } from '@shared/osharp/osharp.model';
 
@@ -23,7 +23,14 @@ export class RoleEntityinfoComponent extends STComponentBase implements OnInit {
   protected GetSTColumns(): OsharpSTColumn[] {
     let columns: OsharpSTColumn[] =
       [
-        { title: '操作', fixed: 'left', width: 65, buttons: [{ text: '修改', icon: 'edit', iif: row => row.Updatable, click: row => this.edit(row) }] },
+        {
+          title: '操作', fixed: 'left', width: 65, buttons: [{
+            text: '操作', children: [
+              { text: '编辑', icon: 'edit', acl: 'Root.Admin.Security.RoleEntity.Update', iif: row => row.Updatable, click: row => this.edit(row) },
+              { text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.Security.RoleEntity.Delete', iif: row => row.Deletable, click: row => this.delete(row) },
+            ]
+          }]
+        },
         { title: '角色', index: 'RoleId', type: 'number', className: 'text-left', format: d => `${d.RoleId}. ${d.RoleName}`, editable: true },
         { title: '数据实体', index: 'EntityId', className: 'text-left', format: d => `${d.EntityName} [${d.EntityType}]`, editable: true },
         {

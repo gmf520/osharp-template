@@ -6,7 +6,7 @@ import { OsharpService } from '@shared/osharp/services/osharp.service';
 import { _HttpClient } from '@delon/theme';
 
 @Component({
-  selector: 'app-passport-send-mail',
+  selector: 'passport-send-mail',
   templateUrl: './send-mail.component.html',
   styles: [`
   :host {
@@ -23,7 +23,7 @@ export class SendMailComponent implements OnInit, AfterViewInit {
 
   @Input() title: string;
   @Output() submited = new EventEmitter<SendMailDto>();
-  @ViewChild('sf') sf: SFComponent;
+  @ViewChild('sf', { static: false }) sf: SFComponent;
 
   constructor(
     public router: Router,

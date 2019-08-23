@@ -1,23 +1,56 @@
 import { Injectable } from '@angular/core';
-import { List } from 'linqts';
-import { Observable } from 'rxjs';
 import { OsharpService } from './osharp.service';
 import { _HttpClient } from '@delon/theme';
 import { NzTreeNodeOptions, NzTreeNode } from 'ng-zorro-antd';
+import { List } from 'linqts';
+import { Observable } from 'rxjs';
 import { SFSchemaEnumType, SFSchema } from '@delon/form';
-import { OsharpSTColumn } from './ng-alain.types';
-import { FilterRule, FilterOperate } from '../osharp.model';
-import { STColumn, STColumnTag } from '@delon/abc';
+import { STColumn, STColumnTag, STReq, STRes, STPage, STRequestOptions, STData } from '@delon/abc';
+import { FilterRule, FilterOperate, PageRequest, PageCondition, SortCondition, ListSortDirection } from '../osharp.model';
+import { OsharpSTColumn } from './alain.types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AlainService {
+
   constructor(private osharp: OsharpService) { }
 
   public get http(): _HttpClient {
     return this.osharp.http;
   }
+
+  AjaxResultTypeTags: STColumnTag = {
+    200: { text: '成功', color: 'green' },
+    203: { text: '消息', color: '' },
+    401: { text: '未登录', color: 'orange' },
+    403: { text: '无权操作', color: 'orange' },
+    404: { text: '不存在', color: 'orange' },
+    423: { text: '锁定', color: 'orange' },
+    500: { text: '错误', color: 'red' },
+  };
+  AccessTypeTags: STColumnTag = {
+    0: { text: '匿名访问', color: 'green' },
+    1: { text: '登录访问', color: 'blue' },
+    2: { text: '角色访问', color: 'orange' },
+  };
+  DataAuthOperationTags: STColumnTag = {
+    0: { text: '读取', color: 'green' },
+    1: { text: '更新', color: 'blue' },
+    2: { text: '删除', color: 'orange' },
+  };
+  OperateTypeTags: STColumnTag = {
+    0: { text: '读取', color: '' },
+    1: { text: '新增', color: 'green' },
+    2: { text: '更新', color: 'blue' },
+    3: { text: '删除', color: 'orange' },
+  };
+  PackLevelTags: STColumnTag = {
+    1: { text: 'Core', color: 'red' },
+    10: { text: 'Framework', color: 'orange' },
+    20: { text: 'Application', color: 'blue' },
+    30: { text: 'Business', color: 'green' },
+  };
 
   /**
    * 将原始树数据节点转换为 `NzTreeNodeOptions`节点
@@ -80,7 +113,7 @@ export class AlainService {
   ToSFSchema(column: OsharpSTColumn): SFSchema {
     let schemaProps = ['enum', 'minimum', 'exclusiveMinimum', 'maximum', 'exclusiveMaximum', 'multipleOf', 'maxLength', 'minLength', 'pattern', 'items', 'minItems',
       'maxItems', 'uniqueItems', 'additionalItems', 'maxProperties', 'minProperties', 'required', 'properties', 'if', 'then', 'else', 'allOf', 'anyOf', 'oneOf',
-      'description', 'readOnly', 'definitions', '$ref', '$comment', 'ui',];
+      'description', 'readOnly', 'definitions', '$ref', '$comment', 'ui'];
     let specialProps = ['ftype', 'fformat', 'fdefault', 'ftitle'];
     let schema: SFSchema = {};
     let keys = Object.getOwnPropertyNames(column);
@@ -187,7 +220,7 @@ export class AlainService {
         ]);
         rule.Operate = FilterOperate.Contains;
         rule.control = 'string';
-        rule.Value = '';
+        rule.Value = null;
         break;
     }
   }
@@ -203,35 +236,61 @@ export class AlainService {
     return enums;
   }
 
-  AjaxResultTypeTags: STColumnTag = {
-    200: { text: '成功', color: 'green' },
-    203: { text: '消息', color: '' },
-    401: { text: '未登录', color: 'orange' },
-    403: { text: '无权操作', color: 'orange' },
-    404: { text: '不存在', color: 'orange' },
-    423: { text: '锁定', color: 'orange' },
-    500: { text: '错误', color: 'red' },
-  };
-  AccessTypeTags: STColumnTag = {
-    0: { text: '匿名访问', color: 'green' },
-    1: { text: '登录访问', color: 'blue' },
-    2: { text: '角色访问', color: 'orange' },
-  };
-  DataAuthOperationTags: STColumnTag = {
-    0: { text: '读取', color: 'green' },
-    1: { text: '更新', color: 'blue' },
-    2: { text: '删除', color: 'orange' },
-  };
-  OperateTypeTags: STColumnTag = {
-    0: { text: '读取', color: '' },
-    1: { text: '新增', color: 'green' },
-    2: { text: '更新', color: 'blue' },
-    3: { text: '删除', color: 'orange' },
-  };
-  PackLevelTags: STColumnTag = {
-    1: { text: 'Core', color: 'red' },
-    10: { text: 'Framework', color: 'orange' },
-    20: { text: 'Application', color: 'blue' },
-    30: { text: 'Business', color: 'green' },
-  };
+  GetSTReq(request: PageRequest, process?: (requestOptions: STRequestOptions) => STRequestOptions): STReq {
+    let req: STReq = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: request,
+      allInBody: true,
+      process: process ? process : null,
+    };
+    return req;
+  }
+
+  GetSTRes(process?: (data: STData[], rawData?: any) => STData[]): STRes {
+    let res: STRes = {
+      reName: { list: 'Rows', total: 'Total' },
+      process: process ? process : null
+    };
+    return res;
+  }
+
+  GetSTPage(): STPage {
+    let page: STPage = {
+      showSize: true,
+      showQuickJumper: true,
+      toTop: true,
+      toTopOffset: 0,
+    };
+    return page;
+  }
+
+  RequestProcess(opt: STRequestOptions, fieldReplaceFunc?: (f: string) => string): STRequestOptions {
+    if (opt.body.PageCondition) {
+      let page: PageCondition = opt.body.PageCondition;
+      page.PageIndex = opt.body.pi;
+      page.PageSize = opt.body.ps;
+      if (opt.body.sort) {
+        page.SortConditions = [];
+        let sorts: string[] = opt.body.sort.split('-');
+        for (const item of sorts) {
+          let sort = new SortCondition();
+          let num = item.lastIndexOf('.');
+          let field = item.substr(0, num);
+          if (fieldReplaceFunc) {
+            field = fieldReplaceFunc(field);
+          }
+          sort.SortField = field;
+          sort.ListSortDirection =
+            item.substr(num + 1) === 'ascend'
+              ? ListSortDirection.Ascending
+              : ListSortDirection.Descending;
+          page.SortConditions.push(sort);
+        }
+      } else {
+        page.SortConditions = [];
+      }
+    }
+    return opt;
+  }
 }

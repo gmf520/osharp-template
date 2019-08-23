@@ -8,7 +8,7 @@ import { IdentityService } from '@shared/osharp/services/identity.service';
   selector: 'app-passport-forgot-password',
   template: `
   <div *ngIf="!result.show">
-    <app-passport-send-mail [title]="title" (submited)="onSubmited($event)"></app-passport-send-mail>
+    <passport-send-mail [title]="title" (submited)="onSubmited($event)"></passport-send-mail>
   </div>
   <result *ngIf="result.show" type="{{result.type}}" [title]="result.title" description="{{result.description}}">
     <button nz-button [nzType]="'primary'" (click)="result.show=false;dto.VerifyCode=null;">返回</button>

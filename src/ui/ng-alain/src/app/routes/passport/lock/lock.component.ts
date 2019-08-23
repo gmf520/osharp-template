@@ -7,9 +7,9 @@ import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 @Component({
   selector: 'passport-lock',
   templateUrl: './lock.component.html',
-  styleUrls: [ './lock.component.less' ]
+  styleUrls: ['./lock.component.less']
 })
-export class UserLockComponent {
+export class LockComponent {
   f: FormGroup;
 
   constructor(

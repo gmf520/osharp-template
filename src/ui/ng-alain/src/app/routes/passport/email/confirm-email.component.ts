@@ -5,7 +5,7 @@ import { OsharpService } from '@shared/osharp/services/osharp.service';
 import { IdentityService } from '@shared/osharp/services/identity.service';
 
 @Component({
-  selector: 'app-identity-confirm-email',
+  selector: 'passport-confirm-email',
   template: `
   <result type="{{result.type}}" [title]="result.title" description="{{result.description}}">
     <button nz-button [nzType]="'primary'" (click)="router.navigate(['passport/login'])">立即登录</button>
@@ -31,7 +31,7 @@ export class ConfirmEmailComponent implements OnInit {
   }
 
   private getUrlParams() {
-    let url = window.location.hash;
+    const url = window.location.hash;
     this.dto.UserId = this.osharp.getHashURLSearchParams(url, "userId");
     this.dto.Code = this.osharp.getHashURLSearchParams(url, "code");
   }

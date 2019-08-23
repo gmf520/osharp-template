@@ -1,15 +1,16 @@
 import { Component, OnInit, Injector, ViewChild } from '@angular/core';
 import { STComponentBase } from '@shared/osharp/components/st-component-base';
-import { OsharpSTColumn } from '@shared/osharp/services/ng-alain.types';
 import { SFUISchema } from '@delon/form';
-import { STData } from '@delon/abc';
 import { ModalTreeComponent } from '@shared/components/modal-tree/modal-tree.component';
-import { NzTreeNode } from 'ng-zorro-antd';
 import { FilterGroup } from '@shared/osharp/osharp.model';
+import { STData, STColumn } from '@delon/abc';
+import { NzTreeNode } from 'ng-zorro-antd';
+import { FunctionViewComponent } from '@shared/components/function-view/function-view.component';
 
 @Component({
-  selector: 'app-identity-user',
-  templateUrl: './user.component.html'
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styles: []
 })
 export class UserComponent extends STComponentBase implements OnInit {
 
@@ -18,11 +19,11 @@ export class UserComponent extends STComponentBase implements OnInit {
     this.moduleName = 'user';
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     super.InitBase();
   }
 
-  protected GetSTColumns(): OsharpSTColumn[] {
+  protected GetSTColumns(): STColumn[] {
     return [
       {
         title: '操作', fixed: 'left', width: 65, buttons: [{
@@ -31,6 +32,7 @@ export class UserComponent extends STComponentBase implements OnInit {
             { text: '角色', icon: 'team', acl: 'Root.Admin.Identity.User.SetRoles', click: row => this.roles(row) },
             { text: '权限', icon: 'safety', acl: 'Root.Admin.Identity.User.SetModules', click: row => this.module(row) },
             { text: '删除', icon: 'delete', type: 'del', acl: 'Root.Admin.Identity.User.Delete', iif: row => row.Deletable, click: row => this.delete(row) },
+            { text: '查看功能', icon: 'security-scan', acl: 'Root.Admin.Security.UserFunction', click: row => this.viewFunction(row) },
           ]
         }]
       },
@@ -42,7 +44,7 @@ export class UserComponent extends STComponentBase implements OnInit {
       { title: '手机号', index: 'PhoneNumber', sort: true, editable: true, ftype: 'string', filterable: true },
       { title: '手机确认', index: 'PhoneNumberConfirmed', sort: true, type: 'yn', editable: true, filterable: true },
       { title: '角色', index: 'Roles', format: d => this.osharp.expandAndToString(d.Roles) },
-      { title: '是否锁定', index: 'Locked', sort: true, type: 'yn', editable: true, filterable: true },
+      { title: '是否锁定', index: 'IsLocked', sort: true, type: 'yn', editable: true, filterable: true },
       { title: '登录锁', index: 'LockoutEnabled', sort: true, type: 'yn', editable: true, filterable: true },
       { title: '登录错误', index: 'AccessFailedCount', sort: true, editable: true, ftype: 'number', filterable: true },
       { title: '锁时间', index: 'LockoutEnd', sort: true, editable: true, type: 'date', filterable: true },
@@ -60,7 +62,6 @@ export class UserComponent extends STComponentBase implements OnInit {
   }
 
   adSearch(group: FilterGroup) {
-    console.log(group);
     this.request.FilterGroup = group;
     this.st.reload();
   }
@@ -69,7 +70,7 @@ export class UserComponent extends STComponentBase implements OnInit {
 
   roleTitle: string;
   roleTreeDataUrl: string;
-  @ViewChild("roleModal") roleModal: ModalTreeComponent;
+  @ViewChild("roleModal", { static: false }) roleModal: ModalTreeComponent;
 
   private roles(row: STData) {
     this.editRow = row;
@@ -95,7 +96,7 @@ export class UserComponent extends STComponentBase implements OnInit {
 
   moduleTitle: string;
   moduleTreeDataUrl: string;
-  @ViewChild("moduleModal") moduleModal: ModalTreeComponent;
+  @ViewChild("moduleModal", { static: false }) moduleModal: ModalTreeComponent;
 
   private module(row: STData) {
     this.editRow = row;
@@ -115,5 +116,28 @@ export class UserComponent extends STComponentBase implements OnInit {
     });
   }
 
+  // #endregion
+
+  // #region 查看功能
+
+  functionTitle: string;
+  functionVisible = false;
+  functionReadUrl: string;
+  @ViewChild('function', { static: false }) function: FunctionViewComponent;
+
+  private viewFunction(row: STData) {
+    this.functionTitle = `查看用户功能 - ${row.Id}. ${row.UserName}`;
+    this.functionVisible = true;
+
+    this.functionReadUrl = `api/admin/userfunction/readfunctions?userId=${row.Id}`;
+    let filter: FilterGroup = new FilterGroup();
+    setTimeout(() => {
+      this.function.reload(filter);
+    }, 100);
+  }
+
+  closeFunction() {
+    this.functionVisible = false;
+  }
   // #endregion
 }

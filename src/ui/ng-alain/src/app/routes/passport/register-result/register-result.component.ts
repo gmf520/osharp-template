@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
   selector: 'passport-register-result',
   templateUrl: './register-result.component.html',
 })
-export class UserRegisterResultComponent {
+export class RegisterResultComponent {
   params = { email: '' };
   email = '';
   constructor(

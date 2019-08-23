@@ -1,16 +1,16 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "src/",
+    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "module": "es2015",
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
+    "downlevelIteration": true,
     "experimentalDecorators": true,
+    "module": "esnext",
+    "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es5",
+    "target": "es2015",
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -20,20 +20,24 @@
     ],
     "paths": {
       "@shared": [
-        "app/shared/index"
+        "src/app/shared/index"
       ],
       "@shared/*": [
-        "app/shared/*"
+        "src/app/shared/*"
       ],
       "@core": [
-        "app/core/index"
+        "src/app/core/index"
       ],
       "@core/*": [
-        "app/core/*"
+        "src/app/core/*"
       ],
       "@env/*": [
-        "environments/*"
+        "src/environments/*"
       ]
     }
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
   }
 }

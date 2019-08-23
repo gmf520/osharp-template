@@ -14,18 +14,21 @@ if (environment.production) {
 }
 
 const bootstrap = () => {
-  return platformBrowserDynamic().bootstrapModule(AppModule, {
-    defaultEncapsulation: ViewEncapsulation.Emulated,
-  }).then((res) => {
-    if ((<any>window).appBootstrap) {
-      (<any>window).appBootstrap();
-    }
-    return res;
-  });
+  return platformBrowserDynamic()
+    .bootstrapModule(AppModule, {
+      defaultEncapsulation: ViewEncapsulation.Emulated,
+    })
+    .then(res => {
+      if ((window as any).appBootstrap) {
+        (window as any).appBootstrap();
+      }
+      return res;
+    });
 };
 
 if (environment.hmr) {
-  if (module[ 'hot' ]) {
+  // tslint:disable-next-line: no-string-literal
+  if (module['hot']) {
     hmrBootstrap(module, bootstrap);
   } else {
     console.error('HMR is not enabled for webpack-dev-server!');

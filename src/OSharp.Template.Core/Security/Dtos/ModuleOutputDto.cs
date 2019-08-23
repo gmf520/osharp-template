@@ -7,7 +7,10 @@
 //  <last-date>2018-06-27 4:44</last-date>
 // -----------------------------------------------------------------------
 
+using OSharp.Template.Security.Entities;
+
 using OSharp.Entity;
+using OSharp.Mapping;
 
 
 namespace OSharp.Template.Security.Dtos
@@ -15,6 +18,7 @@ namespace OSharp.Template.Security.Dtos
     /// <summary>
     /// 输入DTO:模块信息
     /// </summary>
+    [MapFrom(typeof(Module))]
     public class ModuleOutputDto : IOutputDto
     {
         /// <summary>

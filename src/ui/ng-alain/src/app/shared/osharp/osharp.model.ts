@@ -1,4 +1,5 @@
 import { User as NzUser } from '@delon/theme';
+import { JWTTokenModel } from '@delon/auth';
 
 //#region OSharp Tools
 export class AjaxResult {
@@ -62,7 +63,7 @@ export class FilterGroup {
   Operate: FilterOperate = FilterOperate.And;
   /** 条件组集合 */
   Groups: FilterGroup[] = [];
-  Level: number = 1;
+  Level = 1;
 
   static Init(group: FilterGroup) {
     if (!group.Level) {
@@ -136,7 +137,7 @@ export class FilterOperateEntry {
         this.Display = '未知操作';
         break;
     }
-    this.Display = `${<number>operate}.${this.Display}`;
+    this.Display = `${operate as number}.${this.Display}`;
   }
 }
 /**  分页请求 */
@@ -149,9 +150,9 @@ export class PageRequest {
 /**  分页条件 */
 export class PageCondition {
   /**  页序 */
-  PageIndex: number = 1;
+  PageIndex = 1;
   /**  分页大小 */
-  PageSize: number = 20;
+  PageSize = 20;
   /**  排序条件集合 */
   SortConditions: SortCondition[] = [];
 }
@@ -180,7 +181,7 @@ export class VerifyCode {
   /**  验证码后台编号 */
   id: string;
   /**  验证码图片的Base64格式 */
-  image: string = 'data:image/png;base64,null';
+  image = 'data:image/png;base64,null';
   /**  输入的验证码 */
   code: string;
 }
@@ -197,33 +198,49 @@ export class LoginDto {
   Remember = true;
   ReturnUrl: string;
 }
+export class TokenDto {
+  GrantType: 'password' | 'refresh_token';
+  Account?: string;
+  Password?: string;
+  VerifyCode?: string;
+  RefreshToken?: string;
+}
+export class JsonWebToken {
+  AccessToken: string;
+  RefreshToken: string;
+  RefreshUctExpires: number;
+}
+export class LocalTokenModel {
+  AccessToken: JWTTokenModel;
+  RefreshToken: string;
+}
 export class RegisterDto {
-  Email: string;
-  Password: string;
-  ConfirmPassword: string;
-  VerifyCode: string;
-  VerifyCodeId: string;
+  Email?: string;
+  Password?: string;
+  ConfirmPassword?: string;
+  VerifyCode?: string;
+  VerifyCodeId?: string;
 }
 export class ChangePasswordDto {
-  UserId: string;
-  OldPassword: string;
-  NewPassword: string;
-  ConfirmNewPassword: string;
+  UserId?: string;
+  OldPassword?: string;
+  NewPassword?: string;
+  ConfirmNewPassword?: string;
 }
 export class ConfirmEmailDto {
   UserId: string;
   Code: string;
 }
 export class SendMailDto {
-  Email: string;
-  VerifyCode: string;
-  VerifyCodeId: string;
+  Email?: string;
+  VerifyCode?: string;
+  VerifyCodeId?: string;
 }
 export class ResetPasswordDto {
-  UserId: string;
-  Token: string;
-  NewPassword: string;
-  ConfirmPassword: string;
+  UserId?: string;
+  Token?: string;
+  NewPassword?: string;
+  ConfirmPassword?: string;
 }
 export class ProfileEditDto {
   Id: number;
@@ -236,7 +253,7 @@ export class UserLoginInfoEx {
   constructor(key: string) {
     this.ProviderKey = key;
   }
-  ProviderKey: string;
+  ProviderKey?: string;
   Email?: string;
   Password?: string;
 }
@@ -247,7 +264,7 @@ export class AuthConfig {
     public position: string,
     /**  要权限控制的功能名称，可以是节点名称或全路径 */
     public funcs: string[],
-  ) {}
+  ) { }
 }
 
 /**  用户信息 */
@@ -290,7 +307,7 @@ export class AdResult {
   /**
    * 是否显示结果框
    */
-  show: boolean = false;
+  show = false;
   /**  结果类型，可选为： 'success' | 'error' | 'minus-circle-o' */
   type: 'success' | 'error' | 'minus-circle-o';
   /**  结果标题 */

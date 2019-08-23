@@ -1,131 +1,108 @@
-import { Component, AfterViewInit, Injector } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AlainService } from '@shared/osharp/services/alain.service';
+import { PageRequest, FilterRule, FilterOperate, FilterGroup } from '@shared/osharp/osharp.model';
+import { List } from 'linqts';
+import { ArrayService } from '@delon/util';
+import { STColumn, STReq, STPage, STRes, STComponent } from '@delon/abc';
+import { FunctionViewComponent } from '@shared/components/function-view/function-view.component';
 
-import { KendoTreeListComponentBase } from '@shared/osharp/services/kendoui.service';
-import { AuthConfig } from '@shared/osharp/osharp.model';
+export interface TreeNodeInterface {
+  Id: number;
+  Name: string;
+  Remark: string;
+  Code: string;
+  OrderCode: number;
+  level: number;
+  expand: boolean;
+  children?: TreeNodeInterface[];
+}
 
 @Component({
-  selector: 'app-security-module',
-  templateUrl: './module.component.html'
+  selector: 'app-module',
+  templateUrl: './module.component.html',
+  styles: []
 })
-export class ModuleComponent extends KendoTreeListComponentBase implements AfterViewInit {
+export class ModuleComponent implements OnInit {
 
-  splitterOptions: kendo.ui.SplitterOptions = null;
-  selectedModuleId = 0;
-  functionTreeOptions: kendo.ui.TreeViewOptions;
-  functionTree: kendo.ui.TreeView;
+  data = [];
+  request: PageRequest = new PageRequest();
+  mapOfExpandedData: { [key: string]: TreeNodeInterface[] } = {};
 
-  constructor(injector: Injector) {
-    super(injector);
-    this.moduleName = "module";
-    this.splitterOptions = {
-      panes: [{ size: "60%" }, { collapsible: true, collapsed: false }]
-    };
-    this.functionTreeOptions = { autoBind: true, checkboxes: { checkChildren: true }, dataTextField: "Name", select: e => this.kendoui.OnTreeNodeSelect(e) };
+  constructor(private alain: AlainService, private arraySrv: ArrayService) { }
+
+  ngOnInit() {
+    this.loadData();
   }
 
-  async ngAfterViewInit() {
-    await this.checkAuth();
-    if (this.auth.Read) {
-      super.InitBase();
-      super.ViewInitBase();
-    } else {
-      this.osharp.error("无权查看该页面");
+  loadData() {
+    let url = 'api/admin/module/read';
+    this.alain.http.post(url, this.request).subscribe(res => {
+      let tree = this.arraySrv.arrToTree(res, { idMapName: 'Id', parentIdMapName: 'ParentId' });
+      this.data = tree;
+      tree.forEach(item => this.mapOfExpandedData[item.Id] = this.convertTreeToList(item));
+    });
+  }
+
+  collapse(array: TreeNodeInterface[], data: TreeNodeInterface, $event: boolean): void {
+    if ($event === false) {
+      if (data.children) {
+        data.children.forEach(d => {
+          const target = array.find(a => a.Id === d.Id)!;
+          target.expand = false;
+          this.collapse(array, target, false);
+        });
+      } else {
+        return;
+      }
     }
   }
 
-  protected AuthConfig(): AuthConfig {
-    return { position: "Root.Admin.Security.Module", funcs: ["Read", "ReadFunctions"] };
-  }
+  convertTreeToList(root: object): TreeNodeInterface[] {
+    const stack: any[] = [];
+    const array: any[] = [];
+    const hashMap = {};
+    stack.push({ ...root, level: 0, expand: true });
 
-  // #region Grid
-  protected GetModel() {
-    return {
-      id: "Id",
-      parentId: "ParentId",
-      fields: {
-        Id: { type: "number", nullable: false, editable: false },
-        ParentId: { type: "number", nullable: true },
-        Name: { type: "string" },
-        Code: { type: 'string' },
-        OrderCode: { type: "number" },
-        Remark: { type: "string" }
-      },
-      expanded: true
-    };
-  }
-  protected GetTreeListColumns(): kendo.ui.TreeListColumn[] {
-    return [
-      {
-        field: "Name", title: "名称", width: 200,
-        template: d => "<span>" + d.Id + ". " + d.Name + "</span>"
-      },
-      { field: "Remark", title: "备注", width: 200 },
-      { field: "Code", title: "代码", width: 130 },
-      {
-        field: "OrderCode", title: "排序", width: 70,
-        editor: (container, options) => this.kendoui.NumberEditor(container, options, 3)
-      }
-    ];
-  }
-  protected GetTreeListOptions(dataSource: kendo.data.TreeListDataSource): kendo.ui.TreeListOptions {
-    let options = super.GetTreeListOptions(dataSource);
-    options.toolbar = [{ name: "refresh", text: "刷新", imageClass: "k-icon k-i-refresh", click: e => this.treeList.dataSource.read() }];
-    options.change = e => {
-      let row = this.treeList.select();
-      if (row) {
-        let data: any = this.treeList.dataItem(row);
-        this.selectedModuleId = data.Id;
-      }
-    };
-    options.remove = e => {
-      let model: any = e.model;
-      if (!model.ParentId) {
-        this.osharp.error('“' + model.Name + '”是根结点，禁止删除');
-        e.preventDefault();
-        return;
-      }
-      if (model.hasChildren) {
-        this.osharp.error('“' + model.Name + '”包含子节点，不能删除');
-        e.preventDefault();
-        return;
-      }
-      if (!confirm('是否删除模块“' + model.Name + '”？')) {
-        e.preventDefault();
-        return;
-      }
-    };
-    return options;
-  }
-  protected FilterTreeListAuth(options: kendo.ui.TreeListOptions) {
-    // 命令列
-    let cmdColumn = options.columns && options.columns.find(m => m.command != null);
-    let cmds = cmdColumn && cmdColumn.command as kendo.ui.TreeListColumnCommandItem[];
-    if (cmds) {
-      if (!this.auth.SetFunctions) {
-        this.osharp.remove(cmds, m => m.name == "setFuncs");
+    while (stack.length !== 0) {
+      const node = stack.pop();
+      this.visitNode(node, hashMap, array);
+      if (node.children) {
+        for (let i = node.children.length - 1; i >= 0; i--) {
+          stack.push({ ...node.children[i], level: node.level + 1, expand: true, parent: node });
+        }
       }
     }
-    options = super.FilterTreeListAuth(options);
-    return options;
-  }
-  onModuleSelectedChange(functionGrid: kendo.ui.Grid) {
-    let options = {
-      filter: {
-        logic: "and",
-        filters: [
-          { field: "TreePathString", operator: "contains", value: "$" + this.selectedModuleId + "$" }
-        ]
-      }
-    };
-    options = this.kendoui.queryOptions(functionGrid.dataSource, options);
-    functionGrid.dataSource.query(options);
+
+    return array;
   }
 
-  // #endregion
-
-  // #region TreeView
-  onFunctionTreeInit(tree) {
-    this.functionTree = tree;
+  visitNode(node: TreeNodeInterface, hashMap: { [key: number]: any }, array: TreeNodeInterface[]): void {
+    if (!hashMap[node.Id]) {
+      hashMap[node.Id] = true;
+      array.push(node);
+    }
   }
+
+  // #region 抽屉
+
+  drawerTitle = '';
+  drawerVisible = false;
+  @ViewChild('function', { static: false }) function: FunctionViewComponent;
+
+  showDrawer(item) {
+    this.drawerTitle = `查看模块功能 - ${item.Remark || item.Name}`;
+    this.drawerVisible = true;
+
+    let filter: FilterGroup = new FilterGroup();
+    filter.Rules.push(new FilterRule('TreePathString', `$${item.Id}$`, FilterOperate.Contains));
+    setTimeout(() => {
+      this.function.reload(filter);
+    }, 100);
+  }
+
+  closeDrawer() {
+    this.drawerVisible = false;
+  }
+
   // #endregion
 }

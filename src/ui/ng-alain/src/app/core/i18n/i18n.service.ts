@@ -62,7 +62,7 @@ const LANGS: { [key: string]: LangData } = {
 @Injectable({ providedIn: 'root' })
 export class I18NService implements AlainI18NService {
   private _default = DEFAULT;
-  private change$ = new BehaviorSubject<string>(null);
+  private change$ = new BehaviorSubject<string | null>(null);
 
   private _langs = Object.keys(LANGS).map(code => {
     const item = LANGS[code];
@@ -75,12 +75,15 @@ export class I18NService implements AlainI18NService {
     private delonLocaleService: DelonLocaleService,
     private translate: TranslateService,
   ) {
-    const defaultLan = settings.layout.lang || translate.getBrowserLang();
     // `@ngx-translate/core` 预先知道支持哪些语言
     const lans = this._langs.map(item => item.code);
     translate.addLangs(lans);
 
-    this._default = lans.includes(defaultLan) ? defaultLan : lans[0];
+    const defaultLan = settings.layout.lang || translate.getBrowserLang();
+    if (lans.includes(defaultLan)) {
+      this._default = defaultLan;
+    }
+
     this.updateLangData(this._default);
   }
 
@@ -88,12 +91,13 @@ export class I18NService implements AlainI18NService {
     const item = LANGS[lang];
     registerLocaleData(item.ng);
     this.nzI18nService.setLocale(item.zorro);
+    this.nzI18nService.setDateLocale(item.dateFns);
     (window as any).__locale__ = item.dateFns;
     this.delonLocaleService.setLocale(item.delon);
   }
 
   get change(): Observable<string> {
-    return this.change$.asObservable().pipe(filter(w => w != null));
+    return this.change$.asObservable().pipe(filter(w => w != null)) as Observable<string>;
   }
 
   use(lang: string): void {
@@ -107,7 +111,7 @@ export class I18NService implements AlainI18NService {
     return this._langs;
   }
   /** 翻译 */
-  fanyi(key: string, interpolateParams?: Object) {
+  fanyi(key: string, interpolateParams?: {}) {
     return this.translate.instant(key, interpolateParams);
   }
   /** 默认语言 */
@@ -116,10 +120,6 @@ export class I18NService implements AlainI18NService {
   }
   /** 当前语言 */
   get currentLang() {
-    return (
-      this.translate.currentLang ||
-      this.translate.getDefaultLang() ||
-      this._default
-    );
+    return this.translate.currentLang || this.translate.getDefaultLang() || this._default;
   }
 }

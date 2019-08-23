@@ -15,7 +15,7 @@ using OSharp.Entity;
 
 namespace OSharp.Template.Web.Controllers
 {
-    public class Test2Controller:ApiController
+    public class Test2Controller : ApiController
     {
         private readonly DefaultDbContext _dbContext;
 

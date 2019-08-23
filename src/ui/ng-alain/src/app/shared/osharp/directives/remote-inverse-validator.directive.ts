@@ -5,6 +5,7 @@ import { OsharpService } from '@shared/osharp/services/osharp.service';
 import { _HttpClient } from '@delon/theme';
 
 @Directive({
+  // tslint:disable-next-line: directive-selector
   selector: '[remoteInverse][formControlName],[remoteInverse][formControl],[remoteInverse][ngModel]',
   providers: [
     { provide: NG_ASYNC_VALIDATORS, useExisting: forwardRef(() => RemoteInverseValidator), multi: true }
@@ -12,6 +13,7 @@ import { _HttpClient } from '@delon/theme';
 })
 export class RemoteInverseValidator implements AsyncValidator {
 
+  // tslint:disable-next-line: no-input-rename
   @Input('remoteInverse') url: string;
   private timeout;
 
@@ -23,11 +25,11 @@ export class RemoteInverseValidator implements AsyncValidator {
   validate(elem: AbstractControl): Promise<{ [key: string]: any; }> | Observable<{ [key: string]: any; }> {
     let value = elem.value;
     if (this.url.indexOf("value&verifycodeid=") > 0) {
-      //拼验证码
-      let id = this.osharp.subStr(this.url, "value&verifycodeid=", "");
+      // 拼验证码
+      const id = this.osharp.subStr(this.url, "value&verifycodeid=", "");
       value = `${value}&id=${id}`;
     }
-    let url = this.url.replace(/:value\S*/, value);
+    const url = this.url.replace(/:value\S*/, value);
 
     clearTimeout(this.timeout);
     return new Promise((resolve) => {

@@ -3,12 +3,12 @@ import { NzModalComponent } from 'ng-zorro-antd';
 import { OsharpService } from '@shared/osharp/services/osharp.service';
 import { FilterGroup, FilterOperateEntry, FilterOperate, FilterRule, PageRequest, } from '@shared/osharp/osharp.model';
 import { List } from 'linqts';
-import { OsharpSTColumn } from '@shared/osharp/services/ng-alain.types';
-import { AlainService } from '@shared/osharp/services/ng-alain.service';
+import { OsharpSTColumn } from '@shared/osharp/services/alain.types';
+import { AlainService } from '@shared/osharp/services/alain.service';
 import { SFSchema } from '@delon/form';
 
 @Component({
-  selector: 'app-ad-search-modal',
+  selector: 'osharp-ad-search-modal',
   templateUrl: './modal.component.html',
   styles: [
     `
@@ -51,7 +51,7 @@ export class AdSearchModalComponent implements OnInit {
   @Output() submited: EventEmitter<PageRequest> = new EventEmitter<
     PageRequest
   >();
-  @ViewChild('modal') modal: NzModalComponent;
+  @ViewChild('modal', { static: false }) modal: NzModalComponent;
 
   visible: boolean;
   group: FilterGroup;

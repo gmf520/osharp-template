@@ -9,31 +9,31 @@
     <!-- Menu -->
     <li>
       <div class="alain-default__nav-item" (click)="toggleCollapsedSidebar()">
-        <i nz-icon type="menu-{{settings.layout.collapsed ? 'unfold' : 'fold'}}"></i>
+        <i nz-icon nzType="menu-{{settings.layout.collapsed ? 'unfold' : 'fold'}}"></i>
       </div>
     </li>
     <!-- Github Page -->
     <li>
       <a class="alain-default__nav-item" href="https://github.com/i66soft/osharp" target="_blank">
-        <i nz-icon type="github"></i>
+        <i nz-icon nzType="github"></i>
       </a>
     </li>
     <!-- Lock Page -->
     <li class="hidden-mobile">
-      <div class="alain-default__nav-item" [routerLink]="['/passport/lock']">
-        <i nz-icon type="lock"></i>
+      <div class="alain-default__nav-item" [routerLink]="['/lock']">
+        <i nz-icon nzType="lock"></i>
       </div>
     </li>
     <!-- Documents -->
     <li>
       <a class="alain-default__nav-item" href="https://docs.osharp.org" target="_blank" [title]="'menu.nav.docs'|translate">
-        <i nz-icon type="file-word"></i>
+        <i nz-icon nzType="file-word"></i>
       </a>
     </li>
     <!-- Search Button -->
     <li class="hidden-pc" (click)="searchToggleChange()">
       <div class="alain-default__nav-item">
-        <i nz-icon type="search"></i>
+        <i nz-icon nzType="search"></i>
       </div>
     </li>
   </ul>
@@ -53,10 +53,10 @@
     </li>
     <!-- Settings -->
     <li class="hidden-mobile">
-      <nz-dropdown nzTrigger="click" nzPlacement="bottomRight">
-        <div class="alain-default__nav-item" nz-dropdown>
-          <i nz-icon type="setting"></i>
-        </div>
+      <div class="alain-default__nav-item" nz-dropdown [nzDropdownMenu]="settingsMenu" nzTrigger="click" nzPlacement="bottomRight">
+        <i nz-icon nzType="setting"></i>
+      </div>
+      <nz-dropdown-menu #settingsMenu="nzDropdownMenu">
         <div nz-menu style="width:200px;">
           <div nz-menu-item>
             <header-fullscreen></header-fullscreen>
@@ -68,7 +68,7 @@
             <header-i18n></header-i18n>
           </div>
         </div>
-      </nz-dropdown>
+      </nz-dropdown-menu>
     </li>
     <li class="hidden-mobile">
       <header-user></header-user>

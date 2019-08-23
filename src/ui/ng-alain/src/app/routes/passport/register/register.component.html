@@ -1,4 +1,4 @@
-<h3 class="text-center" style="font-size: 20px; margin-bottom: 20px;">{{ 'app.register.register' | translate }}</h3>
+<h3 class="text-center" style="font-size: 20px; margin-bottom: 20px;">{{ 'app.passport.register' | translate }}</h3>
 <div *ngIf="!result.show">
   <sf #sf mode="edit" [schema]="schema" [button]="null">
     <ng-template sf-template="Password" let-me>
@@ -21,7 +21,7 @@
         </div>
       </ng-template>
     </ng-template>
-    <button nz-button nzType="primary" type="submit" (click)="submit(sf.value)" [disabled]="!sf.valid" style="width:50%">注册</button>
+    <button nz-button nzType="primary" type="submit" nzSize="large" (click)="submit(sf.value)" [disabled]="!sf.valid" style="width:50%">注册</button>
     <a [routerLink]="[ '/passport/login' ]" style="float: right;"> 登录已有账号 </a>
   </sf>
 </div>

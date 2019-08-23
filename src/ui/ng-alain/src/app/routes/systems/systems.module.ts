@@ -1,29 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from '@shared';
+
 import { SystemsRoutingModule } from './systems.routing';
 import { AuditEntityComponent } from './audit-entity/audit-entity.component';
 import { AuditOperationComponent } from './audit-operation/audit-operation.component';
+import { DataDictionaryComponent } from './data-dictionary/data-dictionary.component';
 import { PackComponent } from './pack/pack.component';
 import { SettingsComponent } from './settings/settings.component';
-import { DataDictionaryComponent } from './data-dictionary/data-dictionary.component';
+import { SharedModule } from '@shared';
 
-import '@progress/kendo-ui/js/kendo.web.js';
-import '@progress/kendo-ui/js/cultures/kendo.culture.zh-CN';
-import '@progress/kendo-ui/js/messages/kendo.messages.zh-CN';
 
 @NgModule({
+  declarations: [AuditEntityComponent, AuditOperationComponent, DataDictionaryComponent, PackComponent, SettingsComponent],
   imports: [
     CommonModule,
     SharedModule,
     SystemsRoutingModule
   ],
-  declarations: [
-    AuditEntityComponent,
-    AuditOperationComponent,
-    PackComponent,
-    SettingsComponent,
-    DataDictionaryComponent,
-  ]
+  entryComponents: [AuditEntityComponent]
 })
 export class SystemsModule { }

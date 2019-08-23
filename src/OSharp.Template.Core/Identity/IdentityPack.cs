@@ -19,9 +19,11 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 
 using OSharp.Core.Options;
@@ -100,11 +102,16 @@ namespace OSharp.Template.Identity
         protected override void AddAuthentication(IServiceCollection services)
         {
             IConfiguration configuration = services.GetConfiguration();
+
+            // JwtBearer
             AuthenticationBuilder authenticationBuilder = services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(jwt =>
+            });
+            services.TryAddScoped<IJwtBearerService, JwtBearerService<User, int>>();
+            services.TryAddScoped<IAccessClaimsProvider, AccessClaimsProvider<User, int>>();
+            authenticationBuilder.AddJwtBearer(jwt =>
             {
                 string secret = configuration["OSharp:Jwt:Secret"];
                 if (secret.IsNullOrEmpty())
@@ -116,25 +123,29 @@ namespace OSharp.Template.Identity
                 {
                     ValidIssuer = configuration["OSharp:Jwt:Issuer"] ?? "osharp identity",
                     ValidAudience = configuration["OSharp:Jwt:Audience"] ?? "osharp client",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret)),
-                    LifetimeValidator = (before, expires, token, param) => expires > DateTime.Now,
-                    ValidateLifetime = true
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)),
+                    LifetimeValidator = (nbf, exp, token, param) => exp > DateTime.UtcNow
                 };
 
-                jwt.SecurityTokenValidators.Clear();
-                jwt.SecurityTokenValidators.Add(new OnlineUserJwtSecurityTokenHandler());
                 jwt.Events = new JwtBearerEvents()
                 {
-                    // 生成SignalR的用户信息
                     OnMessageReceived = context =>
                     {
+                        // 生成SignalR的用户信息
                         string token = context.Request.Query["access_token"];
                         string path = context.HttpContext.Request.Path;
                         if (!string.IsNullOrEmpty(token) && path.Contains("hub"))
                         {
                             context.Token = token;
                         }
-
+                        return Task.CompletedTask;
+                    },
+                    OnAuthenticationFailed = context =>
+                    {
+                        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                        {
+                            context.Response.Headers.Add("Token-Expired", "true");
+                        }
                         return Task.CompletedTask;
                     }
                 };
