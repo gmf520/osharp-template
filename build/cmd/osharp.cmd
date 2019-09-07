@@ -1,5 +1,13 @@
 ::此命令行工具是用来生成项目代码的，一键生成
+::更新模板
 @echo off
+echo 正在更新最新版本的 OSharpNS.Template.Mvc_Angular
+dotnet new -i OSharpNS.Template.Mvc_Angular
+:: 输出空行
+echo= 
+echo, 
+echo; 
+::生成代码
 echo －－－－－－－－－－－－－－－－－－－－－－－－－
 echo － 欢迎使用 OSharp一键模板 命令
 echo － http://www.osharp.org
