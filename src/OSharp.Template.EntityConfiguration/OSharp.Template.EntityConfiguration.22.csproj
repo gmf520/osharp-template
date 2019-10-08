@@ -4,6 +4,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyVersion>1.0.1</AssemblyVersion>
     <FileVersion>1.0.1.0</FileVersion>
+    <AssemblyName>OSharp.Template.EntityConfiguration</AssemblyName>
+    <RootNamespace>OSharp.Template.EntityConfiguration</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -15,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OSharp.Template.Core\OSharp.Template.Core.csproj" />
+    <ProjectReference Include="..\OSharp.Template.Core\OSharp.Template.Core.22.csproj" />
   </ItemGroup>
 
 </Project>

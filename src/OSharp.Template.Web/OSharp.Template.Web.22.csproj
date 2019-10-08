@@ -6,6 +6,8 @@
     <FileVersion>1.0.1.0</FileVersion>
     <UserSecretsId>166558f9-be39-46bb-8d0c-1bfc1bc5f26f</UserSecretsId>
     <Version>0.5.0.5</Version>
+    <AssemblyName>OSharp.Template.Web</AssemblyName>
+    <RootNamespace>OSharp.Template.Web</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -39,8 +41,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OSharp.Template.Core\OSharp.Template.Core.csproj" />
-    <ProjectReference Include="..\OSharp.Template.EntityConfiguration\OSharp.Template.EntityConfiguration.csproj" />
+    <ProjectReference Include="..\OSharp.Template.Core\OSharp.Template.Core.22.csproj" />
+    <ProjectReference Include="..\OSharp.Template.EntityConfiguration\OSharp.Template.EntityConfiguration.22.csproj" />
   </ItemGroup>
 
   <ItemGroup>
