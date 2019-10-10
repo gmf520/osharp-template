@@ -20,7 +20,6 @@ using Microsoft.AspNetCore.Identity;
 
 using OSharp.Collections;
 using OSharp.Data;
-using OSharp.Entity;
 using OSharp.Identity;
 using OSharp.Identity.Events;
 
@@ -34,7 +33,7 @@ namespace OSharp.Template.Identity
         /// </summary>
         public IQueryable<UserRole> UserRoles
         {
-            get { return _userRoleRepository.Query(); }
+            get { return _userRoleRepository.QueryAsNoTracking(); }
         }
 
         /// <summary>
@@ -61,7 +60,7 @@ namespace OSharp.Template.Identity
             OperationResult result = await _userRoleRepository.UpdateAsync(dtos,
                 (dto, entity) =>
                 {
-                    string userName = _userRoleRepository.Query(m => m.UserId == entity.UserId).Select(m => m.User.UserName).FirstOrDefault();
+                    string userName = _userRoleRepository.QueryAsNoTracking(m => m.UserId == entity.UserId).Select(m => m.User.UserName).FirstOrDefault();
                     userNames.AddIfNotNull(userName);
                     return Task.FromResult(0);
                 });
@@ -84,7 +83,7 @@ namespace OSharp.Template.Identity
             OperationResult result = await _userRoleRepository.DeleteAsync(ids,
                 (entity) =>
                 {
-                    string userName = _userRoleRepository.Query(m => m.UserId == entity.UserId).Select(m => m.User.UserName).FirstOrDefault();
+                    string userName = _userRoleRepository.QueryAsNoTracking(m => m.UserId == entity.UserId).Select(m => m.User.UserName).FirstOrDefault();
                     userNames.AddIfNotNull(userName);
                     return Task.FromResult(0);
                 });

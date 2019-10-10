@@ -12,7 +12,9 @@ using System.ComponentModel;
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-
+#if NETCOREAPP3_0
+using Microsoft.Extensions.Hosting;
+#endif
 using OSharp.AspNetCore;
 using OSharp.CodeGenerator;
 using OSharp.Core.Packs;
@@ -44,7 +46,11 @@ namespace OSharp.Template.Web.Startups
         /// <returns></returns>
         public override IServiceCollection AddServices(IServiceCollection services)
         {
+#if NETCOREAPP3_0
+            if(services.GetWebHostEnvironment().IsDevelopment())
+#else
             if (services.GetHostingEnvironment().IsDevelopment())
+#endif
             {
                 services.AddSingleton<ITypeMetadataHandler, TypeMetadataHandler>();
             }
@@ -57,7 +63,11 @@ namespace OSharp.Template.Web.Startups
         /// <param name="provider">服务提供者</param>
         public override void UsePack(IServiceProvider provider)
         {
+#if NETCOREAPP3_0
+            IWebHostEnvironment environment = provider.GetService<IWebHostEnvironment>();
+#else
             IHostingEnvironment environment = provider.GetService<IHostingEnvironment>();
+#endif
             if (environment.IsDevelopment())
             {
                 IsEnabled = true;

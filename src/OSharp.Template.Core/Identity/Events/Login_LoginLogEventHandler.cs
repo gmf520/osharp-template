@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 
 using OSharp.Template.Identity.Entities;
 
-using OSharp.Dependency;
 using OSharp.Entity;
 using OSharp.EventBuses;
 

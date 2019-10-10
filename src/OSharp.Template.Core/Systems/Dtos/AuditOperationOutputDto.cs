@@ -11,7 +11,6 @@ using System;
 
 using OSharp.Template.Systems.Entities;
 
-using OSharp.AspNetCore.UI;
 using OSharp.Data;
 using OSharp.Entity;
 using OSharp.Mapping;

@@ -73,7 +73,11 @@ namespace OSharp.Template.Web.Controllers
         [Description("用户名是否存在")]
         public bool CheckUserNameExists(string userName)
         {
+#if NETCOREAPP3_0
+            bool exists = _userManager.Users.Any(m => m.NormalizedUserName == _userManager.NormalizeName(userName));
+#else
             bool exists = _userManager.Users.Any(m => m.NormalizedUserName == _userManager.NormalizeKey(userName));
+#endif
             return exists;
         }
 
@@ -86,7 +90,11 @@ namespace OSharp.Template.Web.Controllers
         [Description("用户Email是否存在")]
         public bool CheckEmailExists(string email)
         {
+#if NETCOREAPP3_0
+            bool exists = _userManager.Users.Any(m => m.NormalizeEmail == _userManager.NormalizeEmail(email));
+#else
             bool exists = _userManager.Users.Any(m => m.NormalizeEmail == _userManager.NormalizeKey(email));
+#endif
             return exists;
         }
 

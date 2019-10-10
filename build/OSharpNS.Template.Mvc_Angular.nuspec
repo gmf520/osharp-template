@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>OSharpNS.Template.Mvc_Angular</id>
-    <version>1.1.3.2</version>
+    <version>3.0.0.3</version>
     <title></title>
     <authors>柳柳软件(66soft.net)</authors>
     <owners>柳柳软件(66soft.net)</owners>
@@ -25,6 +25,8 @@
     <file src="..\LICENSE" target="content\OSharp.Solution"/>
     <file src="..\Dockerfile" target="content\OSharp.Solution"/>
     <file src="..\build.bat" target="content\OSharp.Solution"/>
+    <file src="public.props" target="content\OSharp.Solution\build"/>
+    <file src="version.props" target="content\OSharp.Solution\build"/>
     <file src="sln\.template.config/template.json" target="content\OSharp.Solution\.template.config"/>
     <file src="..\src\**"
       exclude="**/node_modules/**;**/bin/**;**/obj/**;**/log/**;**/logs/**;**/.vs/**;**/.vscode/**;**/dist/**;**/wwwroot/**;**/assets/tmp/**"

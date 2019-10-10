@@ -15,6 +15,7 @@ using System.ComponentModel;
 
 namespace OSharp.Template.Web.Startups
 {
+#if NETCOREAPP2_2
     /// <summary>
     /// SignalR模块
     /// </summary>
@@ -33,6 +34,7 @@ namespace OSharp.Template.Web.Startups
                 // 在这实现Hub的路由映射
                 // 例如：builder.MapHub<MyHub>();
             });
-        }
+        } 
     }
+#endif
 }

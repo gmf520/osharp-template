@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 
 using OSharp.Template.Identity.Entities;
 
-using OSharp.Dependency;
 using OSharp.Entity;
 using OSharp.EventBuses;
 
@@ -42,7 +41,7 @@ namespace OSharp.Template.Identity.Events
         /// <param name="eventData">事件源数据</param>
         public override void Handle(LogoutEventData eventData)
         {
-            LoginLog log = _loginLogRepository.Query().LastOrDefault(m => m.UserId == eventData.UserId);
+            LoginLog log = _loginLogRepository.QueryAsNoTracking().LastOrDefault(m => m.UserId == eventData.UserId);
             if (log == null)
             {
                 return;
@@ -59,7 +58,7 @@ namespace OSharp.Template.Identity.Events
         /// <returns>是否成功</returns>
         public override async Task HandleAsync(LogoutEventData eventData, CancellationToken cancelToken = default(CancellationToken))
         {
-            LoginLog log = _loginLogRepository.Query().LastOrDefault(m => m.UserId == eventData.UserId);
+            LoginLog log = _loginLogRepository.QueryAsNoTracking().LastOrDefault(m => m.UserId == eventData.UserId);
             if (log == null)
             {
                 return;

@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <Import Project="../../build/public.props" />
+  <Import Project="../../build/version.props" />
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Startups\MySqlDefaultDbContextMigrationPack.cs" />
+    <Compile Remove="Startups\MySqlDesignTimeDefaultDbContextFactory.cs" />
+    <Compile Remove="Startups\OracleDefaultDbContextMigrationPack.cs" />
+    <Compile Remove="Startups\OracleDesignTimeDefaultDbContextFactory.cs" />
+    <Compile Remove="Startups\PostgreSqlDefaultDbContextMigrationPack.cs" />
+    <Compile Remove="Startups\PostgreSqlDesignTimeDefaultDbContextFactory.cs" />
+    <Compile Remove="Startups\SqliteDefaultDbContextMigrationPack.cs" />
+    <Compile Remove="Startups\SqliteDesignTimeDefaultDbContextFactory.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OSharpNS.Core" Version="3.0.0-beta03" />
+    <PackageReference Include="OSharpNS.AspNetCore" Version="3.0.0-beta03" />
+    <PackageReference Include="OSharpNS.EntityFrameworkCore.SqlServer" Version="3.0.0-beta03" />
+    <PackageReference Include="OSharpNS.Log4Net" Version="3.0.0-beta03" />
+    <PackageReference Include="OSharpNS.MiniProfiler" Version="3.0.0-beta03" />
+    <PackageReference Include="OSharpNS.Redis" Version="3.0.0-beta03" />
+    <PackageReference Include="OSharpNS.Swagger" Version="3.0.0-beta03" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp2.2'">
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="[2.2.3, 3.0)" />
+    <PackageReference Include="OSharpNS.Hangfire" Version="3.0.0-beta03" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.0'">
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OSharp.Template.Core\OSharp.Template.Core.csproj" />
+    <ProjectReference Include="..\OSharp.Template.EntityConfiguration\OSharp.Template.EntityConfiguration.csproj" />
+  </ItemGroup>
+
+</Project>

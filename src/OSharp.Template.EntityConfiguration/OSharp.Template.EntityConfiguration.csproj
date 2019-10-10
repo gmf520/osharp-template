@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="../../build/public.props" />
+  <Import Project="../../build/version.props" />
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;netcoreapp3.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OSharpNS.EntityFrameworkCore" Version="3.0.0-beta03" />
+    <PackageReference Include="OSharpNS.Permissions" Version="3.0.0-beta03" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OSharp.Template.Core\OSharp.Template.Core.csproj" />
+  </ItemGroup>
+
+</Project>

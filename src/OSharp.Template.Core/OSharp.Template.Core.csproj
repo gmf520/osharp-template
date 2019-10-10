@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="../../build/public.props" />
+  <Import Project="../../build/version.props" />
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;netcoreapp3.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Authentication.GitHub.Core" Version="1.0.0" />
+    <PackageReference Include="OSharpNS.AutoMapper" Version="3.0.0-beta03" />
+    <PackageReference Include="OSharpNS.Permissions" Version="3.0.0-beta03" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="[2.2.0, 3.0)" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.0'">
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="3.0.0" />
+  </ItemGroup>
+
+</Project>
