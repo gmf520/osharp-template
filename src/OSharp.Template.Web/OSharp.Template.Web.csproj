@@ -25,18 +25,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="OSharpNS.Core" Version="3.0.0-beta04" />
-    <PackageReference Include="OSharpNS.AspNetCore" Version="3.0.0-beta04" />
-    <PackageReference Include="OSharpNS.EntityFrameworkCore.SqlServer" Version="3.0.0-beta04" />
-    <PackageReference Include="OSharpNS.Log4Net" Version="3.0.0-beta04" />
-    <PackageReference Include="OSharpNS.MiniProfiler" Version="3.0.0-beta04" />
-    <PackageReference Include="OSharpNS.Redis" Version="3.0.0-beta04" />
-    <PackageReference Include="OSharpNS.Swagger" Version="3.0.0-beta04" />
+    <PackageReference Include="OSharpNS.Core" Version="3.0.0-beta05" />
+    <PackageReference Include="OSharpNS.AspNetCore" Version="3.0.0-beta05" />
+    <PackageReference Include="OSharpNS.EntityFrameworkCore.SqlServer" Version="3.0.0-beta05" />
+    <PackageReference Include="OSharpNS.Log4Net" Version="3.0.0-beta05" />
+    <PackageReference Include="OSharpNS.MiniProfiler" Version="3.0.0-beta05" />
+    <PackageReference Include="OSharpNS.Redis" Version="3.0.0-beta05" />
+    <PackageReference Include="OSharpNS.Swagger" Version="3.0.0-beta05" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp2.2'">
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="[2.2.3, 3.0)" />
-    <PackageReference Include="OSharpNS.Hangfire" Version="3.0.0-beta04" />
+    <PackageReference Include="OSharpNS.Hangfire" Version="3.0.0-beta05" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.0'">
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0" />
