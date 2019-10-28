@@ -15,13 +15,13 @@ using System.ComponentModel;
 
 namespace OSharp.Template.Web.Startups
 {
-#if NETCOREAPP2_2
     /// <summary>
     /// SignalR模块
     /// </summary>
     [Description("SignalR模块")]
     public class SignalRPack : SignalRPackBase
     {
+#if NETCOREAPP2_2
         /// <summary>
         /// 重写以获取Hub路由创建委托
         /// </summary>
@@ -34,7 +34,7 @@ namespace OSharp.Template.Web.Startups
                 // 在这实现Hub的路由映射
                 // 例如：builder.MapHub<MyHub>();
             });
-        } 
+        }
+#endif 
     }
-#endif
 }
