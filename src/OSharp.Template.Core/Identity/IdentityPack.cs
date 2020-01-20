@@ -219,6 +219,9 @@ namespace OSharp.Template.Identity
         public override void UsePack(IApplicationBuilder app)
         {
             app.UseAuthentication();
+#if NETCOREAPP
+            app.UseAuthorization();
+#endif
 
             IsEnabled = true;
         }

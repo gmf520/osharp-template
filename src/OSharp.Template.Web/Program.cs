@@ -17,7 +17,7 @@ namespace OSharp.Template.Web
     public class Program
     {
 
-#if NETCOREAPP3_0
+#if !NETCOREAPP2_2
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();

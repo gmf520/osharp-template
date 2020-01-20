@@ -4,20 +4,20 @@
   <Import Project="../../build/version.props" />
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netcoreapp3.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netcoreapp3.1</TargetFrameworks>
     <RootNamespace>OSharp.Template</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Authentication.GitHub.Core" Version="1.0.0" />
-    <PackageReference Include="OSharpNS.AutoMapper" Version="3.0.0-beta05" />
-    <PackageReference Include="OSharpNS.Permissions" Version="3.0.0-beta05" />
+    <PackageReference Include="OSharpNS.AutoMapper" Version="3.1.0-beta01" />
+    <PackageReference Include="OSharpNS.Permissions" Version="3.1.0-beta01" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="[2.2.0, 3.0)" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.0'">
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="3.0.0" />
+  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="3.1.0" />
   </ItemGroup>
 
   <ItemGroup>

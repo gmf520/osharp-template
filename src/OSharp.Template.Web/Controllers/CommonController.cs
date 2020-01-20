@@ -8,30 +8,23 @@
 // -----------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Dynamic;
 using System.IO;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading.Tasks;
-
-using OSharp.Template.Common;
-using OSharp.Template.Security;
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyModel;
 
 using OSharp.AspNetCore;
 using OSharp.AspNetCore.Mvc;
 using OSharp.AspNetCore.UI;
 using OSharp.CodeGenerator;
-using OSharp.Collections;
 using OSharp.Core.Modules;
 using OSharp.Core.Packs;
 using OSharp.Data;
@@ -49,6 +42,17 @@ namespace OSharp.Template.Web.Controllers
     public class CommonController : ApiController
     {
         private readonly IVerifyCodeService _verifyCodeService;
+#if !NETCOREAPP2_2
+        private readonly IWebHostEnvironment _environment;
+
+        public CommonController(
+            IVerifyCodeService verifyCodeService,
+            IWebHostEnvironment environment)
+        {
+            _verifyCodeService = verifyCodeService;
+            _environment = environment;
+        }
+#else
         private readonly IHostingEnvironment _environment;
 
         public CommonController(
@@ -58,6 +62,7 @@ namespace OSharp.Template.Web.Controllers
             _verifyCodeService = verifyCodeService;
             _environment = environment;
         }
+#endif
 
         /// <summary>
         /// 获取验证码图片

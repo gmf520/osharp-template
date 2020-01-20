@@ -4,12 +4,12 @@
   <Import Project="../../build/version.props" />
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netcoreapp3.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netcoreapp3.1</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="OSharpNS.EntityFrameworkCore" Version="3.0.0-beta05" />
-    <PackageReference Include="OSharpNS.Permissions" Version="3.0.0-beta05" />
+    <PackageReference Include="OSharpNS.EntityFrameworkCore" Version="3.1.0-beta01" />
+    <PackageReference Include="OSharpNS.Permissions" Version="3.1.0-beta01" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,3 +17,4 @@
   </ItemGroup>
 
 </Project>
+ 

@@ -12,13 +12,15 @@ using OSharp.Template.Web.Startups;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-#if NETCOREAPP3_0
+#if !NETCOREAPP2_2
 using Microsoft.Extensions.Hosting;
 #endif
 using Microsoft.Extensions.Logging;
 
 using OSharp.AspNetCore;
+using OSharp.AspNetCore.Http;
 using OSharp.Core.Builders;
+using OSharp.Core.Options;
 using OSharp.Entity;
 
 
@@ -33,7 +35,7 @@ namespace OSharp.Template.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-#if NETCOREAPP3_0
+#if !NETCOREAPP2_2
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
 
 #else
@@ -53,6 +55,7 @@ namespace OSharp.Template.Web
             }
 
             app
+                //.UseMiddleware<HostHttpCryptoMiddleware>()
                 //.UseMiddleware<NodeNoFoundHandlerMiddleware>()
                 .UseMiddleware<NodeExceptionHandlerMiddleware>()
                 .UseDefaultFiles()

@@ -34,7 +34,7 @@ namespace OSharp.Template.Web.Startups
                 // 在这实现Hub的路由映射
                 // 例如：builder.MapHub<MyHub>();
             });
-        }
-#endif 
+        } 
+#endif
     }
 }
