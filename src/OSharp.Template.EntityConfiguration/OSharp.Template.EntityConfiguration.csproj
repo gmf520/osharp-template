@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="OSharpNS.EntityFrameworkCore" Version="3.1.0-beta01" />
-    <PackageReference Include="OSharpNS.Permissions" Version="3.1.0-beta01" />
+    <PackageReference Include="OSharpNS.EntityFrameworkCore" Version="3.1.1" />
+    <PackageReference Include="OSharpNS.Permissions" Version="3.1.1" />
   </ItemGroup>
 
   <ItemGroup>

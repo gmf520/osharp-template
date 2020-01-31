@@ -10,9 +10,9 @@ echo;
 ::生成代码
 echo －－－－－－－－－－－－－－－－－－－－－－－－－
 echo － 欢迎使用 OSharp一键模板 命令
-echo － 当前版本：3.0.0-beta03
+echo － 当前版本：3.1.1
 echo － http://www.osharp.org
-echo － Copyright @ 2014 - 2019 OSHARP.ORG
+echo － Copyright @ 2014 - 2020 OSHARP.ORG
 echo －－－－－－－－－－－－－－－－－－－－－－－－－
 echo 请输入项目名称，推荐形如 “公司.项目”的模式：
 set name=:

@@ -10,8 +10,8 @@
 
   <ItemGroup>
     <PackageReference Include="Authentication.GitHub.Core" Version="1.0.0" />
-    <PackageReference Include="OSharpNS.AutoMapper" Version="3.1.0-beta01" />
-    <PackageReference Include="OSharpNS.Permissions" Version="3.1.0-beta01" />
+    <PackageReference Include="OSharpNS.AutoMapper" Version="3.1.1" />
+    <PackageReference Include="OSharpNS.Permissions" Version="3.1.1" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="[2.2.0, 3.0)" />
