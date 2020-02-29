@@ -15,7 +15,7 @@ using OSharp.Template.Identity.Entities;
 
 using OSharp.Data;
 using OSharp.Exceptions;
-using OSharp.Security.Claims;
+using OSharp.Identity;
 
 
 namespace OSharp.Template.Identity

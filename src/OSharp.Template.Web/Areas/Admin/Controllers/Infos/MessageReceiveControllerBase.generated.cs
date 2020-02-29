@@ -27,8 +27,6 @@ using OSharp.AspNetCore.Mvc;
 using OSharp.AspNetCore.Mvc.Filters;
 using OSharp.AspNetCore.UI;
 using OSharp.Caching;
-using OSharp.Core.Functions;
-using OSharp.Core.Modules;
 using OSharp.Data;
 using OSharp.Entity;
 using OSharp.Filter;
@@ -37,6 +35,8 @@ using OSharp.Security;
 using OSharp.Template.Infos;
 using OSharp.Template.Infos.Dtos;
 using OSharp.Template.Infos.Entities;
+
+using OSharp.Authorization.Modules;
 
 
 namespace OSharp.Template.Web.Areas.Admin.Controllers

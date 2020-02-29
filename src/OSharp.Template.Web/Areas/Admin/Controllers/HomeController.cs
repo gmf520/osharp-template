@@ -9,7 +9,7 @@
 
 using System.ComponentModel;
 
-using OSharp.Template.Security;
+using OSharp.Template.Authorization;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,13 +19,6 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
     [Description("管理-主页")]
     public class HomeController : AdminApiController
     {
-        private readonly SecurityManager _securityManager;
-
-        public HomeController(SecurityManager securityManager)
-        {
-            _securityManager = securityManager;
-        }
-
         /// <summary>
         /// 获取后台管理主菜单
         /// </summary>

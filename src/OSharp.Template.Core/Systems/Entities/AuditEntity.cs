@@ -22,6 +22,7 @@ namespace OSharp.Template.Systems.Entities
     /// 实体类：审计实体信息
     /// </summary>
     [MapFrom(typeof(AuditEntityEntry))]
+    [TableNamePrefix("Systems")]
     [Description("审计实体信息")]
     public class AuditEntity : EntityBase<Guid>
     {

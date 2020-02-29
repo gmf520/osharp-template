@@ -18,6 +18,7 @@ namespace OSharp.Template.Identity.Entities
     /// 实体类：用户详细信息
     /// </summary>
     [Description("用户详细信息")]
+    [TableNamePrefix("Identity")]
     public class UserDetail : EntityBase<int>
     {
         /// <summary>

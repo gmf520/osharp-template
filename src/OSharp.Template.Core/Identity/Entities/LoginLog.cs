@@ -20,6 +20,7 @@ namespace OSharp.Template.Identity.Entities
     /// 实体类：用户登录日志
     /// </summary>
     [Description("用户登录日志")]
+    [TableNamePrefix("Identity")]
     public class LoginLog : EntityBase<Guid>, ICreatedTime
     {
         /// <summary>

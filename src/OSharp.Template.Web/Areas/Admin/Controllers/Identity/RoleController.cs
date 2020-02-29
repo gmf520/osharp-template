@@ -14,11 +14,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
+using OSharp.Template.Authorization;
+using OSharp.Template.Authorization.Dtos;
 using OSharp.Template.Identity;
 using OSharp.Template.Identity.Dtos;
 using OSharp.Template.Identity.Entities;
-using OSharp.Template.Security;
-using OSharp.Template.Security.Dtos;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -26,11 +26,11 @@ using Microsoft.AspNetCore.Mvc;
 using OSharp.AspNetCore.Mvc;
 using OSharp.AspNetCore.Mvc.Filters;
 using OSharp.AspNetCore.UI;
+using OSharp.Authorization.Functions;
+using OSharp.Authorization.Modules;
 using OSharp.Caching;
 using OSharp.Collections;
 using OSharp.Core;
-using OSharp.Core.Functions;
-using OSharp.Core.Modules;
 using OSharp.Data;
 using OSharp.Entity;
 using OSharp.Filter;
@@ -45,20 +45,20 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
     public class RoleController : AdminApiController
     {
         private readonly IIdentityContract _identityContract;
+        private readonly FunctionAuthManager _functionAuthorizationManager;
         private readonly ICacheService _cacheService;
         private readonly IFilterService _filterService;
         private readonly RoleManager<Role> _roleManager;
-        private readonly SecurityManager _securityManager;
 
         public RoleController(RoleManager<Role> roleManager,
-            SecurityManager securityManager,
             IIdentityContract identityContract,
+            FunctionAuthManager functionAuthorizationManager,
             ICacheService cacheService,
             IFilterService filterService)
         {
             _roleManager = roleManager;
-            _securityManager = securityManager;
             _identityContract = identityContract;
+            _functionAuthorizationManager = functionAuthorizationManager;
             _cacheService = cacheService;
             _filterService = filterService;
         }
@@ -214,7 +214,7 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
         [Description("设置模块")]
         public async Task<ActionResult> SetModules(RoleSetModuleDto dto)
         {
-            OperationResult result = await _securityManager.SetRoleModules(dto.RoleId, dto.ModuleIds);
+            OperationResult result = await _functionAuthorizationManager.SetRoleModules(dto.RoleId, dto.ModuleIds);
             return Json(result.ToAjaxResult());
         }
     }

@@ -1,6 +1,6 @@
 {
   "name": "osharpns",
-  "version": "3.1.1",
+  "version": "3.1.2-preview2.29",
   "private": true,
   "scripts": {
     "analyze": "npm run color-less && node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod --stats-json",
@@ -14,7 +14,7 @@
     "lint:style": "stylelint \"src/**/*.less\" --syntax less --fix",
     "lint:ts": "tslint -c tslint.json \"src/**/*.ts\" --fix",
     "ng": "ng",
-    "start": "npm run color-less && ng s -o --port 4203",
+    "start": "npm run color-less && ng s -o --port 4201",
     "test": "ng test",
     "test-coverage": "ng test --code-coverage --watch=false",
     "tslint-check": "tslint-config-prettier-check ./tslint.json"

@@ -7,34 +7,36 @@
 //  <last-date>2018-06-27 4:49</last-date>
 // -----------------------------------------------------------------------
 
-using OSharp.Template.Common.Dtos;
-using OSharp.Template.Identity;
-using OSharp.Template.Identity.Dtos;
-using OSharp.Template.Identity.Entities;
-using OSharp.Template.Security;
-using OSharp.Template.Security.Dtos;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using OSharp.AspNetCore.Mvc;
-using OSharp.AspNetCore.Mvc.Filters;
-using OSharp.AspNetCore.UI;
-using OSharp.Caching;
-using OSharp.Collections;
-using OSharp.Core.Functions;
-using OSharp.Core.Modules;
-using OSharp.Data;
-using OSharp.Extensions;
-using OSharp.Filter;
-using OSharp.Identity;
-using OSharp.Mapping;
-using OSharp.Security;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+
+using OSharp.Template.Authorization;
+using OSharp.Template.Authorization.Dtos;
+using OSharp.Template.Common.Dtos;
+using OSharp.Template.Identity;
+using OSharp.Template.Identity.Dtos;
+using OSharp.Template.Identity.Entities;
+
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using OSharp.AspNetCore.Mvc;
+using OSharp.AspNetCore.Mvc.Filters;
+using OSharp.AspNetCore.UI;
+using OSharp.Authorization;
+using OSharp.Authorization.Functions;
+using OSharp.Authorization.Modules;
+using OSharp.Caching;
+using OSharp.Collections;
+using OSharp.Data;
+using OSharp.Extensions;
+using OSharp.Filter;
+using OSharp.Identity;
+using OSharp.Mapping;
 
 
 namespace OSharp.Template.Web.Areas.Admin.Controllers
@@ -46,19 +48,18 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
         private readonly IIdentityContract _identityContract;
         private readonly ICacheService _cacheService;
         private readonly IFilterService _filterService;
-        private readonly SecurityManager _securityManager;
         private readonly UserManager<User> _userManager;
+        private readonly FunctionAuthManager _functionAuthManager;
 
         public UserController(
             UserManager<User> userManager,
-            SecurityManager securityManager,
+            FunctionAuthManager functionAuthManager,
             IIdentityContract identityContract,
-            ILoggerFactory loggerFactory,
             ICacheService cacheService,
             IFilterService filterService)
         {
             _userManager = userManager;
-            _securityManager = securityManager;
+            _functionAuthManager = functionAuthManager;
             _identityContract = identityContract;
             _cacheService = cacheService;
             _filterService = filterService;
@@ -226,7 +227,7 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
         [Description("设置模块")]
         public async Task<AjaxResult> SetModules(UserSetModuleDto dto)
         {
-            OperationResult result = await _securityManager.SetUserModules(dto.UserId, dto.ModuleIds);
+            OperationResult result = await _functionAuthManager.SetUserModules(dto.UserId, dto.ModuleIds);
             return result.ToAjaxResult();
         }
     }

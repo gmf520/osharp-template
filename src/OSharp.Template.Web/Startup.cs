@@ -7,21 +7,14 @@
 //  <last-date>2018-06-27 4:50</last-date>
 // -----------------------------------------------------------------------
 
-using OSharp.Template.Web.Startups;
+using System;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-#if !NETCOREAPP2_2
 using Microsoft.Extensions.Hosting;
-#endif
-using Microsoft.Extensions.Logging;
 
 using OSharp.AspNetCore;
-using OSharp.AspNetCore.Http;
-using OSharp.Core.Builders;
-using OSharp.Core.Options;
-using OSharp.Entity;
 
 
 namespace OSharp.Template.Web
@@ -35,13 +28,7 @@ namespace OSharp.Template.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-#if !NETCOREAPP2_2
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
-
-#else
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
-
-#endif
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -51,16 +38,16 @@ namespace OSharp.Template.Web
             else
             {
                 app.UseExceptionHandler("/#/500");
-                app.UseHsts().UseHttpsRedirection();
+                app.UseHsts();
+                //app.UseHttpsRedirection(); // 启用HTTPS
             }
 
-            app
-                //.UseMiddleware<HostHttpCryptoMiddleware>()
-                //.UseMiddleware<NodeNoFoundHandlerMiddleware>()
-                .UseMiddleware<NodeExceptionHandlerMiddleware>()
-                .UseDefaultFiles()
-                .UseStaticFiles()
-                .UseOSharp();
+            //app.UseMiddleware<HostHttpCryptoMiddleware>();
+            //app.UseMiddleware<JsonNoFoundHandlerMiddleware>();
+            app.UseMiddleware<JsonExceptionHandlerMiddleware>();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            app.UseOSharp();
         }
     }
 }

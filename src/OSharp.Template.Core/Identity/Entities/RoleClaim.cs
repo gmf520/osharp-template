@@ -9,7 +9,7 @@
 
 using System.ComponentModel;
 
-using OSharp.Identity;
+using OSharp.Identity.Entities;
 
 
 namespace OSharp.Template.Identity.Entities

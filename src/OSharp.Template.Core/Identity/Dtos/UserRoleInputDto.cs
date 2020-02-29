@@ -11,7 +11,7 @@ using System;
 
 using OSharp.Template.Identity.Entities;
 
-using OSharp.Identity;
+using OSharp.Identity.Dtos;
 using OSharp.Mapping;
 
 
