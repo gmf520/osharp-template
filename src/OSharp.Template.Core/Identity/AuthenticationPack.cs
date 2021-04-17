@@ -1,27 +1,28 @@
 ﻿// -----------------------------------------------------------------------
-//  <copyright file="DataAuthorizationPack.cs" company="OSharp开源团队">
+//  <copyright file="AuthenticationPack.cs" company="OSharp开源团队">
 //      Copyright (c) 2014-2020 OSharp. All rights reserved.
 //  </copyright>
 //  <site>http://www.osharp.org</site>
 //  <last-editor>郭明锋</last-editor>
-//  <last-date>2020-02-27 0:35</last-date>
+//  <last-date>2020-03-02 21:21</last-date>
 // -----------------------------------------------------------------------
 
-using OSharp.Template.Authorization.Dtos;
-using OSharp.Template.Authorization.Entities;
+using OSharp.Template.Identity.Entities;
+using OSharp.Template.Identity.Events;
 
 using Microsoft.Extensions.DependencyInjection;
 
-using OSharp.Authorization;
-using OSharp.Authorization.Dtos;
-using OSharp.Authorization.EntityInfos;
-using OSharp.AutoMapper;
+using OSharp.Authentication;
+using OSharp.Core.Packs;
 
 
-namespace OSharp.Template.Authorization
+namespace OSharp.Template.Identity
 {
-    public class DataAuthorizationPack
-        : DataAuthorizationPackBase<DataAuthManager, DataAuthCache, EntityInfo, EntityInfoInputDto, EntityRole, EntityRoleInputDto, int>
+    /// <summary>
+    /// 身份认证模块
+    /// </summary>
+    [DependsOnPacks(typeof(IdentityPack))]
+    public class AuthenticationPack : AuthenticationPackBase<User, int>
     {
         /// <summary>
         /// 将模块服务添加到依赖注入服务容器中
@@ -30,8 +31,8 @@ namespace OSharp.Template.Authorization
         /// <returns></returns>
         public override IServiceCollection AddServices(IServiceCollection services)
         {
-            services.AddSingleton<IAutoMapperConfiguration, AutoMapperConfiguration>();
-
+            services.AddEventHandler<Logout_RemoveRefreshTokenEventHandler>();
+            
             return base.AddServices(services);
         }
     }

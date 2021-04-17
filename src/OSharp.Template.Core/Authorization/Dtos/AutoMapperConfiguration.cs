@@ -11,10 +11,7 @@ using AutoMapper.Configuration;
 
 using OSharp.Template.Authorization.Entities;
 
-using Microsoft.Extensions.DependencyInjection;
-
 using OSharp.AutoMapper;
-using OSharp.Dependency;
 using OSharp.Json;
 
 
@@ -23,7 +20,6 @@ namespace OSharp.Template.Authorization.Dtos
     /// <summary>
     /// DTO对象映射类
     /// </summary>
-    [Dependency(ServiceLifetime.Singleton)]
     public class AutoMapperConfiguration : IAutoMapperConfiguration
     {
         /// <summary>

@@ -7,13 +7,16 @@
 //  <last-date>2020-02-15 17:31</last-date>
 // -----------------------------------------------------------------------
 
-using System;
 using System.ComponentModel;
 
+using OSharp.Template.Identity.Dtos;
 using OSharp.Template.Identity.Entities;
+using OSharp.Template.Identity.Events;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using OSharp.AutoMapper;
+using OSharp.Entity;
 using OSharp.Identity;
 
 
@@ -33,6 +36,11 @@ namespace OSharp.Template.Identity
         public override IServiceCollection AddServices(IServiceCollection services)
         {
             services.AddScoped<IIdentityContract, IdentityService>();
+            services.AddSingleton<IAutoMapperConfiguration, AutoMapperConfiguration>();
+            services.AddSingleton<ISeedDataInitializer, RoleSeedDataInitializer>();
+
+            services.AddEventHandler<LoginLoginLogEventHandler>();
+            services.AddEventHandler<LogoutLoginLogEventHandler>();
 
             return base.AddServices(services);
         }

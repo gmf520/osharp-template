@@ -6,7 +6,7 @@ using OSharp.Entity;
 using OSharp.Entity.Sqlite;
 
 
-namespace Liuliu.Demo.Web.Startups
+namespace OSharp.Template.Web.Startups
 {
     /// <summary>
     /// Sqlite-DefaultDbContext迁移模块

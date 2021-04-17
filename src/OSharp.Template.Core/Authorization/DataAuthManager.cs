@@ -13,12 +13,9 @@ using OSharp.Template.Authorization.Dtos;
 using OSharp.Template.Authorization.Entities;
 using OSharp.Template.Identity.Entities;
 
-using Microsoft.Extensions.DependencyInjection;
-
 using OSharp.Authorization.DataAuthorization;
 using OSharp.Authorization.Dtos;
 using OSharp.Authorization.EntityInfos;
-using OSharp.Dependency;
 using OSharp.Entity;
 using OSharp.EventBuses;
 

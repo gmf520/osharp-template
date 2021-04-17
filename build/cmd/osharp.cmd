@@ -3,7 +3,7 @@
 ::生成代码
 echo －－－－－－－－－－－－－－－－－－－－－－－－－
 echo － 欢迎使用 OSharp一键模板 命令
-echo － 当前版本：3.1.2.229
+echo － 当前版本：3.1.2.326
 echo － http://www.osharp.org
 echo － Copyright @ 2014 - 2020 OSHARP.ORG
 echo －－－－－－－－－－－－－－－－－－－－－－－－－

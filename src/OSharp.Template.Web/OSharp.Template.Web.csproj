@@ -8,14 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Startups\MySqlDefaultDbContextMigrationPack.cs" />
+    <Compile Remove="Startups\MySqlDesignTimeDefaultDbContextFactory.cs" />
     <Compile Remove="Startups\OracleDefaultDbContextMigrationPack.cs" />
     <Compile Remove="Startups\OracleDesignTimeDefaultDbContextFactory.cs" />
     <Compile Remove="Startups\PostgreSqlDefaultDbContextMigrationPack.cs" />
     <Compile Remove="Startups\PostgreSqlDesignTimeDefaultDbContextFactory.cs" />
     <Compile Remove="Startups\SqliteDefaultDbContextMigrationPack.cs" />
     <Compile Remove="Startups\SqliteDesignTimeDefaultDbContextFactory.cs" />
-    <Compile Remove="Startups\SqlServerDefaultDbContextMigrationPack.cs" />
-    <Compile Remove="Startups\SqlServerDesignTimeDefaultDbContextFactory.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,13 +29,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="OSharpNS.EntityFrameworkCore.SqlServer" Version="3.1.2-preview2.29" />
-    <PackageReference Include="OSharpNS.EntityFrameworkCore.MySql" Version="3.1.2-preview2.29" />
-    <PackageReference Include="OSharpNS.Log4Net" Version="3.1.2-preview2.29" />
-    <PackageReference Include="OSharpNS.MiniProfiler" Version="3.1.2-preview2.29" />
-    <PackageReference Include="OSharpNS.Redis" Version="3.1.2-preview2.29" />
-    <PackageReference Include="OSharpNS.Swagger" Version="3.1.2-preview2.29" />
-    <PackageReference Include="OSharpNS.Hangfire" Version="3.1.2-preview2.29" />
+    <PackageReference Include="OSharpNS.EntityFrameworkCore.SqlServer" Version="3.1.2" />
+    <PackageReference Include="OSharpNS.EntityFrameworkCore.MySql" Version="3.1.2" />
+    <PackageReference Include="OSharpNS.Log4Net" Version="3.1.2" />
+    <PackageReference Include="OSharpNS.MiniProfiler" Version="3.1.2" />
+    <PackageReference Include="OSharpNS.Redis" Version="3.1.2" />
+    <PackageReference Include="OSharpNS.Swagger" Version="3.1.2" />
+    <PackageReference Include="OSharpNS.Hangfire" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
   </ItemGroup>
@@ -43,6 +43,5 @@
     <ProjectReference Include="..\OSharp.Template.Core\OSharp.Template.Core.csproj" />
     <ProjectReference Include="..\OSharp.Template.EntityConfiguration\OSharp.Template.EntityConfiguration.csproj" />
   </ItemGroup>
-  <ProjectExtensions><VisualStudio><UserProperties appsettings_1development_1json__JsonSchema="http://json.schemastore.org/appsettings" /></VisualStudio></ProjectExtensions>
 
 </Project>

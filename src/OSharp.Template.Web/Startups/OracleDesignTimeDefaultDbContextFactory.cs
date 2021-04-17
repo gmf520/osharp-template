@@ -22,7 +22,7 @@ using OSharp.Extensions;
 using OSharp.Reflection;
 
 
-namespace Liuliu.Demo.Web.Startups
+namespace OSharp.Template.Web.Startups
 {
     public class OracleDesignTimeDefaultDbContextFactory : DesignTimeDbContextFactoryBase<DefaultDbContext>
     {
