@@ -64,7 +64,7 @@
     "@ngx-translate/http-loader": "^4.0.0",
     "ajv": "^6.10.2",
     "heartbeats": "^5.0.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "linqts": "^1.12.6",
     "moment": "^2.24.0",
     "ng-alain": "^8.9.0",
