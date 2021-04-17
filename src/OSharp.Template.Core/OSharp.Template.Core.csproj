@@ -10,9 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="OSharpNS.Authorization.Datas" Version="3.1.2" />
-    <PackageReference Include="OSharpNS.Authorization.Functions" Version="3.1.2" />
-    <PackageReference Include="OSharpNS.AutoMapper" Version="3.1.2" />
+    <PackageReference Include="OSharpNS.Hosting.Core" Version="5.0.5-preview.418" />
   </ItemGroup>
 
   <ItemGroup>

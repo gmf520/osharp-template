@@ -4,18 +4,18 @@
   <Import Project="../../build/version.props" />
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>OSharp.Template.Web</RootNamespace>
+    <UserSecretsId>38c51dba-31f4-4c29-a3b3-49164e38d32f</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="Startups\MySqlDefaultDbContextMigrationPack.cs" />
-    <Compile Remove="Startups\MySqlDesignTimeDefaultDbContextFactory.cs" />
+    <Compile Remove="Startups\NpgsqlDefaultDbContextMigrationPack.cs" />
     <Compile Remove="Startups\OracleDefaultDbContextMigrationPack.cs" />
-    <Compile Remove="Startups\OracleDesignTimeDefaultDbContextFactory.cs" />
-    <Compile Remove="Startups\PostgreSqlDefaultDbContextMigrationPack.cs" />
-    <Compile Remove="Startups\PostgreSqlDesignTimeDefaultDbContextFactory.cs" />
     <Compile Remove="Startups\SqliteDefaultDbContextMigrationPack.cs" />
-    <Compile Remove="Startups\SqliteDesignTimeDefaultDbContextFactory.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,23 +25,38 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.2">
+    <PackageReference Include="AspectCore.Extensions.Hosting" Version="2.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
+    <PackageReference Include="OSharpNS.Hangfire" Version="5.0.5-preview.418" />
+    <PackageReference Include="OSharpNS.Log4Net" Version="5.0.5-preview.418" />
+    <PackageReference Include="OSharpNS.MiniProfiler" Version="5.0.5-preview.418" />
+    <PackageReference Include="OSharpNS.Redis" Version="5.0.5-preview.418" />
+    <PackageReference Include="OSharpNS.Swagger" Version="5.0.5-preview.418" />
+    <PackageReference Include="OSharpNS.EntityFrameworkCore.SqlServer" Version="5.0.5-preview.418" />
+    <PackageReference Include="OSharpNS.Hosting.Apis" Version="5.0.5-preview.418" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="[3.1.13,4.0.0)" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="[3.1.13,4.0.0)">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="OSharpNS.EntityFrameworkCore.SqlServer" Version="3.1.2" />
-    <PackageReference Include="OSharpNS.EntityFrameworkCore.MySql" Version="3.1.2" />
-    <PackageReference Include="OSharpNS.Log4Net" Version="3.1.2" />
-    <PackageReference Include="OSharpNS.MiniProfiler" Version="3.1.2" />
-    <PackageReference Include="OSharpNS.Redis" Version="3.1.2" />
-    <PackageReference Include="OSharpNS.Swagger" Version="3.1.2" />
-    <PackageReference Include="OSharpNS.Hangfire" Version="3.1.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.2" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="[3.1.5,4.0.0)" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\OSharp.Template.Core\OSharp.Template.Core.csproj" />
-    <ProjectReference Include="..\OSharp.Template.EntityConfiguration\OSharp.Template.EntityConfiguration.csproj" />
+  <ItemGroup Condition="'$(TargetFramework)'=='net5.0'">
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
+
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties />
+    </VisualStudio>
+  </ProjectExtensions>
+
 
 </Project>
