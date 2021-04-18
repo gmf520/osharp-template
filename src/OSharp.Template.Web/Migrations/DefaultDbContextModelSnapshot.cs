@@ -16,7 +16,7 @@ namespace OSharp.Template.Web.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.4")
+                .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("OSharp.Authorization.EntityInfos.EntityInfo", b =>
@@ -118,7 +118,7 @@ namespace OSharp.Template.Web.Migrations
 
                     b.Property<string>("Key")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ValueJson")
                         .HasColumnType("nvarchar(max)");
@@ -127,6 +127,10 @@ namespace OSharp.Template.Web.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Key")
+                        .IsUnique()
+                        .HasDatabaseName("KeyIndex");
 
                     b.ToTable("Systems_KeyValue");
                 });

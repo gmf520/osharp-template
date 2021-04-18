@@ -122,7 +122,7 @@ namespace OSharp.Template.Web.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ValueJson = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ValueType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Key = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Key = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     IsLocked = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -788,6 +788,12 @@ namespace OSharp.Template.Web.Migrations
                 name: "IX_Systems_AuditProperty_AuditEntityId",
                 table: "Systems_AuditProperty",
                 column: "AuditEntityId");
+
+            migrationBuilder.CreateIndex(
+                name: "KeyIndex",
+                table: "Systems_KeyValue",
+                column: "Key",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Systems_Menu_ParentId",

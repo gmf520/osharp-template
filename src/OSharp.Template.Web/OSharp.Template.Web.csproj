@@ -27,13 +27,13 @@
   <ItemGroup>
     <PackageReference Include="AspectCore.Extensions.Hosting" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
-    <PackageReference Include="OSharpNS.Hangfire" Version="5.0.5-preview.418" />
-    <PackageReference Include="OSharpNS.Log4Net" Version="5.0.5-preview.418" />
-    <PackageReference Include="OSharpNS.MiniProfiler" Version="5.0.5-preview.418" />
-    <PackageReference Include="OSharpNS.Redis" Version="5.0.5-preview.418" />
-    <PackageReference Include="OSharpNS.Swagger" Version="5.0.5-preview.418" />
-    <PackageReference Include="OSharpNS.EntityFrameworkCore.SqlServer" Version="5.0.5-preview.418" />
-    <PackageReference Include="OSharpNS.Hosting.Apis" Version="5.0.5-preview.418" />
+    <PackageReference Include="OSharpNS.Hangfire" Version="5.0.5-preview.418.2" />
+    <PackageReference Include="OSharpNS.Log4Net" Version="5.0.5-preview.418.2" />
+    <PackageReference Include="OSharpNS.MiniProfiler" Version="5.0.5-preview.418.2" />
+    <PackageReference Include="OSharpNS.Redis" Version="5.0.5-preview.418.2" />
+    <PackageReference Include="OSharpNS.Swagger" Version="5.0.5-preview.418.2" />
+    <PackageReference Include="OSharpNS.EntityFrameworkCore.SqlServer" Version="5.0.5-preview.418.2" />
+    <PackageReference Include="OSharpNS.Hosting.Apis" Version="5.0.5-preview.418.2" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="[3.1.13,4.0.0)" />
@@ -50,6 +50,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
   <ProjectExtensions>
