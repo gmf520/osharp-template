@@ -1,9 +1,9 @@
 <Project>
   <PropertyGroup>
-    <VersionMain>5.0</VersionMain>
-    <VersionPrefix>5</VersionPrefix>
+    <VersionMain>6.0</VersionMain>
+    <VersionPrefix>0</VersionPrefix>
     <VersionSuffix>.</VersionSuffix>
-    <VersionSuffixVersion>419</VersionSuffixVersion>
+    <VersionSuffixVersion>0</VersionSuffixVersion>
     <Version>$(VersionMain).$(VersionPrefix)$(VersionSuffix)$(VersionSuffixVersion)</Version>
     <AssemblyVersion>$(VersionMain).$(VersionPrefix)</AssemblyVersion>
     <FileVersion>$(VersionMain).$(VersionSuffixVersion)</FileVersion>

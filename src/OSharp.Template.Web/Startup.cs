@@ -7,23 +7,18 @@
 //  <last-date>2020-06-02 14:35</last-date>
 // -----------------------------------------------------------------------
 
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-
 using OSharp.Template.Web.Startups;
 
+#if !NET6_0_OR_GREATER
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyModel;
 using Microsoft.Extensions.Hosting;
+#endif
 
 using OSharp.AspNetCore;
 using OSharp.AspNetCore.Routing;
 using OSharp.AutoMapper;
-using OSharp.Collections;
 using OSharp.Hosting.Authorization;
 using OSharp.Hosting.Identity;
 using OSharp.Hosting.Infos;
@@ -41,7 +36,7 @@ namespace OSharp.Template.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-#if NET5_0
+#if NET5_0_OR_GREATER
             services.AddDatabaseDeveloperPageExceptionFilter();
 #endif
             services.AddOSharp()
@@ -61,12 +56,18 @@ namespace OSharp.Template.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+#if NET6_0_OR_GREATER
+        public void Configure(WebApplication app)
+        {
+            IWebHostEnvironment env = app.Environment;
+#else
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+#endif
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-#if NET5_0
+#if NET5_0_OR_GREATER
                 app.UseMigrationsEndPoint();
 #else
                 app.UseDatabaseErrorPage();
@@ -79,8 +80,8 @@ namespace OSharp.Template.Web
 
             app.UseMiddleware<JsonExceptionHandlerMiddleware>()
                 .UseDefaultFiles()
-                .UseStaticFiles()
-                .UseOSharp();
+                .UseStaticFiles();
+            app.UseOSharp();
         }
     }
 }

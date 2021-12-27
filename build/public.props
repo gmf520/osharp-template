@@ -6,8 +6,8 @@
     <Company>柳柳软件(66soft.net)</Company>
     <Copyright>Copyright @ 66SOFT 2014-2021</Copyright>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/i66soft/osharp</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/i66soft/osharp.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/dotnetcore/osharp</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dotnetcore/osharp.git</RepositoryUrl>
     <PackageIcon>icon.png</PackageIcon>
     <RepositoryType>git</RepositoryType>
     <PackageTags>osharp osharpns</PackageTags>

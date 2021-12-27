@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <id>OSharpNS.Template.Mvc_Angular</id>
-    <version>5.0.5.419</version>
+    <id>OSharp.Template.WebApi</id>
+    <version>6.0.0</version>
     <title></title>
     <authors>柳柳软件(66soft.net)</authors>
     <owners>柳柳软件(66soft.net)</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>https://choosealicense.com/licenses/apache-2.0/</licenseUrl>
-    <projectUrl>https://github.com/i66soft/osharp-ns20</projectUrl>
+    <projectUrl>https://github.com/dotnetcore/osharp</projectUrl>
     <iconUrl>https://en.gravatar.com/userimage/140788132/0ff3b1e68fa0154337b1528c4276e276.png?size=80</iconUrl>
-    <description>osharp with .netstandard2.0 &amp; angular，项目启动模板代码，以WebApi为后端，Angular为前端，实现了系统初始化、身份认证、权限授权等通用功能。</description>
-    <copyright>Copyright © 66SOFT 2014-2020</copyright>
-    <tags>osharp osharpns</tags>
+    <description>osharp webapi项目启动模板代码，实现了系统初始化、身份认证、权限授权等通用功能。</description>
+    <copyright>Copyright © 66SOFT 2014-2021</copyright>
+    <tags>osharp</tags>
     <packageTypes>
       <packageType name="Template" />
     </packageTypes>
