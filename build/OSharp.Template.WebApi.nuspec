@@ -2,14 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>OSharp.Template.WebApi</id>
-    <version>6.0.0</version>
-    <title></title>
+    <version>6.0.0.1</version>
+    <title>OSharp Template for WebApi</title>
     <authors>柳柳软件(66soft.net)</authors>
     <owners>柳柳软件(66soft.net)</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <licenseUrl>https://choosealicense.com/licenses/apache-2.0/</licenseUrl>
+    <license type="expression">Apache-2.0</license>
+    <icon>content\build\icon.png</icon>
     <projectUrl>https://github.com/dotnetcore/osharp</projectUrl>
-    <iconUrl>https://en.gravatar.com/userimage/140788132/0ff3b1e68fa0154337b1528c4276e276.png?size=80</iconUrl>
     <description>osharp webapi项目启动模板代码，实现了系统初始化、身份认证、权限授权等通用功能。</description>
     <copyright>Copyright © 66SOFT 2014-2021</copyright>
     <tags>osharp</tags>
@@ -18,19 +18,13 @@
     </packageTypes>
   </metadata>
   <files>
-    <file src="cmd\.template.config/template.json" target="content\OSharp\.template.config"/>
-    <file src="cmd\osharp.cmd" target="content\OSharp"/>
-    <file src="..\OSharp.Template.sln" target="content\OSharp.Solution"/>
-    <file src="..\OSharp.Template.sln.DotSettings" target="content\OSharp.Solution"/>
-    <file src="..\README.md" target="content\OSharp.Solution"/>
-    <file src="..\LICENSE" target="content\OSharp.Solution"/>
-    <file src="..\Dockerfile" target="content\OSharp.Solution"/>
-    <file src="..\build.bat" target="content\OSharp.Solution"/>
-    <file src="public.props" target="content\OSharp.Solution\build"/>
-    <file src="version.props" target="content\OSharp.Solution\build"/>
-    <file src="sln\.template.config/template.json" target="content\OSharp.Solution\.template.config"/>
-    <file src="..\src\**"
-      exclude="**/node_modules/**;**/bin/**;**/obj/**;**/log/**;**/logs/**;**/.vs/**;**/.vscode/**;**/dist/**;**/wwwroot/**;**/assets/tmp/**"
-      target="content" />
+    <file src="..\.template.config\template.json" target="content\.template.config\" />
+    <file src="..\build\**" target="content\build" exclude="pack.ps1" />
+    <file src="..\docs\**" target="content\docs" />
+    <file src="..\src\**" target="content\src" exclude="**/node_modules/**;**/bin/**;**/obj/**;**/log/**;**/logs/**;**/.vs/**;**/.vscode/**;**/dist/**;**/wwwroot/**;**/assets/tmp/**" />
+    <file src="..\LICENSE" target="content\LICENSE" />
+    <file src="..\OSharp.Template.sln" target="content" />
+    <file src="..\OSharp.Template.sln.DotSettings" target="content" />
+    <file src="..\ReadMe.md" target="content" />
   </files>
 </package>

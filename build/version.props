@@ -3,7 +3,7 @@
     <VersionMain>6.0</VersionMain>
     <VersionPrefix>0</VersionPrefix>
     <VersionSuffix>.</VersionSuffix>
-    <VersionSuffixVersion>0</VersionSuffixVersion>
+    <VersionSuffixVersion>1</VersionSuffixVersion>
     <Version>$(VersionMain).$(VersionPrefix)$(VersionSuffix)$(VersionSuffixVersion)</Version>
     <AssemblyVersion>$(VersionMain).$(VersionPrefix)</AssemblyVersion>
     <FileVersion>$(VersionMain).$(VersionSuffixVersion)</FileVersion>

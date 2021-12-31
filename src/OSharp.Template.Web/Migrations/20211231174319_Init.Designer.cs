@@ -7,19 +7,22 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OSharp.Entity;
 
+#nullable disable
+
 namespace OSharp.Template.Web.Migrations
 {
     [DbContext(typeof(DefaultDbContext))]
-    [Migration("20210418075756_Init")]
+    [Migration("20211231174319_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.5")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("OSharp.Authorization.EntityInfos.EntityInfo", b =>
                 {
@@ -32,15 +35,18 @@ namespace OSharp.Template.Web.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("PropertyJson")
                         .IsRequired()
+                        .HasMaxLength(5000)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TypeName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.HasKey("Id");
 
@@ -48,7 +54,7 @@ namespace OSharp.Template.Web.Migrations
                         .IsUnique()
                         .HasDatabaseName("ClassFullNameIndex");
 
-                    b.ToTable("Auth_EntityInfo");
+                    b.ToTable("Auth_EntityInfo", (string)null);
                 });
 
             modelBuilder.Entity("OSharp.Authorization.Functions.Function", b =>
@@ -61,10 +67,12 @@ namespace OSharp.Template.Web.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Action")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Area")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<bool>("AuditEntityEnabled")
                         .HasColumnType("bit");
@@ -76,7 +84,8 @@ namespace OSharp.Template.Web.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Controller")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<bool>("IsAccessTypeChanged")
                         .HasColumnType("bit");
@@ -97,7 +106,8 @@ namespace OSharp.Template.Web.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
 
@@ -106,7 +116,7 @@ namespace OSharp.Template.Web.Migrations
                         .HasDatabaseName("AreaControllerActionIndex")
                         .HasFilter("[Area] IS NOT NULL AND [Controller] IS NOT NULL AND [Action] IS NOT NULL");
 
-                    b.ToTable("Auth_Function");
+                    b.ToTable("Auth_Function", (string)null);
                 });
 
             modelBuilder.Entity("OSharp.Core.Systems.KeyValue", b =>
@@ -115,18 +125,31 @@ namespace OSharp.Template.Web.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Display")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<bool>("IsLocked")
                         .HasColumnType("bit");
 
                     b.Property<string>("Key")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Remark")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("ValueJson")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ValueType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.HasKey("Id");
 
@@ -134,7 +157,7 @@ namespace OSharp.Template.Web.Migrations
                         .IsUnique()
                         .HasDatabaseName("KeyIndex");
 
-                    b.ToTable("Systems_KeyValue");
+                    b.ToTable("Systems_KeyValue", (string)null);
                 });
 
             modelBuilder.Entity("OSharp.Hosting.Authorization.Entities.EntityRole", b =>
@@ -150,6 +173,7 @@ namespace OSharp.Template.Web.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("FilterGroupJson")
+                        .HasMaxLength(5000)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsLocked")
@@ -169,7 +193,7 @@ namespace OSharp.Template.Web.Migrations
                         .IsUnique()
                         .HasDatabaseName("EntityRoleIndex");
 
-                    b.ToTable("Auth_EntityRole");
+                    b.ToTable("Auth_EntityRole", (string)null);
                 });
 
             modelBuilder.Entity("OSharp.Hosting.Authorization.Entities.EntityUser", b =>
@@ -185,6 +209,7 @@ namespace OSharp.Template.Web.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("FilterGroupJson")
+                        .HasMaxLength(5000)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsLocked")
@@ -200,23 +225,26 @@ namespace OSharp.Template.Web.Migrations
                     b.HasIndex("EntityId", "UserId")
                         .HasDatabaseName("EntityUserIndex");
 
-                    b.ToTable("Auth_EntityUser");
+                    b.ToTable("Auth_EntityUser", (string)null);
                 });
 
             modelBuilder.Entity("OSharp.Hosting.Authorization.Entities.Module", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<double>("OrderCode")
                         .HasColumnType("float");
@@ -225,16 +253,18 @@ namespace OSharp.Template.Web.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Remark")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("TreePathString")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Auth_Module");
+                    b.ToTable("Auth_Module", (string)null);
                 });
 
             modelBuilder.Entity("OSharp.Hosting.Authorization.Entities.ModuleFunction", b =>
@@ -257,7 +287,7 @@ namespace OSharp.Template.Web.Migrations
                         .IsUnique()
                         .HasDatabaseName("ModuleFunctionIndex");
 
-                    b.ToTable("Auth_ModuleFunction");
+                    b.ToTable("Auth_ModuleFunction", (string)null);
                 });
 
             modelBuilder.Entity("OSharp.Hosting.Authorization.Entities.ModuleRole", b =>
@@ -280,7 +310,7 @@ namespace OSharp.Template.Web.Migrations
                         .IsUnique()
                         .HasDatabaseName("ModuleRoleIndex");
 
-                    b.ToTable("Auth_ModuleRole");
+                    b.ToTable("Auth_ModuleRole", (string)null);
                 });
 
             modelBuilder.Entity("OSharp.Hosting.Authorization.Entities.ModuleUser", b =>
@@ -306,7 +336,7 @@ namespace OSharp.Template.Web.Migrations
                         .IsUnique()
                         .HasDatabaseName("ModuleUserIndex");
 
-                    b.ToTable("Auth_ModuleUser");
+                    b.ToTable("Auth_ModuleUser", (string)null);
                 });
 
             modelBuilder.Entity("OSharp.Hosting.Identity.Entities.LoginLog", b =>
@@ -319,13 +349,15 @@ namespace OSharp.Template.Web.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Ip")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("LogoutTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserAgent")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -334,43 +366,48 @@ namespace OSharp.Template.Web.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Identity_LoginLog");
+                    b.ToTable("Identity_LoginLog", (string)null);
                 });
 
             modelBuilder.Entity("OSharp.Hosting.Identity.Entities.Organization", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int?>("ParentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Remark")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Identity_Organization");
+                    b.ToTable("Identity_Organization", (string)null);
                 });
 
             modelBuilder.Entity("OSharp.Hosting.Identity.Entities.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
@@ -395,15 +432,17 @@ namespace OSharp.Template.Web.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("NormalizedName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Remark")
-                        .HasMaxLength(512)
-                        .HasColumnType("nvarchar(512)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.HasKey("Id");
 
@@ -414,21 +453,24 @@ namespace OSharp.Template.Web.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[DeletedTime] IS NOT NULL");
 
-                    b.ToTable("Identity_Role");
+                    b.ToTable("Identity_Role", (string)null);
                 });
 
             modelBuilder.Entity("OSharp.Hosting.Identity.Entities.RoleClaim", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
@@ -437,22 +479,24 @@ namespace OSharp.Template.Web.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Identity_RoleClaim");
+                    b.ToTable("Identity_RoleClaim", (string)null);
                 });
 
             modelBuilder.Entity("OSharp.Hosting.Identity.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
@@ -461,13 +505,15 @@ namespace OSharp.Template.Web.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
                     b.Property<string>("HeadImg")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<bool>("IsLocked")
                         .HasColumnType("bit");
@@ -485,36 +531,44 @@ namespace OSharp.Template.Web.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("NickName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("NormalizeEmail")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("NormalizedUserName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
                     b.Property<string>("Remark")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
 
@@ -528,22 +582,25 @@ namespace OSharp.Template.Web.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[DeletedTime] IS NOT NULL");
 
-                    b.ToTable("Identity_User");
+                    b.ToTable("Identity_User", (string)null);
                 });
 
             modelBuilder.Entity("OSharp.Hosting.Identity.Entities.UserClaim", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ClaimType")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -552,18 +609,20 @@ namespace OSharp.Template.Web.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Identity_UserClaim");
+                    b.ToTable("Identity_UserClaim", (string)null);
                 });
 
             modelBuilder.Entity("OSharp.Hosting.Identity.Entities.UserDetail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("RegisterIp")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -573,7 +632,7 @@ namespace OSharp.Template.Web.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Identity_UserDetail");
+                    b.ToTable("Identity_UserDetail", (string)null);
                 });
 
             modelBuilder.Entity("OSharp.Hosting.Identity.Entities.UserLogin", b =>
@@ -583,19 +642,23 @@ namespace OSharp.Template.Web.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Avatar")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -609,7 +672,7 @@ namespace OSharp.Template.Web.Migrations
                         .HasDatabaseName("UserLoginIndex")
                         .HasFilter("[LoginProvider] IS NOT NULL AND [ProviderKey] IS NOT NULL");
 
-                    b.ToTable("Identity_UserLogin");
+                    b.ToTable("Identity_UserLogin", (string)null);
                 });
 
             modelBuilder.Entity("OSharp.Hosting.Identity.Entities.UserRole", b =>
@@ -642,7 +705,7 @@ namespace OSharp.Template.Web.Migrations
                         .HasDatabaseName("UserRoleIndex")
                         .HasFilter("[DeletedTime] IS NOT NULL");
 
-                    b.ToTable("Identity_UserRole");
+                    b.ToTable("Identity_UserRole", (string)null);
                 });
 
             modelBuilder.Entity("OSharp.Hosting.Identity.Entities.UserToken", b =>
@@ -652,16 +715,19 @@ namespace OSharp.Template.Web.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
 
                     b.HasKey("Id");
 
@@ -670,7 +736,7 @@ namespace OSharp.Template.Web.Migrations
                         .HasDatabaseName("UserTokenIndex")
                         .HasFilter("[LoginProvider] IS NOT NULL AND [Name] IS NOT NULL");
 
-                    b.ToTable("Identity_UserToken");
+                    b.ToTable("Identity_UserToken", (string)null);
                 });
 
             modelBuilder.Entity("OSharp.Hosting.Infos.Entities.Message", b =>
@@ -721,7 +787,7 @@ namespace OSharp.Template.Web.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("Infos_Message");
+                    b.ToTable("Infos_Message", (string)null);
                 });
 
             modelBuilder.Entity("OSharp.Hosting.Infos.Entities.MessageReceive", b =>
@@ -751,7 +817,7 @@ namespace OSharp.Template.Web.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Infos_MessageReceive");
+                    b.ToTable("Infos_MessageReceive", (string)null);
                 });
 
             modelBuilder.Entity("OSharp.Hosting.Infos.Entities.MessageReply", b =>
@@ -798,7 +864,7 @@ namespace OSharp.Template.Web.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Infos_MessageReply");
+                    b.ToTable("Infos_MessageReply", (string)null);
                 });
 
             modelBuilder.Entity("OSharp.Hosting.Systems.Entities.AuditEntity", b =>
@@ -808,10 +874,13 @@ namespace OSharp.Template.Web.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("EntityKey")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("OperateType")
                         .HasColumnType("int");
@@ -820,13 +889,15 @@ namespace OSharp.Template.Web.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("TypeName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OperationId");
 
-                    b.ToTable("Systems_AuditEntity");
+                    b.ToTable("Systems_AuditEntity", (string)null);
                 });
 
             modelBuilder.Entity("OSharp.Hosting.Systems.Entities.AuditOperation", b =>
@@ -836,7 +907,8 @@ namespace OSharp.Template.Web.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Browser")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<DateTime>("CreatedTime")
                         .HasColumnType("datetime2");
@@ -845,35 +917,44 @@ namespace OSharp.Template.Web.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("FunctionName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Ip")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Message")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("NickName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("OperationSystem")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<int>("ResultType")
                         .HasColumnType("int");
 
                     b.Property<string>("UserAgent")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Systems_AuditOperation");
+                    b.ToTable("Systems_AuditOperation", (string)null);
                 });
 
             modelBuilder.Entity("OSharp.Hosting.Systems.Entities.AuditProperty", b =>
@@ -886,41 +967,47 @@ namespace OSharp.Template.Web.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("DataType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("DisplayName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("FieldName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("NewValue")
+                        .HasMaxLength(5000)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OriginalValue")
+                        .HasMaxLength(5000)
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AuditEntityId");
 
-                    b.ToTable("Systems_AuditProperty");
+                    b.ToTable("Systems_AuditProperty", (string)null);
                 });
 
             modelBuilder.Entity("OSharp.Hosting.Systems.Entities.Menu", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Acl")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Data")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
 
                     b.Property<string>("Icon")
                         .HasMaxLength(50)
@@ -953,8 +1040,8 @@ namespace OSharp.Template.Web.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("TreePathString")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasMaxLength(3000)
+                        .HasColumnType("nvarchar(3000)");
 
                     b.Property<string>("Url")
                         .HasMaxLength(2000)
@@ -964,7 +1051,7 @@ namespace OSharp.Template.Web.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Systems_Menu");
+                    b.ToTable("Systems_Menu", (string)null);
                 });
 
             modelBuilder.Entity("OSharp.Hosting.Authorization.Entities.EntityRole", b =>

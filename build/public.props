@@ -12,6 +12,8 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>osharp osharpns</PackageTags>
     <NeutralLanguage>zh-CHS</NeutralLanguage>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <FrameworkVersion>net6.0</FrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\build\icon.png" Pack="true" Visible="false" PackagePath=""/>
