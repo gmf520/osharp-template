@@ -13,11 +13,9 @@ dotnet new --install OSharp.Template.WebApi
 ```
 安装之后，运行`dotnet new --list`可以查看到已安装的模板
 ```
-模板名                短名称                语言         标记
--------------------  -------------------  ----------  ----------------
-...
-OSharp Template      osharp               [C#]        Web/OSharp
-...
+模板名              短名称     语言    标记
+---------------  ------  ----  ----------
+OSharp Template  osharp  [C#]  Web/OSharp
 ``` 
 
 ### 1.2 创建项目
