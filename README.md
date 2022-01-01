@@ -1,32 +1,33 @@
-# OSharp ÏîÄ¿Ä£°å
+ï»¿# OSharp é¡¹ç›®æ¨¡æ¿
 
-´ËÏîÄ¿Ä£°åÉú³ÉOSharpÏîÄ¿µÄ³õÊ¼½â¾ö·½°¸´úÂë£¬Éú³É 3 ¸öÏîÄ¿£º
-1. OSharp.Template.Web£ºËŞÖ÷ÏîÄ¿£¬¶ÔÍâÌá¹©WebApi·şÎñ
-2. OSharp.Template.Core£º·şÎñºËĞÄÏîÄ¿£¬·ÖÄ£¿éÊµÏÖÒµÎñµÄ
-3. OSharp.Template.EntityConfiguration£ºÊµÌåÓ³ÉäÅäÖÃÏîÄ¿
+æ­¤é¡¹ç›®æ¨¡æ¿ç”ŸæˆOSharpé¡¹ç›®çš„åˆå§‹è§£å†³æ–¹æ¡ˆä»£ç ï¼Œç”Ÿæˆ 3 ä¸ªé¡¹ç›®ï¼š
+1. OSharp.Template.Webï¼šå®¿ä¸»é¡¹ç›®ï¼Œå¯¹å¤–æä¾›WebApiæœåŠ¡
+2. OSharp.Template.Coreï¼šæœåŠ¡æ ¸å¿ƒé¡¹ç›®ï¼Œåˆ†æ¨¡å—å®ç°ä¸šåŠ¡çš„
+3. OSharp.Template.EntityConfigurationï¼šå®ä½“æ˜ å°„é…ç½®é¡¹ç›®
 
-## 1. Ê¹ÓÃËµÃ÷
-### 1.1 °²×°
-´ò¿ª`PowerShell`»òÕß`cmd`£¬ÔËĞĞÈçÏÂÃüÁî°²×°Ä£°å°ü
+## 1. ä½¿ç”¨è¯´æ˜
+### 1.1 å®‰è£…
+æ‰“å¼€`PowerShell`æˆ–è€…`cmd`ï¼Œè¿è¡Œå¦‚ä¸‹å‘½ä»¤å®‰è£…æ¨¡æ¿åŒ…
 ```
 dotnet new --install OSharp.Template.WebApi
 ```
-°²×°Ö®ºó£¬ÔËĞĞ`dotnet new --list`¿ÉÒÔ²é¿´µ½ÒÑ°²×°µÄÄ£°å
+å®‰è£…ä¹‹åï¼Œè¿è¡Œ`dotnet new --list`å¯ä»¥æŸ¥çœ‹åˆ°å·²å®‰è£…çš„æ¨¡æ¿
 ```
-Ä£°åÃû                ¶ÌÃû³Æ                ÓïÑÔ         ±ê¼Ç
+æ¨¡æ¿å                çŸ­åç§°                è¯­è¨€         æ ‡è®°
 -------------------  -------------------  ----------  ----------------
 ...
 OSharp Template      osharp               [C#]        Web/OSharp
 ...
 ``` 
 
-### 1.2 ´´½¨ÏîÄ¿
-ÔÚÒ»¸ö¿Õ°×ÎÄ¼ş¼Ğ£¬ÔËĞĞÈçÏÂÃüÁî£¬¼´¿ÉÉú³ÉÏîÄ¿³õÊ¼»¯½â¾ö·½°¸µÄ´úÂë£¬ÆäÖĞ`Company.Project`ÊÇÏîÄ¿´úÂëÄ¬ÈÏ»ù´¡ÃüÃû¿Õ¼ä£¬ÍÆ¼ö¸ñÊ½Îª¡°¹«Ë¾.ÏîÄ¿¡±£¬Ä¬ÈÏ½«Éú³É`net6.0µÄÏîÄ¿`
+### 1.2 åˆ›å»ºé¡¹ç›®
+åœ¨ä¸€ä¸ªç©ºç™½æ–‡ä»¶å¤¹ï¼Œè¿è¡Œå¦‚ä¸‹å‘½ä»¤ï¼Œå³å¯ç”Ÿæˆé¡¹ç›®åˆå§‹åŒ–è§£å†³æ–¹æ¡ˆçš„ä»£ç ï¼Œå…¶ä¸­`Company.Project`æ˜¯é¡¹ç›®ä»£ç é»˜è®¤åŸºç¡€å‘½åç©ºé—´ï¼Œæ¨èæ ¼å¼ä¸ºâ€œå…¬å¸.é¡¹ç›®â€ï¼Œé»˜è®¤å°†ç”Ÿæˆ`net6.0çš„é¡¹ç›®`
 ```
 dotnet new osharp -n Company.Project
 ```
-Èç¹ûÒªÉú³ÉÆäËûsdk°æ±¾µÄÏîÄ¿£¬¿ÉÒÔÊ¹ÓÃ`-F`»ò`--Framework`²ÎÊıÖ¸¶¨£¬¿ÉÑ¡ÖµÎª£ºnet6.0/net5.0/netcoreapp3.1
-net5.0£º
+* æŒ‡å®šsdkç‰ˆæœ¬ï¼Œ`--Framework`å‚æ•°
+å¦‚æœè¦ç”Ÿæˆå…¶ä»–sdkç‰ˆæœ¬çš„é¡¹ç›®ï¼Œå¯ä»¥ä½¿ç”¨`-F`æˆ–`--Framework`å‚æ•°æŒ‡å®šï¼Œå¯é€‰å€¼ä¸ºï¼šnet6.0/net5.0/netcoreapp3.1
+net5.0ï¼š
 ```
 dotnet new osharp -n Company.Project -F net5.0
 ```
@@ -35,13 +36,19 @@ netcoreapp3.1
 dotnet new osharp -n Company.Project -F netcoreapp3.1
 ```
 
-## 2.ÎÄ¼şÇåµ¥ÈçÏÂ£º
+* æŒ‡å®šæ•°æ®åº“ç±»å‹ï¼Œ`--DatabaseType`å‚æ•°
+é¡¹ç›®é»˜è®¤ä½¿ç”¨`SqlServer`æ•°æ®åº“ç±»å‹ï¼Œå¦‚æœè¦ä½¿ç”¨å…¶ä»–æ•°æ®åº“ç±»å‹ï¼Œå¯ä»¥ä½¿ç”¨`--DatabaseType`å‚æ•°æŒ‡å®šï¼Œå¯é€‰å€¼ä¸ºï¼šSqlServer/MySql/Sqlite/PostgreSql/Oracle
+```
+dotnet new osharp -n Company.Project -F net5.0 --DatabaseType MySql
+```
+
+## 2.æ–‡ä»¶æ¸…å•å¦‚ä¸‹ï¼š
 ```
 |-- Company.Project
     |-- Company.Project.sln
     |-- Company.Project.sln.DotSettings
     |-- LICENSE
-    |-- ReadMe.md
+    |-- README.md
     |-- build
     |   |-- icon.png
     |   |-- public.props
@@ -73,76 +80,6 @@ dotnet new osharp -n Company.Project -F netcoreapp3.1
             |-- Properties
             |   |-- launchSettings.json
             |-- Startups
+                |-- DefaultDbContextMigrationPack.cs
                 |-- DesignTimeDefaultDbContextFactory.cs
-                |-- MySqlDefaultDbContextMigrationPack.cs
-                |-- NpgsqlDefaultDbContextMigrationPack.cs
-                |-- OracleDefaultDbContextMigrationPack.cs
-                |-- SqliteDefaultDbContextMigrationPack.cs
-                |-- SqlServerDefaultDbContextMigrationPack.cs
-```
-
-## 3. ÔËĞĞÏîÄ¿
-
-### 3.1 ¸ü»»Êı¾İ¿âÇı¶¯
-ÏîÄ¿Êı¾İ¿âÇı¶¯Ä¬ÈÏÊ¹ÓÃ`SqlServer`£¬OSharpÖ§³ÖµÄÊı¾İ¿âÇı¶¯ÓĞ£º
-1. SqlServer
-2. MySql
-3. PostgreSql
-4. Oracle
-5. Sqlite
-Èç¹ûĞèÒª¸ü»»Êı¾İ¿âÇı¶¯£¬×ñÑ­ÈçÏÂ²½Öè
-#### 3.1.1 ¸ü¸ÄÊı¾İ¿âÁ¬½Ó´®
-½øÈë`src/Company.Project.Web`ÎÄ¼ş¼Ğ£¬´ò¿ª`appsettings.Development.json`£¬¸üĞÂ`OSharp::DbContexts`½ÚµãµÄÏàÓ¦ÅäÖÃ
-```
-"SqlServer": {
-    "DbContextTypeName": "OSharp.Entity.DefaultDbContext,OSharp.EntityFrameworkCore",
-    "ConnectionString": "Server=localhost;Database=Company.Project-dev;User Id=sa;Password=Abc123456!;",
-    "DatabaseType": "SqlServer",
-    "AuditEntityEnabled": true,
-    "AutoMigrationEnabled": true
-}
-```
-`SqlServer`¸ü¸ÄÎªÏàÓ¦Êı¾İ¿âÃû³Æ£¬Í¬Ê±°´Êµ¼Ê³¡¾°¸üĞÂ`ConnectionString`Á¬½Ó´®ÄÚÈİ
-
-#### 3.1.2 Ìí¼ÓÏàÓ¦Êı¾İ¿âÇı¶¯µÄnuget°üÒıÓÃ
-ÔÚ`src/Company.Project.Web`ÎÄ¼ş¼Ğ£¬´ò¿ª`PowerShell`»ò`cmd£¬ÔËĞĞÏàÓ¦ÃüÁî°²×°
-
-SqlServer: 
-```
-Install-Package OSharp.EntityFrameworkCore.SqlServer
-```
-MySql
-```
-Install-Package OSharp.EntityFrameworkCore.MySql
-```
-µÈµÈ£¬ÆäËûÊı¾İ¿âÇı¶¯ÕÒÏàÓ¦°ü½øĞĞ°²×°
-
-#### 3.1.3 ÆôÓÃÏàÓ¦Êı¾İ¿âÇı¶¯µÄ XXXDefaultDbContextMigrationPack
-1. ÔÚ`src/Company.Project.Web/Startups`ÎÄ¼ş¼ĞÖĞ£¬½«ÏàÓ¦Êı¾İ¿âÇı¶¯µÄPackÒıÈë¹¤³ÌÖĞ
-2. ÔÚ`Startup.cs`ÎÄ¼şÖĞ£¬Ìí¼ÓÆäËûÏàÓ¦Êı¾İ¿âÇı¶¯PackÀàĞÍ
-```
-service.AddOSharp()
-    ...
-
-    .AddPack<MySqlDefaultDbContextMigrationPack>()
-    ...
-    
-```
-#### 3.1.4 ´´½¨Êı¾İ¿âÇ¨ÒÆ¼ÇÂ¼
-Èç¹ûÃ»ÓĞ°²×°`dotnet-ef`¹¤¾ß£¬ÔËĞĞÈçÏÂÃüÁî°²×°
-```
-dotnet tool install dotnet-ef -g
-```
-ÔÚ`src/Company.Project.Web`ÎÄ¼ş¼ĞÖĞ£¬ÔËĞĞÈçÏÂÃüÁîÌí¼ÓÇ¨ÒÆ¼ÇÂ¼
-```
-dotnet ef migrations add Init
-```
-ÔËĞĞÈçÏÂÃüÁî´´½¨Êı¾İ¿â
-```
-dotnet ef database update
-```
-### 3.2 ÔËĞĞÏîÄ¿
-ÖÁ´Ë£¬Êı¾İ¿â´´½¨Íê±Ï£¬¿ÉÒÔÔÚ`src/Company.Project.Web`ÎÄ¼ş¼ĞÖĞÔËĞĞÈçÏÂÃüÁîÔËĞĞÏîÄ¿
-```
-dotnet run
 ```

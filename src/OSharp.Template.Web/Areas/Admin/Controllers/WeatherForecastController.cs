@@ -16,7 +16,8 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
     [ApiExplorerSettings(GroupName = "buss")]
     public class WeatherForecastController : ControllerBase
     {
-#if !NET5_0_OR_GREATER || !Net50OrGreater
+#if Net60OrGreater || NET6_0_OR_GREATER
+#else
         public static Random Random = new Random();
 
 #endif
@@ -38,12 +39,12 @@ namespace OSharp.Template.Web.Areas.Admin.Controllers
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
-#if !NET5_0_OR_GREATER || !Net50OrGreater
-                TemperatureC = Random.Next(-20, 55),
-                Summary = Summaries[Random.Next(Summaries.Length)]
-#else
+#if Net60OrGreater || NET6_0_OR_GREATER
                 TemperatureC = Random.Shared.Next(-20, 55),
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+#else
+                TemperatureC = Random.Next(-20, 55),
+                Summary = Summaries[Random.Next(Summaries.Length)]
 #endif
             })
             .ToArray();

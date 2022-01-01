@@ -1,4 +1,4 @@
-#nuget pack OSharp.Template.WebApi.nuspec
+ï»¿#nuget pack OSharp.Template.WebApi.nuspec
 
 function WriteXml([System.Xml.XmlDocument]$xml, [string]$file)
 {
@@ -28,21 +28,21 @@ function GetVersion()
 function SetNuspecVersion()
 {
     $file = "$($rootPath)\build\OSharp.Template.WebApi.nuspec"
-    Write-Host "ÕıÔÚ¸üĞÂÎÄ¼ş $($file) µÄ°æ±¾ºÅ£º$($version)"
+    Write-Host "æ­£åœ¨æ›´æ–°æ–‡ä»¶ $($file) çš„ç‰ˆæœ¬å·ï¼š$($version)"
     $xml = New-Object -TypeName XML
     $xml.Load($file)
     $xml.package.metadata.version = $version
     WriteXml $xml $file
-    Write-Host "$($file)°æ±¾ºÅ¸üĞÂÎª$($version)"
+    Write-Host "$($file)ç‰ˆæœ¬å·æ›´æ–°ä¸º$($version)"
 }
 
 function NugetPack()
 {
     $file = "$($rootPath)\build\OSharp.Template.WebApi.nuspec"
-    Write-Host "ÕıÔÚ½«ÎÄ¼ş $($file) ½øĞĞnuget´ò°ü"
+    Write-Host "æ­£åœ¨å°†æ–‡ä»¶ $($file) è¿›è¡Œnugetæ‰“åŒ…"
     & nuget pack $file
 
-    $input = Read-Host "ÊÇ·ñ°²×°´ËÄ£°å°ü£¿Y/N"
+    $input = "Y"#Read-Host "æ˜¯å¦å®‰è£…æ­¤æ¨¡æ¿åŒ…ï¼ŸY/N"
     if($input -eq "Y")
     {
         & dotnet new -u "OSharp.Template.WebApi"
@@ -57,8 +57,8 @@ if($rootPath -eq $null)
     $rootPath = Split-Path -Parent $MyInvocation.MyCommand.Definition
     $rootPath = Split-Path -Parent $rootPath
 }
-Write-Host ("µ±Ç°Ä¿Â¼£º$($rootPath)")
+Write-Host ("å½“å‰ç›®å½•ï¼š$($rootPath)")
 $version = GetVersion
-Write-Host ("µ±Ç°°æ±¾£º$($version)")
+Write-Host ("å½“å‰ç‰ˆæœ¬ï¼š$($version)")
 SetNuspecVersion
 NugetPack

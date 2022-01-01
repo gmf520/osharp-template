@@ -9,7 +9,8 @@
 
 using OSharp.Template.Web.Startups;
 
-#if !NET6_0_OR_GREATER || (!Net60OrGreater)
+#if Net60OrGreater || NET6_0_OR_GREATER
+#else
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,7 +37,7 @@ namespace OSharp.Template.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-#if NET5_0_OR_GREATER || Net50OrGreater
+#if Net50OrGreater || NET5_0_OR_GREATER 
             services.AddDatabaseDeveloperPageExceptionFilter();
 #endif
             services.AddOSharp()
@@ -56,7 +57,7 @@ namespace OSharp.Template.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-#if NET6_0_OR_GREATER || Net60OrGreater
+#if Net60OrGreater || NET6_0_OR_GREATER
         public void Configure(WebApplication app)
         {
             IWebHostEnvironment env = app.Environment;
@@ -67,7 +68,7 @@ namespace OSharp.Template.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-#if NET5_0_OR_GREATER || Net50OrGreater
+#if Net50OrGreater || NET5_0_OR_GREATER
                 app.UseMigrationsEndPoint();
 #else
                 app.UseDatabaseErrorPage();

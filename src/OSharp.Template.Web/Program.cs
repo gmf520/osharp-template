@@ -7,7 +7,7 @@
 //  <last-date>2020-06-02 11:32</last-date>
 // -----------------------------------------------------------------------
 
-#if NET6_0_OR_GREATER || Net60OrGreater
+#if Net60OrGreater || NET6_0_OR_GREATER
 using OSharp.Template.Web;
 
 var builder = WebApplication.CreateBuilder(args);

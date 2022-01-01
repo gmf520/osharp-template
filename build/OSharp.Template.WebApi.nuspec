@@ -19,12 +19,12 @@
   </metadata>
   <files>
     <file src="..\.template.config\template.json" target="content\.template.config\" />
-    <file src="..\build\**" target="content\build" exclude="pack.ps1" />
+    <file src="..\build\**" target="content\build" exclude="pack.ps1;*.nuspec;*.nupkg" />
     <file src="..\docs\**" target="content\docs" />
     <file src="..\src\**" target="content\src" exclude="**/node_modules/**;**/bin/**;**/obj/**;**/log/**;**/logs/**;**/.vs/**;**/.vscode/**;**/dist/**;**/wwwroot/**;**/assets/tmp/**" />
     <file src="..\LICENSE" target="content\LICENSE" />
     <file src="..\OSharp.Template.sln" target="content" />
     <file src="..\OSharp.Template.sln.DotSettings" target="content" />
-    <file src="..\ReadMe.md" target="content" />
+    <file src="..\build\README-Project.md" target="content\README.md" />
   </files>
 </package>

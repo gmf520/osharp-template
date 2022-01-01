@@ -34,6 +34,35 @@
         }
       ]
     },
+    "DatabaseType": {
+      "type": "parameter",
+      "description": "the type of database, eq: SqlServer/MySql/Sqlite",
+      "datatype": "choice",
+      "replaces": "SqlServer",
+      "defaultValue": "SqlServer",
+      "choices": [
+        {
+          "choice": "SqlServer",
+          "description": "SqlServer"
+        },
+        {
+          "choice": "MySql",
+          "description": "MySql"
+        },
+        {
+          "choice": "Sqlite",
+          "description": "Sqlite"
+        },
+        {
+          "choice": "PostgreSql",
+          "description": "PostgreSql"
+        },
+        {
+          "choice": "Oracle",
+          "description": "Oracle"
+        }
+      ]
+    },
     "Net60OrGreater": {
       "type": "computed",
       "value": "(Framework == \"net6.0\")"

@@ -55,15 +55,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="Startups\MySqlDefaultDbContextMigrationPack.cs" />
-    <Compile Remove="Startups\NpgsqlDefaultDbContextMigrationPack.cs" />
-    <Compile Remove="Startups\OracleDefaultDbContextMigrationPack.cs" />
-    <Compile Remove="Startups\SqliteDefaultDbContextMigrationPack.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Migrations\" />
-  </ItemGroup>
 </Project>
