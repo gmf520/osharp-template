@@ -7,8 +7,7 @@
 //  <last-date>2020-06-02 11:32</last-date>
 // -----------------------------------------------------------------------
 
-#if NET6_0_OR_GREATER
-
+#if NET6_0_OR_GREATER || Net60OrGreater
 using OSharp.Template.Web;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,9 +18,7 @@ startup.ConfigureServices(builder.Services);
 var app = builder.Build();
 startup.Configure(app);
 app.Run();
-
 #else
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;

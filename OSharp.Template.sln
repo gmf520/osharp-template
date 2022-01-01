@@ -13,6 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{A2FCC2FC
 		.template.config\template.json = .template.config\template.json
 		build\version.props = build\version.props
 	EndProjectSection
+	ProjectSection(FolderGlobals) = preProject
+		D_5_4WorkSpace_4Source_4Repos_4osharp-template_4_1template_1config_4template_1json__JsonSchema = 
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{7A78BD76-8319-4C40-AE2F-5214A24BAE8E}"
 EndProject

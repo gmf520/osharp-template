@@ -75,7 +75,7 @@ namespace OSharp.Template.Web.Hangfire
             user2.IsLocked = !user2.IsLocked;
             await userManager.UpdateAsync(user2);
             IUnitOfWork unitOfWork = _provider.GetUnitOfWork(true);
-#if NET5_0_OR_GREATER
+#if NET5_0_OR_GREATER || Net50OrGreater
             await unitOfWork.CommitAsync();
 #else
             unitOfWork.Commit();

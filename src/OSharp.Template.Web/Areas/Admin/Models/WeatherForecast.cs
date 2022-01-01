@@ -1,3 +1,5 @@
+using System;
+
 namespace OSharp.Template.Web.Areas.Admin.Models
 {
     public class WeatherForecast

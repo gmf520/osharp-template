@@ -13,12 +13,34 @@
   "sourceName": "OSharp.Template",
   "preferNameDirectory": true,
   "symbols": {
-    "framework": {
+    "Framework": {
       "type": "parameter",
       "description": "The target framework for the project",
-      "datatype": "text",
+      "datatype": "choice",
       "replaces": "$(FrameworkVersion)",
-      "defaultValue": "net6.0"
+      "defaultValue": "net6.0",
+      "choices": [
+        {
+          "choice": "net6.0",
+          "description": "Target .Net 6.0"
+        },
+        {
+          "choice": "net5.0",
+          "description": "Target .Net 5.0"
+        },
+        {
+          "choice": "netcoreapp3.1",
+          "description": "Target .NetCoreApp 3.1"
+        }
+      ]
+    },
+    "Net60OrGreater": {
+      "type": "computed",
+      "value": "(Framework == \"net6.0\")"
+    },
+    "Net50OrGreater": {
+      "type": "computed",
+      "value": "(Framework == \"net6.0\") || (Framework == \"net5.0\")"
     }
   }
 }
