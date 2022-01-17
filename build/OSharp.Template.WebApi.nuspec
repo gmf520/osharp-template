@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>OSharp.Template.WebApi</id>
-    <version>6.0.0.2</version>
+    <version>6.0.1-preview.117</version>
     <title>OSharp Template for WebApi</title>
     <authors>柳柳软件(66soft.net)</authors>
     <owners>柳柳软件(66soft.net)</owners>
@@ -20,7 +20,6 @@
   <files>
     <file src="..\.template.config\template.json" target="content\.template.config\" />
     <file src="..\build\**" target="content\build" exclude="pack.ps1;*.nuspec;*.nupkg" />
-    <file src="..\docs\**" target="content\docs" />
     <file src="..\src\**" target="content\src" exclude="**/node_modules/**;**/bin/**;**/obj/**;**/log/**;**/logs/**;**/.vs/**;**/.vscode/**;**/dist/**;**/wwwroot/**;**/assets/tmp/**" />
     <file src="..\LICENSE" target="content\LICENSE" />
     <file src="..\OSharp.Template.sln" target="content" />

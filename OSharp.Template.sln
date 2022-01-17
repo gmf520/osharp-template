@@ -15,8 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{A2FCC2FC
 		D_5_4WorkSpace_4Source_4Repos_4osharp-template_4_1template_1config_4template_1json__JsonSchema = 
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{7A78BD76-8319-4C40-AE2F-5214A24BAE8E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSharp.Template.Core", "src\OSharp.Template.Core\OSharp.Template.Core.csproj", "{6E06A125-0785-4422-8FEC-7D9BC6E04AA6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSharp.Template.EntityConfiguration", "src\OSharp.Template.EntityConfiguration\OSharp.Template.EntityConfiguration.csproj", "{092033B8-4D0C-4E34-AF61-A6EEB42BDFCB}"
