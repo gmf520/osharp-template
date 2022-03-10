@@ -19,19 +19,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
-    <PackageReference Include="OSharp.Hangfire" Version="6.0.1-preview.117" />
-    <PackageReference Include="OSharp.Log4Net" Version="6.0.1-preview.117" />
-    <PackageReference Include="OSharp.MiniProfiler" Version="6.0.1-preview.117" />
-    <PackageReference Include="OSharp.Redis" Version="6.0.1-preview.117" />
-    <PackageReference Include="OSharp.Swagger" Version="6.0.1-preview.117" />
-    <PackageReference Include="OSharp.EntityFrameworkCore.SqlServer" Version="6.0.1-preview.117" />
-    <PackageReference Include="OSharp.Hosting.Apis" Version="6.0.1-preview.117" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
+    <PackageReference Include="OSharp.Hangfire" Version="6.0.3-preview.310" />
+    <PackageReference Include="OSharp.Log4Net" Version="6.0.3-preview.310" />
+    <PackageReference Include="OSharp.MiniProfiler" Version="6.0.3-preview.310" />
+    <PackageReference Include="OSharp.Redis" Version="6.0.3-preview.310" />
+    <PackageReference Include="OSharp.Swagger" Version="6.0.3-preview.310" />
+    <PackageReference Include="OSharp.EntityFrameworkCore.SqlServer" Version="6.0.3-preview.310" />
+    <PackageReference Include="OSharp.Hosting.Apis" Version="6.0.3-preview.310" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
     <PackageReference Include="AspectCore.Extensions.Hosting" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="[3.1.21,4.0.0)" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="[3.1.21,4.0.0)">
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="[3.1.23,4.0.0)" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="[3.1.23,4.0.0)">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -39,17 +39,17 @@
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='net5.0'">
     <PackageReference Include="AspectCore.Extensions.Hosting" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.15" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.10">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.15">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='net6.0'">
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.1" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.1">
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
