@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <Import Project="../../build/public.props" />
   <Import Project="../../build/version.props" />
@@ -20,13 +20,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
-    <PackageReference Include="OSharp.Hangfire" Version="6.0.3-preview.310" />
-    <PackageReference Include="OSharp.Log4Net" Version="6.0.3-preview.310" />
-    <PackageReference Include="OSharp.MiniProfiler" Version="6.0.3-preview.310" />
-    <PackageReference Include="OSharp.Redis" Version="6.0.3-preview.310" />
-    <PackageReference Include="OSharp.Swagger" Version="6.0.3-preview.310" />
-    <PackageReference Include="OSharp.EntityFrameworkCore.SqlServer" Version="6.0.3-preview.310" />
-    <PackageReference Include="OSharp.Hosting.Apis" Version="6.0.3-preview.310" />
+    <PackageReference Include="OSharp.Hangfire" Version="6.0.3-preview.313" />
+    <PackageReference Include="OSharp.Log4Net" Version="6.0.3-preview.313" />
+    <PackageReference Include="OSharp.MiniProfiler" Version="6.0.3-preview.313" />
+    <PackageReference Include="OSharp.Redis" Version="6.0.3-preview.313" />
+    <PackageReference Include="OSharp.Swagger" Version="6.0.3-preview.313" />
+    <PackageReference Include="OSharp.EntityFrameworkCore.SqlServer" Version="6.0.3-preview.313" />
+    <PackageReference Include="OSharp.Hosting.Apis" Version="6.0.3-preview.313" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
     <PackageReference Include="AspectCore.Extensions.Hosting" Version="2.2.0" />

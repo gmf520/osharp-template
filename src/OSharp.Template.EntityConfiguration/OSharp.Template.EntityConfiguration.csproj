@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="OSharp.Hosting.EntityConfiguration" Version="6.0.3-preview.310" />
+    <PackageReference Include="OSharp.Hosting.EntityConfiguration" Version="6.0.3-preview.313" />
   </ItemGroup>
 
   <ItemGroup>
