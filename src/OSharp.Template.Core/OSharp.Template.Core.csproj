@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="OSharp.Hosting.Core" Version="6.0.4" />
+    <PackageReference Include="OSharp.Hosting.Core" Version="6.0.5-preview.505" />
   </ItemGroup>
 
   <ItemGroup>

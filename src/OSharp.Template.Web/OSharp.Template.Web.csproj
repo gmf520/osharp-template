@@ -20,13 +20,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
-    <PackageReference Include="OSharp.Hangfire" Version="6.0.4" />
-    <PackageReference Include="OSharp.Log4Net" Version="6.0.4" />
-    <PackageReference Include="OSharp.MiniProfiler" Version="6.0.4" />
-    <PackageReference Include="OSharp.Redis" Version="6.0.4" />
-    <PackageReference Include="OSharp.Swagger" Version="6.0.4" />
-    <PackageReference Include="OSharp.EntityFrameworkCore.SqlServer" Version="6.0.4" />
-    <PackageReference Include="OSharp.Hosting.Apis" Version="6.0.4" />
+    <PackageReference Include="OSharp.Hangfire" Version="6.0.5-preview.505" />
+    <PackageReference Include="OSharp.Log4Net" Version="6.0.5-preview.505" />
+    <PackageReference Include="OSharp.MiniProfiler" Version="6.0.5-preview.505" />
+    <PackageReference Include="OSharp.Redis" Version="6.0.5-preview.505" />
+    <PackageReference Include="OSharp.Swagger" Version="6.0.5-preview.505" />
+    <PackageReference Include="OSharp.EntityFrameworkCore.SqlServer" Version="6.0.5-preview.505" />
+    <PackageReference Include="OSharp.Hosting.Apis" Version="6.0.5-preview.505" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
     <PackageReference Include="AspectCore.Extensions.Hosting" Version="2.2.0" />
