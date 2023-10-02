@@ -8,13 +8,13 @@
     <RootNamespace>OSharp.Template.EntityConfiguration</RootNamespace>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)'=='net6.0'">
+  <PropertyGroup>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="OSharp.Hosting.EntityConfiguration" Version="6.0.5-preview.505" />
+    <PackageReference Include="OSharp.Hosting.EntityConfiguration" Version="$(OsharpVersion)" />
   </ItemGroup>
 
   <ItemGroup>

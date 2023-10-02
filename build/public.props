@@ -4,7 +4,7 @@
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Authors>LiuliuSoft</Authors>
     <Company>柳柳软件(66soft.net)</Company>
-    <Copyright>Copyright @ 66SOFT 2014-2021</Copyright>
+    <Copyright>Copyright @ 66SOFT 2014-2022</Copyright>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/dotnetcore/osharp</PackageProjectUrl>
     <RepositoryUrl>https://github.com/dotnetcore/osharp.git</RepositoryUrl>
@@ -13,7 +13,7 @@
     <PackageTags>osharp osharpns</PackageTags>
     <NeutralLanguage>zh-CHS</NeutralLanguage>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <FrameworkVersion>net6.0</FrameworkVersion>
+    <FrameworkVersion>net7.0</FrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\build\icon.png" Pack="true" Visible="false" PackagePath=""/>

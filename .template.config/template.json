@@ -18,19 +18,15 @@
       "description": "The target framework for the project",
       "datatype": "choice",
       "replaces": "$(FrameworkVersion)",
-      "defaultValue": "net6.0",
+      "defaultValue": "net7.0",
       "choices": [
+        {
+          "choice": "net7.0",
+          "description": "Target .Net 7.0"
+        },
         {
           "choice": "net6.0",
           "description": "Target .Net 6.0"
-        },
-        {
-          "choice": "net5.0",
-          "description": "Target .Net 5.0"
-        },
-        {
-          "choice": "netcoreapp3.1",
-          "description": "Target .NetCoreApp 3.1"
         }
       ]
     },
@@ -63,13 +59,20 @@
         }
       ]
     },
+    "OsharpVersion": {
+      "type": "parameter",
+      "description": "the nuget version of OSharp, eq: 7.0.11",
+      "datatype": "string",
+      "replaces": "$(OsharpVersion)",
+      "defaultValue": "7.0.11"
+    },
+    "Net70OrGreater": {
+      "type": "computed",
+      "value": "(Framework == \"net7.0\")"
+    },
     "Net60OrGreater": {
       "type": "computed",
-      "value": "(Framework == \"net6.0\")"
-    },
-    "Net50OrGreater": {
-      "type": "computed",
-      "value": "(Framework == \"net6.0\") || (Framework == \"net5.0\")"
+      "value": "(Framework == \"net7.0\") || (Framework == \"net6.0\")"
     }
   }
 }

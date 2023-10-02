@@ -45,8 +45,8 @@ function NugetPack()
     $input = "Y"#Read-Host "是否安装此模板包？Y/N"
     if($input -eq "Y")
     {
-        & dotnet new -u "OSharp.Template.WebApi"
-        & dotnet new -i "OSharp.Template.WebApi.$($version).nupkg"
+        & dotnet new uninstall "OSharp.Template.WebApi"
+        & dotnet new install "OSharp.Template.WebApi.$($version).nupkg"
     }
 }
 

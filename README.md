@@ -24,21 +24,28 @@ OSharp Template    osharp     [C#]   Web/OSharp
 dotnet new osharp -n Company.Project
 ```
 * 指定sdk版本，`--Framework`参数
-如果要生成其他sdk版本的项目，可以使用`-F`或`--Framework`参数指定，可选值为：net6.0/net5.0/netcoreapp3.1
-net5.0：
+如果要生成其他sdk版本的项目，可以使用`-F`或`--Framework`参数指定，可选值为：net7.0/net6.0
+net6.0：
 ```
-dotnet new osharp -n Company.Project -F net5.0
+dotnet new osharp -n Company.Project -F net6.0
 ```
-netcoreapp3.1
+net7.0
 ```
-dotnet new osharp -n Company.Project -F netcoreapp3.1
+dotnet new osharp -n Company.Project -F net7.0
 ```
 
 * 指定数据库类型，`--DatabaseType`参数
 项目默认使用`SqlServer`数据库类型，如果要使用其他数据库类型，可以使用`--DatabaseType`参数指定，可选值为：SqlServer/MySql/Sqlite/PostgreSql/Oracle
 ```
-dotnet new osharp -n Company.Project -F net5.0 --DatabaseType MySql
+dotnet new osharp -n Company.Project -F net7.0 --DatabaseType MySql
 ```
+
+* 指定OSharp版本，`--OsharpVersion`参数
+引用指定版本的osharp nuget版本号，例如：7.0.11，如果要使用雪花long类型作为主键，可引用snow特定版本，如：7.0.11-snow
+```
+dotnet new osharp -n Company.Project -F net7.0 --OsharpVersion 7.0.11
+```
+
 
 ## 2.文件清单如下：
 ```

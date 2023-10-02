@@ -35,8 +35,8 @@ namespace OSharp.Template.Web.Hangfire
             BackgroundJob.Enqueue<UserManager<User>>(m => m.FindByIdAsync("1"));
             string jobId = BackgroundJob.Schedule<UserManager<User>>(m => m.FindByIdAsync("2"), TimeSpan.FromMinutes(2));
             BackgroundJob.ContinueJobWith<TestHangfireJob>(jobId, m => m.GetUserCount());
-            RecurringJob.AddOrUpdate<TestHangfireJob>(m => m.GetUserCount(), Cron.Minutely, TimeZoneInfo.Local);
-            RecurringJob.AddOrUpdate<TestHangfireJob>(m => m.LockUser2(), Cron.Minutely, TimeZoneInfo.Local);
+            RecurringJob.AddOrUpdate<TestHangfireJob>("TestHangfireJob.GetUserCount", m => m.GetUserCount(), Cron.Minutely);
+            RecurringJob.AddOrUpdate<TestHangfireJob>("TestHangfireJob.LockUser2", m => m.LockUser2(), Cron.Minutely);
         }
     }
 
@@ -75,11 +75,7 @@ namespace OSharp.Template.Web.Hangfire
             user2.IsLocked = !user2.IsLocked;
             IUnitOfWork unitOfWork = _provider.GetUnitOfWork(true);
             await userManager.UpdateAsync(user2);
-#if Net50OrGreater || NET5_0_OR_GREATER
             await unitOfWork.CommitAsync();
-#else
-            unitOfWork.Commit();
-#endif
             user2 = await userManager.FindByIdAsync("2");
             list.Add($"user2.IsLocked: {user2.IsLocked}");
             return list.ExpandAndToString();
